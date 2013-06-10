@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.1"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
+    <navigation-rule>
+        <from-view-id>/addContact.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>error</from-outcome>
+            <to-view-id>/addContact.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/addContact.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/search.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>Success</from-outcome>
+            <to-view-id>/mail.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/mail.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>can</from-outcome>
+            <to-view-id>/search.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>Success</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/mailClient.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>can</from-outcome>
+            <to-view-id>/searchClient.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>Success</from-outcome>
+            <to-view-id>/newIndex.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/searchClient.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>Success</from-outcome>
+            <to-view-id>/mailClient.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/addContactClient.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>Success</from-outcome>
+            <to-view-id>/addContactClient.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>error</from-outcome>
+            <to-view-id>/addContactClient.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+</faces-config>

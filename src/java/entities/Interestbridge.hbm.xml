@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 5, 2013 5:07:46 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="entities.Interestbridge" table="interestbridge" catalog="contactmanagementsystem">
+        <id name="ibId" type="java.lang.Integer">
+            <column name="IB_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="contacts" class="entities.Contacts" fetch="select">
+            <column name="contactId" />
+        </many-to-one>
+        <many-to-one name="interests" class="entities.Interests" fetch="select">
+            <column name="interestId" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

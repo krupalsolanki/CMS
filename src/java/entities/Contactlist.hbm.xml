@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 5, 2013 5:07:46 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="entities.Contactlist" table="contactlist" catalog="contactmanagementsystem">
+        <id name="contactListId" type="java.lang.Integer">
+            <column name="contactListId" />
+            <generator class="identity" />
+        </id>
+        <property name="myId" type="java.lang.Integer">
+            <column name="myId" />
+        </property>
+        <property name="contactId" type="java.lang.Integer">
+            <column name="contactId" />
+        </property>
+    </class>
+</hibernate-mapping>

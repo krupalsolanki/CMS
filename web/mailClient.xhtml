@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="./MainTemplate.xhtml">
+
+    <ui:define name="menu">
+        <div id="nav_wrapper">
+            <ul id="nav">
+                <li><a href="newIndex.xhtml">Home</a></li>
+                <li><a href="addContactClient.xhtml">Add Contact</a></li>
+                <li><a href="searchClient.xhtml">Search</a></li>
+                <li class="current_page_item"><a href="mailClient.xhtml">Mail</a></li>
+                <li><a href="aboutusClient.xhtml">About us</a></li>
+            </ul>
+        </div>
+    </ui:define>
+    <ui:define name="content">
+        <h:form>
+            <h4>
+                <table>
+
+                    <tr>
+                        <td colspan="2" align="center"><h2>Mail</h2></td>
+                    </tr>
+                    <tr>
+                        <td>To :</td>
+                        <td><p class="mailContent"><p:inputText id="to" value="#{mailBean.to}" size="110"/></p></td>
+                    </tr>
+                    <tr>
+                        <td>Subject :</td>
+                        <td><p class="mailContent"><p:inputText id="subject"  value="#{mailBean.subject}" size="110"/></p></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 15px; vertical-align: top" >Body :</td> 
+                        <td><p class="mailContent"><p:inputTextarea id="body" value="#{mailBean.content}" rows="10" cols="110" autoResize="false"/></p></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <!-- <p:notificationBar style="z-index: 50;" position="top" effect="slide" widgetVar="bar" styleClass="top">
+                                 <h:outputText value="Your mail is being sent. ;)" style="font-size:40px;color: black"/>
+                             </p:notificationBar> -->
+                            <p:commandButton action="#{mailBean.sendContent()}" value="Send" style="width: 100px;height: 40px"/>
+                            <p:commandButton action="#{mailBean.can()}" value="Cancel" style="width: 100px;height: 40px"/>
+                        </td>
+                    </tr>
+
+                </table>
+            </h4>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
