@@ -5,6 +5,7 @@
 package helperConverter;
 
 import entities.Contacts;
+import entities.Interestbridge;
 import entities.Interests;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.hibernate.SessionFactory;
  */
 public class ContactHelper {
 
+    String email = null;
     Session session = null;
     protected EntityManager em;
     public static List<Contacts> cont;
@@ -40,7 +42,7 @@ public class ContactHelper {
             contactList = (List<Contacts>) q.list();
         } catch (Exception e) {
             e.printStackTrace();
-        } 
+        }
 
         return contactList;
     }
@@ -53,7 +55,7 @@ public class ContactHelper {
             contactList = (List<String>) q.list();
         } catch (Exception e) {
             e.printStackTrace();
-        } 
+        }
         return contactList;
     }
 
@@ -65,7 +67,7 @@ public class ContactHelper {
             contactList = (List<String>) q.list();
         } catch (Exception e) {
             e.printStackTrace();
-        } 
+        }
 
         return contactList;
     }
@@ -81,7 +83,7 @@ public class ContactHelper {
         }
         return contactList;
     }
-    
+
     public List getDistinctInterests() {
         List<String> interestList = null;
         try {
@@ -94,7 +96,7 @@ public class ContactHelper {
         return interestList;
     }
 
-    public List getUpdatedContacts(List<Contacts> names, List<String> companies, List<String> locations, List<String> designations,List<String> interests) {
+    public List getUpdatedContacts(List<Contacts> names, List<String> companies, List<String> locations, List<String> designations, List<String> interests) {
         List<Contacts> contactList = null;
 
         /*String string = conts.get(0);
@@ -165,7 +167,7 @@ public class ContactHelper {
             } else {
                 designation_array = "select distinct c.designation from Contacts as c";
             }
-            
+
             if (interests != null) {
                 for (int i = 0; i < interests.size(); i++) {
                     if (i != interests.size() - 1) {
@@ -177,14 +179,13 @@ public class ContactHelper {
             } else {
                 interest_array = "select distinct c.designation from Contacts as c";
             }
-            
+
             Query q;
 
-            if(interests != null){
-                q = session.createQuery("select distinct c from Contacts as c, Interests i , Interestbridge ib where ib.interests = i and ib.contacts = c and c.firstName in (" + first_name_array + ") and c.companyName in (" + company_array + ") and c.companyLoc in (" + location_array + ") and c.designation in (" + designation_array + ") and i.interestName in ("+interest_array+")");
-                System.out.println("interest :"+interest_array+"::::::first : "+first_name_array);
-            }
-            else {
+            if (interests != null) {
+                q = session.createQuery("select distinct c from Contacts as c, Interests i , Interestbridge ib where ib.interests = i and ib.contacts = c and c.firstName in (" + first_name_array + ") and c.companyName in (" + company_array + ") and c.companyLoc in (" + location_array + ") and c.designation in (" + designation_array + ") and i.interestName in (" + interest_array + ")");
+                System.out.println("interest :" + interest_array + "::::::first : " + first_name_array);
+            } else {
                 q = session.createQuery("from Contacts as c where c.firstName in (" + first_name_array + ") and c.companyName in (" + company_array + ") and c.companyLoc in (" + location_array + ") and c.designation in (" + designation_array + ")");
             }
             //System.out.println(name_array);
@@ -197,11 +198,10 @@ public class ContactHelper {
         }
         return contactList;
     }
-    
     boolean flag = false;
-    
-    
-    public String addContact(String firstName,String lastName,String email,String mobNo,String comName,String comLoc,String designation,String url,String addedBy,String notes,List<String> selectedInterests) {
+
+    public String addContact(String firstName, String lastName, String email, String mobNo, String comName, String comLoc, String designation, String url, String addedBy, String notes, List<String> selectedInterests) {
+        this.email = email;
         System.out.println("addContact()");
         openSession();
         System.out.println("Inside add");
@@ -216,31 +216,29 @@ public class ContactHelper {
         contact.setLinkedInUrl(url);
         contact.setAddedBy(addedBy);
         contact.setNotes(notes);
-        
-        if(selectedInterests != null) {
-            
-            List<String> InterestsInTable = getDistinctInterests();
-            List<String> temp = new ArrayList<String> (selectedInterests.size());
+        List<String> InterestsInTable = getDistinctInterests();
+        List<String> temp = null;
+        if (selectedInterests != null) {
+            temp = new ArrayList<String>(selectedInterests.size());
             temp.addAll(selectedInterests);
             temp.removeAll(InterestsInTable);
-            
-            for(int i = 0; i < temp.size();i++) {
-                Interests ints = new Interests();
-                ints.setInterestName(temp.get(i));
-                session.save(ints);
 
+            for (int i = 0; i < temp.size(); i++) {
+                Interests ints = new Interests();
+                ints.setInterestName(temp.get(i).toLowerCase());
+                session.save(ints);
             }
         }
-        System.out.println("Phone No : " +mobNo);
+        System.out.println("Phone No : " + mobNo);
         boolean check = false;
         System.out.println("check1.." + firstName);
         if (firstName != null && lastName != null && email != null && comName != null && comLoc != null && designation != null && addedBy != null) {
             session.save(contact);
+            addInterestBridge(selectedInterests);
             System.out.println("save in the database..");
             check = true;
-            
         }
-        
+
         if (check) {
             closeSession();
             flag = true;
@@ -250,7 +248,42 @@ public class ContactHelper {
             return "error";
         }
     }
-        
+
+    public String addInterestBridge(List<String> intList) {
+        System.out.print(email);
+        try {
+            String hql_query = "select c from Contacts c where c.email='" + email + "'";
+            Query query = (Query) session.createQuery(hql_query);
+            //prepare statement
+            List<Contacts> conList = (List<Contacts>) query.list();
+            int conId = 0;
+            for (Contacts c : conList) {
+                conId = c.getContactId();
+            }
+            Contacts c = new Contacts();
+            c.setContactId(conId);
+            System.out.println("Contact Id is " + c.getContactId());
+            List<String> temp = intList;
+            System.out.println("temp size " + temp.size());
+            List<Interests> intId;
+            for (int i = 0; i < temp.size(); i++) {
+                Interests ints = new Interests();
+                hql_query = "select i from Interests i where i.interestName='" + temp.get(i) + "'";
+                query = (Query) session.createQuery(hql_query);
+                intId = (List<Interests>) query.list();
+                System.out.println("interest Id is " + intId);
+                Interestbridge ib = new Interestbridge();
+                ib.setContacts(c);
+                ib.setInterests(intId.get(0));
+                System.out.println("done..");
+                session.save(ib);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "success";
+    }
 
     public List<Contacts> getContactsDetails() {
         List<Contacts> contactList = new ArrayList<Contacts>();
@@ -266,10 +299,6 @@ public class ContactHelper {
                 System.out.println("check1..");
                 System.out.println(cl.getFirstName());
             }
-//            for (Iterator it = query.iterate();it.hasNext();) {
-//                Contacts c = (Contacts) it.next();
-//                System.out.println(c.getFirstName());
-//            }
             System.out.println("Done..");
 
         } catch (Exception e) {
@@ -279,28 +308,29 @@ public class ContactHelper {
         }
         return contactList;
     }
-    
+
     public boolean doesEmailExist(String email) {
-        Query q = session.createQuery("select c from Contacts c where c.email='"+email+"'");
-        
-        
-        if(q.list().isEmpty())
+        Query q = session.createQuery("select c from Contacts c where c.email='" + email + "'");
+
+
+        if (q.list().isEmpty()) {
             return false;
-        else 
+        } else {
             return true;
+        }
     }
-    
+
     public String getInterestsForUser(String email) {
-        
-        Query q = session.createQuery("select i.interestName from Interests i , Contacts c, Interestbridge ib where c.email='"+email+"' and ib.contacts = c and ib.interests = i");
+
+        Query q = session.createQuery("select i.interestName from Interests i , Contacts c, Interestbridge ib where c.email='" + email + "' and ib.contacts = c and ib.interests = i");
         List<String> interestList = q.list();
         String intlist = "";
-        for(int i = 0; i < interestList.size(); i++) {
+        for (int i = 0; i < interestList.size(); i++) {
             intlist = intlist + interestList.get(0) + " ";
         }
         return intlist;
     }
-    
+
     public void openSession() {
         SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
         session = sessionFactory.openSession();
@@ -313,5 +343,4 @@ public class ContactHelper {
         session.flush();
         session.close();
     }
-    
 }
