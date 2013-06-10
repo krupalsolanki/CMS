@@ -33,7 +33,7 @@ public class ContactHelper {
         session = sessionFactory.openSession();
         org.hibernate.Transaction tx = session.beginTransaction();
     }
-
+    
     public List getContacts() {
         List<Contacts> contactList = null;
         try {

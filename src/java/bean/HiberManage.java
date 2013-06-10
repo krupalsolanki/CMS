@@ -7,25 +7,53 @@ package bean;
 import helperConverter.ContactHelper;
 import entities.Contacts;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionContext;
 
 import org.primefaces.event.UnselectEvent;
+
 
 /**
  *
  * @author Walter
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class HiberManage {
 
     protected String firstName;
     protected String selectedField;
+    private String username;
 
+    /**
+     * Get the value of username
+     *
+     * @return the value of username
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * Set the value of username
+     *
+     * @param username new value of username
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    
     public String getSelectedField() {
         return selectedField;
     }
@@ -203,10 +231,12 @@ public class HiberManage {
     public HiberManage() {
         helper = new ContactHelper();
         conts = helper.getContacts();
+        
         distinctCompanies = helper.getDistinctCompanies();
         distinctDesignations = helper.getDistinctDesignations();
         distinctLocations = helper.getDistinctLocations();
         distinctInterests = helper.getDistinctInterests();
+        
     }
 
     public Contacts getSelected() {
@@ -491,6 +521,15 @@ public class HiberManage {
     public boolean flag = false;
     public int aurekflag;
 
+    public String login(){
+        
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        Map<String, Object> sessionMap = externalContext.getSessionMap();
+        sessionMap.put("username", username);
+        addedBy = (String) sessionMap.get("username");
+        System.out.println("Session :" + addedBy);
+        return "success";
+    }
     public String addContact() {
 
         String temp = helper.addContact(firstName, lastName, email, mobNo, comName, comLoc, designation, url, addedBy, notes, selectedInterests);

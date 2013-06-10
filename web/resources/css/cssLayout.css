@@ -31,9 +31,11 @@
 
 .center_content {
     
-    background-color: #dddddd;
+    background-color: #dfdfdf;
     padding: 5px;
     margin-top: 140px;
+    margin-left: 15px;
+    border-radius: 10px
 }
 
 .left_content {
