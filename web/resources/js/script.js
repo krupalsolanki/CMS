@@ -16,6 +16,9 @@ jQuery('.slide_entry ul').cycle({
 		before: onBefore,
         after: onAfter,
         timeout: 8000,
+                pagerAnchorBuilder: function(index, el) {
+                return '<a href="#" style="font-size:200%">&bull;</a>';
+                },
 		pager:  '#number',
 		pause: 1
 	});
