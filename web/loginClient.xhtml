@@ -32,23 +32,25 @@
                             <table style="margin:40px 0 100px 100px; ">
                                 
                                 <tr>
-                                    <td>Name</td>
-                                    <td><p:inputText id="fname" required="true" requiredMessage="Please enter First Name!" validatorMessage="Alphabets only!"
-                                                     value="#{hiberManage.username}" tabindex="1" maxlength="30">
-                                            <f:validateRegex pattern="[ a-zA-Z]+"/>
+                                    <td>Username</td>
+                                    <td><p:inputText id="username" required="true" requiredMessage="Please enter username!" 
+                                                     value="#{sessionHandler.username}" tabindex="1" maxlength="100">
+                                            
                                         </p:inputText>
-                                        <br/><h3> <p:message for="fname" /></h3></td>
+                                        <br/><h3 align="right"><h:outputLabel value="@compassitesinc.com" /> </h3></td>
                                 </tr>
+                                <tr><td><br/></td></tr>
                                 <tr>
+                                    
                                     <td>Password</td>
                                     <td> 
-                                        <p:password id="feedback"  tabindex="2" feedback="true"/>  
+                                        <p:password id="password"  tabindex="2" />  
                                     </td>
                                 </tr>
                                 <tr>
 
                                     <td colspan="2" align="right">
-                                        <p:commandButton id="loginButton" action="#{hiberManage.login()}" tabindex="3" value="Login" style="margin:20px; width: 100px;height:40px "
+                                        <p:commandButton id="loginButton" action="#{sessionHandler.login()}" tabindex="3" value="Login" style="margin:20px; width: 100px;height:40px "
                                                           ajax="false"/>
                                     </td>
                                 </tr>

@@ -57,7 +57,7 @@
                     </tr>
                     <tr>
                         <td>Interests</td>
-                        <td><p:autoComplete value="#{hiberManage.selectedInterests}" completeMethod="#{hiberManage.completeInterests}"  
+                        <td><p:autoComplete value="#{hiberManage.selectedInterests}" completeMethod="#{hiberManage.completeInterestsForSearch}"  
                                             multiple="true">  
                             </p:autoComplete></td>
                         <td><p:commandButton value="Search" id="submit" update="display" action="#{hiberManage.getContacts()}" /> </td>

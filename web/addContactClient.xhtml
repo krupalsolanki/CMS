@@ -82,7 +82,7 @@
                                 <p:ajax event="change" update="myform:emailmessage myform:email myform:addButton" listener="#{hiberManage.validateEmail(hiberManage.email)}" />
 
                                 <f:validateRegex
-                                    pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                    pattern="^[A-Za-z0-9][A-Za-z0-9_-]+(\.[_A-Za-z0-9]+)*[A-Za-z0-9]@[A-Za-z0-9]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 
                             </p:inputText>
                             <br/><h3><h:message id="emailmessage" for="email" /> </h3>
@@ -129,7 +129,7 @@
                             <br/><h3><p:message for="comLoc" /></h3>
                         </td>
                         <td>Contact Added By<h:outputText value="*" style="color: red;" /></td>
-                        <td><p:inputText id="addedBy" tabindex="11" value="#{hiberManage.addedBy}" ></p:inputText>
+                        <td><p:inputText id="addedBy" tabindex="11" value="#{sessionHandler.addedBy}" ></p:inputText>
                         <br/><h3><p:message for="addedBy" /></h3></td>
                         
                     </tr>
