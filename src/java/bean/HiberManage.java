@@ -28,12 +28,13 @@ import org.primefaces.event.UnselectEvent;
  * @author Walter
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class HiberManage {
 
     protected String firstName;
     protected String selectedField;
     private String username;
+    SessionHandler sessionhandler;
 
     /**
      * Get the value of username
@@ -132,15 +133,7 @@ public class HiberManage {
     public void setUrl(String url) {
         this.url = url;
     }
-    private String addedBy;
-
-    public String getAddedBy() {
-        return addedBy;
-    }
-
-    public void setAddedBy(String addedBy) {
-        this.addedBy = addedBy;
-    }
+   
     private String notes;
 
     public String getNotes() {
@@ -521,18 +514,10 @@ public class HiberManage {
     public boolean flag = false;
     public int aurekflag;
 
-    public String login(){
-        
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        Map<String, Object> sessionMap = externalContext.getSessionMap();
-        sessionMap.put("username", username);
-        addedBy = (String) sessionMap.get("username");
-        System.out.println("Session :" + addedBy);
-        return "success";
-    }
+    
     public String addContact() {
 
-        String temp = helper.addContact(firstName, lastName, email, mobNo, comName, comLoc, designation, url, addedBy, notes, selectedInterests);
+        String temp = helper.addContact(firstName, lastName, email, mobNo, comName, comLoc, designation, url, sessionhandler.addedBy, notes, selectedInterests);
         if (temp == "success") {
             flag = true;
         }
@@ -545,7 +530,6 @@ public class HiberManage {
         comLoc = null;
         designation = null;
         url = null;
-        addedBy = null;
         notes = null;
         selectedInterests = null;
 
@@ -588,4 +572,6 @@ public class HiberManage {
         return helper.getInterestsForUser(email);
 
     }
+    
+    
 }

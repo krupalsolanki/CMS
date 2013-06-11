@@ -69,7 +69,7 @@ public class SendEmail {
         msg.setFrom(from);
         Multipart multipart = new MimeMultipart("related");
         BodyPart htmlPart = new MimeBodyPart();
-        htmlPart.setContent("<html><body>" + content + "<br/>" + "<img src=\"54.225.26.52/test.php?email="+toMail+"\"/></body></html>", "text/html");
+        htmlPart.setContent("<html><body>" + content + "<br/>" + "<img src=\"54.225.23.238/test.php?email="+toMail+"\"/></body></html>", "text/html");
         multipart.addBodyPart(htmlPart);
         //BodyPart imgPart=new MimeBodyPart();
 
