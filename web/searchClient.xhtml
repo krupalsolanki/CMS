@@ -23,9 +23,9 @@
 
         <h:form >
             <p:growl id="growl" /> 
-
-            <h2>Search By</h2>
-            <h4>    
+            <img src="resources/images/search_detail.png" style="margin-left: -10px"></img>
+            <!--            <h2>Search By</h2>-->
+            <h3>    
                 <table style="margin-left: 20px;" >
                     <tr>
                         <td>Name</td>
@@ -60,10 +60,11 @@
                         <td><p:autoComplete value="#{hiberManage.selectedInterests}" completeMethod="#{hiberManage.completeInterests}"  
                                             multiple="true">  
                             </p:autoComplete></td>
-                        <td><p:commandButton value="Search" id="submit" update="display" action="#{hiberManage.getContacts()}" /> </td>
+                        <td><p:commandButton value="Search" id="submit" update="display" action="#{hiberManage.getContacts()}" />
+                        </td>
                     </tr>
                 </table>
-            </h4>
+            </h3>
 
             <p:separator style="margin-top:20px"/> 
             <p:dataTable id="display" value="#{hiberManage.contacts}" paginator="true" rows="10" var="item" style="border:solid 1px">
@@ -88,12 +89,7 @@
                 <p:column headerText="Designation">
                     <h:outputText value="#{item.designation}"/>
                 </p:column>
-<!--                <p:column headerText="Interests">
-                    <h:outputLink id="fade" value="#" title="#{hiberManage.getInterestsForUser(item.email)}" >  
-                        <h:outputText value="O" />  
-                    </h:outputLink>  
-                </p:column>-->
-                
+
             </p:dataTable>
             <br/>
             <p:commandButton value="Send Email" id="send" style="margin:10px 0" action="#{hiberManage.getEmailIds()}" />  

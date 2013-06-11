@@ -23,6 +23,7 @@
     <ui:define name="content">
 
         <h:form id="myform">
+            <img src="resources/images/conDetail.png" style="margin-left: -10px"></img>
             <h4>
                 <table cellpadding="5">
                     <tr>
@@ -30,9 +31,10 @@
                             <h:outputLabel value="The contact has been added." style="color: red; font-size:25px; font-style: oblique; margin-left: 340px;"/>
                         </c:if>
                     </tr>
-                    <tr>
+<!--                    <tr>
                         <td colspan="4"><h2>Contact Detail</h2></td>
-                    </tr>
+
+                    </tr>-->
 
                     <tr>
 
@@ -82,7 +84,7 @@
                                 <p:ajax event="change" update="myform:emailmessage myform:email myform:addButton" listener="#{hiberManage.validateEmail(hiberManage.email)}" />
 
                                 <f:validateRegex
-                                    pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                    pattern="^[A-Za-z0-9][A-Za-z0-9_-]+(\.[_A-Za-z0-9-]+)*[A-Za-z0-9]@[A-Za-z0-9]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 
                             </p:inputText>
                             <br/><h3><h:message id="emailmessage" for="email" /> </h3>

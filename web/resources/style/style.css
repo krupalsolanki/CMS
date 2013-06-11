@@ -13,7 +13,7 @@ fieldset, form, label, legend, caption, tbody, tfoot, thead, tr, th, td {
     outline: 0;
     font-weight: inherit;
     font-style: inherit;
-    font-size: 100%;
+    
     font-family: inherit;
     vertical-align: baseline;
 }
@@ -44,23 +44,18 @@ body{
 
 }
 
-
-
-
 img{
-    border:none;}
-
-
-
+    border:none;
+}
 
 a{
     color:#75cdd2;
-    text-decoration:none;}
+    text-decoration:none;
+}
 
 a:hover{
     color:#75cdd2;
     text-decoration:underline;}	
-
 
 hr{
     background:#e0e0e0;
@@ -143,11 +138,11 @@ h2{
     color:#51565e;}
 
 h3{
-    font-size:16px;
+    /*font-size:16px;*/
     color:#2f2f2f;}	
 
 h4{
-    font-size:18px;
+    /*font-size:18px;*/
     text-align:left;
     font-family: 'MyriadPro-Regular';
     color:#2f2f2f;}
@@ -164,7 +159,6 @@ h5{
     color:#2f2f2f;
     margin-bottom:10px;
 }
-
 
 p{
     font-size:12px;

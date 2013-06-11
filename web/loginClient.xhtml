@@ -25,42 +25,45 @@
             </ui:define>
 
             <ui:define name="content">
-                <h:form id="myform">
-                    <h4>
-                        <div style="display: inline-block;"> 
-                            <h2 style='margin:60px 0px 0px 60px;'>Login</h2>
-                            <table style="margin:40px 0 100px 100px; ">
-                                
-                                <tr>
-                                    <td>Name</td>
-                                    <td><p:inputText id="fname" required="true" requiredMessage="Please enter First Name!" validatorMessage="Alphabets only!"
-                                                     value="#{hiberManage.username}" tabindex="1" maxlength="30">
-                                            <f:validateRegex pattern="[ a-zA-Z]+"/>
-                                        </p:inputText>
-                                        <br/><h3> <p:message for="fname" /></h3></td>
-                                </tr>
-                                <tr>
-                                    <td>Password</td>
-                                    <td> 
-                                        <p:password id="feedback"  tabindex="2" feedback="true"/>  
-                                    </td>
-                                </tr>
-                                <tr>
+                
+                    <h:form id="myform">
+                        <h4>
+                            <div style="display: inline-block;"> 
+                                <h2 style='margin:60px 0px 0px 60px;'>Login</h2>
+                                <table style="margin:40px 0 100px 100px; ">
 
-                                    <td colspan="2" align="right">
-                                        <p:commandButton id="loginButton" action="#{hiberManage.login()}" tabindex="3" value="Login" style="margin:20px; width: 100px;height:40px "
-                                                          ajax="false"/>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>Name</td>
+                                        <td><p:inputText id="fname" required="true" requiredMessage="Please enter First Name!" validatorMessage="Alphabets only!"
+                                                         value="#{hiberManage.username}" tabindex="1" maxlength="30">
+                                                <f:validateRegex pattern="[ a-zA-Z]+"/>
+                                            </p:inputText>
+                                            <br/><h3> <p:message for="fname" /></h3></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Password</td>
+                                        <td> 
+                                            <p:password id="feedback"  tabindex="2" feedback="true"/>  
+                                        </td>
+                                    </tr>
+                                    <tr>
 
-                            </table>
-                        </div>
-                        <div style='float: right; margin:120px 90px'>
-                            <img src="resources/images/logo.png" width="300px"/>
-                        </div>
+                                        <td colspan="2" align="right">
+                                            <p:commandButton id="loginButton" action="#{hiberManage.login()}" tabindex="3" value="Login" style="margin:20px; width: 100px;height:40px "
+                                                             ajax="false"/>
+                                        </td>
+                                    </tr>
 
-                    </h4>
-                </h:form>
+                                </table>
+                            </div>
+                            <div style='float: right; margin:120px 90px'>
+                                <img src="resources/images/logo.png" width="300px"/>
+                            </div>
+
+                        </h4>
+                    </h:form>
+                
+
             </ui:define>
 
         </ui:composition>
