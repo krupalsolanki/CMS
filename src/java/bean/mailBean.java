@@ -78,7 +78,7 @@ public class mailBean {
             se.composeSend(s[i],htmltext);
         }
         sentFlag = true;
-        return "Success";
+        return "success";
     }
     
     public static void setEmails(String searched) {

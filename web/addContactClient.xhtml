@@ -31,16 +31,16 @@
                             <h:outputLabel value="The contact has been added." style="color: red; font-size:25px; font-style: oblique; margin-left: 340px;"/>
                         </c:if>
                     </tr>
-<!--                    <tr>
-                        <td colspan="4"><h2>Contact Detail</h2></td>
-
-                    </tr>-->
+                    <!--                    <tr>
+                                            <td colspan="4"><h2>Contact Detail</h2></td>
+                    
+                                        </tr>-->
 
                     <tr>
 
                         <td>First Name<h:outputText value="*" style="color: red;" /></td>
                         <td><p:inputText id="fname" tabindex="1" required="true" requiredMessage="Please enter First Name!" validatorMessage="Alphabets only!"
-                                                     value="#{hiberManage.firstName}" maxlength="30">
+                                         value="#{hiberManage.firstName}" maxlength="30">
                                 <f:validateRegex pattern="[ a-zA-Z]+"/>
                             </p:inputText>
                             <br/><h3> <p:message for="fname" /></h3>
@@ -93,8 +93,8 @@
 
                         <td rowspan="3" style="vertical-align: top;">Notes</td>
                         <td rowspan="3"><p class="mailContent">
-                            <p:inputTextarea tabindex="10" value="#{hiberManage.notes}" counter="counter" maxlength="150"       
-                                             counterTemplate="{0} characters remaining." autoResize="false"/>  </p>
+                                <p:inputTextarea tabindex="10" value="#{hiberManage.notes}" counter="counter" maxlength="150"       
+                                                 counterTemplate="{0} characters remaining." autoResize="false"/>  </p>
                             <br/><h:outputText id="counter"  /> 
                         </td>
 
@@ -118,21 +118,27 @@
                             </p:inputText>
                             <br/><h3><p:message for="comName" /></h3>
                         </td>
-                     
+
                     </tr>
 
                     <tr>
                         <td>Company Location<h:outputText value="*" style="color: red;" /></td>
-                        <td><p:inputText id="comLoc" required="true" requiredMessage="Please enter Company location!"
-                                         tabindex="6" value="#{hiberManage.comLoc}" validatorMessage="Alphabets only!" maxlength="30">
-                                <f:validateRegex pattern="[ a-zA-Z]+"/>
-                            </p:inputText>
-                            <br/><h3><p:message for="comLoc" /></h3>
-                        </td>
+                        <!--<td>-->
+                            <!--                            <p:inputText id="comLoc" required="true" requiredMessage="Please enter Company location!"
+                                                                     tabindex="6" value="#{hiberManage.comLoc}" validatorMessage="Alphabets only!" maxlength="30">
+                                                            <f:validateRegex pattern="[ a-zA-Z]+"/>
+                                                        </p:inputText>-->
+                            <!--</td>-->
+                            <td><p:autoComplete value="#{hiberManage.selectedCities}" completeMethod="#{hiberManage.completeCities}"  
+                                                multiple="false" tabindex="6">  
+                                    <br/><h3><p:message for="comLoc" /></h3>
+
+                                </p:autoComplete></td>
+                        
                         <td>Contact Added By<h:outputText value="*" style="color: red;" /></td>
                         <td><p:inputText id="addedBy" tabindex="11" value="#{sessionHandler.addedBy}" ></p:inputText>
-                        <br/><h3><p:message for="addedBy" /></h3></td>
-                        
+                            <br/><h3><p:message for="addedBy" /></h3></td>
+
                     </tr>
 
                     <tr>
@@ -142,7 +148,7 @@
                             </p:inputText>
                             <br/><h3><p:message for="desgn" /></h3>
                         </td>
-                        
+
                     </tr>
 
                     <tr>

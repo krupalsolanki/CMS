@@ -18,32 +18,14 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/search.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>Success</from-outcome>
-            <to-view-id>/mail.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <from-view-id>/mail.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>can</from-outcome>
-            <to-view-id>/search.xhtml</to-view-id>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>Success</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
         <from-view-id>/mailClient.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>can</from-outcome>
             <to-view-id>/searchClient.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
-            <from-outcome>Success</from-outcome>
-            <to-view-id>/newIndex.xhtml</to-view-id>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
@@ -62,13 +44,6 @@
         <navigation-case>
             <from-outcome>error</from-outcome>
             <to-view-id>/addContactClient.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <from-view-id>/loginClient.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>success</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     <navigation-rule>

@@ -370,7 +370,7 @@ public class HiberManage {
         this.selectedDesignations = selectedDesignations;
     }
     private List<String> selectedInterests;
-
+    
     public List<String> getSelectedInterests() {
         return selectedInterests;
     }
@@ -378,8 +378,20 @@ public class HiberManage {
     public void setSelectedInterests(List<String> selectedInterests) {
         this.selectedInterests = selectedInterests;
     }
+    
+    private List<String> selectedCities;
+
+    public List<String> getSelectedCities() {
+        return selectedCities;
+    }
+
+    public void setSelectedCities(List<String> selectedCities) {
+        this.selectedCities = selectedCities;
+    }
+    
     protected List<String> selectedTexts;
 
+    
     /**
      * Get the value of selectedText
      *
@@ -471,6 +483,23 @@ public class HiberManage {
 
         return suggestions;
     }
+    
+    public List<String> completeCities(String query) {
+        List<String> suggestions = new ArrayList<String>();
+
+        for (String p : distinctLocations) {
+            if (p.toLowerCase().contains(query.toLowerCase())) {
+                suggestions.add(p.toLowerCase());
+            }
+        }
+        if (suggestions.isEmpty()) {
+            interestflag = true;
+            suggestions.add(query.toLowerCase());
+        }
+
+        return suggestions;
+    }
+    
     public static String contactsToSend;
 
     /**
