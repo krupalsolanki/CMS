@@ -44,8 +44,22 @@
                             <!-- <p:notificationBar style="z-index: 50;" position="top" effect="slide" widgetVar="bar" styleClass="top">
                                  <h:outputText value="Your mail is being sent. ;)" style="font-size:40px;color: black"/>
                              </p:notificationBar> -->
-                            <p:commandButton action="#{mailBean.sendContent()}" value="Send" style="width: 100px;height: 40px"/>
+                            <p:growl id="messages" globalOnly="true" /> 
+                            
+                            <p:commandButton id="showDialogButton" onclick="confirmation.show();" type="button" 
+                                             value="Send" style="width: 100px;height: 40px"/>
+                            <p:confirmDialog id="confirmDialog" message="Are you sure you want to send Mail?"  
+                                             header="Initiating mail process" severity="alert" widgetVar="confirmation">  
+
+                                <p:commandButton id="confirm" value="Yes" update="messages" onclick="confirmation.hide(); bar.show();"  
+                                                 action="#{mailBean.sendContent()}" />  
+                                <p:commandButton id="decline" value="No" onclick="confirmation.hide();" type="button" />   
+
+                            </p:confirmDialog> 
                             <p:commandButton action="#{mailBean.can()}" value="Cancel" style="width: 100px;height: 40px"/>
+                            <p:notificationBar position="top" effect="slide" widgetVar="bar" styleClass="top">  
+                                <h:outputText value="Please Wait! Your Mail is being Sent" style="color:#FFCC00;font-size:36px;" />  
+                            </p:notificationBar>
                         </td>
                     </tr>
 
