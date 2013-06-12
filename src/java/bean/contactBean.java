@@ -22,14 +22,11 @@ import org.hibernate.SessionFactory;
 @RequestScoped
 public class contactBean {
 
-    /**
-     * Creates a new instance of contactBean
-     */
     static Session session = null;
     private String firstName;
     private String lastName, email, mobNo, comName, comLoc, designation, url, notes, addedBy;
     private String gender;
-    
+    boolean flag = false;
     
     public contactBean() {
     }
@@ -122,7 +119,6 @@ public class contactBean {
         this.email = email;
     }
 
-    
     public void add()
     {
         System.out.println("It works!");
@@ -141,9 +137,7 @@ public class contactBean {
         session.close();
     }
 
-    boolean flag = false;
-    
-public List<Contacts> getContactsDetails() {
+    public List<Contacts> getContactsDetails() {
         List<Contacts> contactList = new ArrayList<Contacts>();
         try {
             openSession();
@@ -167,7 +161,4 @@ public List<Contacts> getContactsDetails() {
         }
         return contactList;
     }    
-            
-    
-    
 }

@@ -19,26 +19,61 @@ import org.primefaces.event.UnselectEvent;
 @RequestScoped
 public class HiberManage {
 
-    protected String firstName;
-    protected String selectedField;
-    private String username;
     SessionHandler sessionhandler;
+    private String username;
     private String addedBy;
+    
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String mobNo;
+    private String comName;
+    private String comLoc;
+    private String designation;
+    private String url;
+    private String notes;
+    
+    protected String searchValue;
+    protected String searchName;
+    protected String searchLocation;
+    protected String searchInterest;
+     
+    
+    List<Contacts> contacts;
+    public List<Contacts> conts;
+    
+    ContactHelper helper;
+    private int recordCount = 20;
+    private Contacts current;
+    private int selectedItemIndex;
+    
+    private List<String> distinctCompanies;
+    private List<String> distinctLocations;
+    private List<String> distinctDesignations;
+    private List<String> distinctInterests;
+    
+    
+    protected List<Contacts> selectedNames;
+    private List<String> selectedCompanies;
+    private List<String> selectedLocations;
+    private List<String> selectedDesignations;
+    private List<String> selectedInterests;
+    private List<String> selectedCities;
+    
+    public boolean interestflag = false;
+    public boolean isContactAddedFlag = false;
+    public int doesEmailExistFlag;
 
+    public static String contactsToSend;
+    
+    // The following are the getter and setter methods for the properties
+    
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getSelectedField() {
-        return selectedField;
-    }
-
-    public void setSelectedField(String selectedField) {
-        this.selectedField = selectedField;
     }
 
     public String getFirstName() {
@@ -48,8 +83,7 @@ public class HiberManage {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-    protected String lastName;
-
+    
     public String getLastName() {
         return lastName;
     }
@@ -57,7 +91,6 @@ public class HiberManage {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    protected String email;
 
     public String getEmail() {
         return email;
@@ -66,7 +99,6 @@ public class HiberManage {
     public void setEmail(String email) {
         this.email = email;
     }
-    private String mobNo;
 
     public String getMobNo() {
         return mobNo;
@@ -75,7 +107,6 @@ public class HiberManage {
     public void setMobNo(String mobNo) {
         this.mobNo = mobNo;
     }
-    private String comName;
 
     public String getComName() {
         return comName;
@@ -84,7 +115,6 @@ public class HiberManage {
     public void setComName(String comName) {
         this.comName = comName;
     }
-    private String comLoc;
 
     public String getComLoc() {
         return comLoc;
@@ -93,7 +123,6 @@ public class HiberManage {
     public void setComLoc(String comLoc) {
         this.comLoc = comLoc;
     }
-    private String designation;
 
     public String getDesignation() {
         return designation;
@@ -102,7 +131,6 @@ public class HiberManage {
     public void setDesignation(String designation) {
         this.designation = designation;
     }
-    private String url;
 
     public String getUrl() {
         return url;
@@ -111,7 +139,6 @@ public class HiberManage {
     public void setUrl(String url) {
         this.url = url;
     }
-    private String notes;
 
     public String getNotes() {
         return notes;
@@ -120,7 +147,6 @@ public class HiberManage {
     public void setNotes(String notes) {
         this.notes = notes;
     }
-    protected String searchValue;
 
     public String getSearchValue() {
         return searchValue;
@@ -129,7 +155,6 @@ public class HiberManage {
     public void setSearchValue(String searchValue) {
         this.searchValue = searchValue;
     }
-    protected String searchName;
 
     public String getSearchName() {
         return searchName;
@@ -138,7 +163,6 @@ public class HiberManage {
     public void setSearchName(String searchName) {
         this.searchName = searchName;
     }
-    protected String searchInterest;
 
     public String getSearchInterest() {
         return searchInterest;
@@ -147,7 +171,6 @@ public class HiberManage {
     public void setSearchInterest(String searchInterest) {
         this.searchInterest = searchInterest;
     }
-    protected String searchLocation;
 
     public String getSearchLocation() {
         return searchLocation;
@@ -156,12 +179,6 @@ public class HiberManage {
     public void setSearchLocation(String searchLocation) {
         this.searchLocation = searchLocation;
     }
-    List<Contacts> contacts;
-    ContactHelper helper;
-    private int recordCount = 20;
-    private Contacts current;
-    private int selectedItemIndex;
-    protected List<String> distinctCompanies;
 
     public List<String> getDistinctCompanies() {
         return distinctCompanies;
@@ -170,7 +187,6 @@ public class HiberManage {
     public void setDistinctCompanies(List<String> distinctCompanies) {
         this.distinctCompanies = distinctCompanies;
     }
-    private List<String> distinctLocations;
 
     public List<String> getDistinctLocations() {
         return distinctLocations;
@@ -179,7 +195,6 @@ public class HiberManage {
     public void setDistinctLocations(List<String> distinctLocations) {
         this.distinctLocations = distinctLocations;
     }
-    private List<String> distinctDesignations;
 
     public List<String> getDistinctDesignations() {
         return distinctDesignations;
@@ -188,7 +203,6 @@ public class HiberManage {
     public void setDistinctDesignations(List<String> distinctDesignations) {
         this.distinctDesignations = distinctDesignations;
     }
-    private List<String> distinctInterests;
 
     public List<String> getDistinctInterests() {
         return distinctInterests;
@@ -197,6 +211,96 @@ public class HiberManage {
     public void setDistinctInterests(List<String> distinctInterests) {
         this.distinctInterests = distinctInterests;
     }
+    
+    public List<Contacts> getConts() {
+        return conts;
+    }
+
+    public void setConts(List<Contacts> conts) {
+        this.conts = conts;
+    }
+
+        public List<Contacts> getSelectedNames() {
+        return selectedNames;
+    }
+
+    public void setSelectedNames(List<Contacts> selectedNames) {
+        this.selectedNames = selectedNames;
+    }
+
+    public List<String> getSelectedCompanies() {
+        return selectedCompanies;
+    }
+
+    public void setSelectedCompanies(List<String> selectedCompanies) {
+        this.selectedCompanies = selectedCompanies;
+    }
+
+    public List<String> getSelectedLocations() {
+        return selectedLocations;
+    }
+
+    public void setSelectedLocations(List<String> selectedLocations) {
+        this.selectedLocations = selectedLocations;
+    }
+    
+    public List<String> getSelectedDesignations() {
+        return selectedDesignations;
+    }
+
+    public void setSelectedDesignations(List<String> selectedDesignations) {
+        this.selectedDesignations = selectedDesignations;
+    }
+
+    public List<String> getSelectedInterests() {
+        return selectedInterests;
+    }
+
+    public void setSelectedInterests(List<String> selectedInterests) {
+        this.selectedInterests = selectedInterests;
+    }
+
+    public List<String> getSelectedCities() {
+        return selectedCities;
+    }
+
+    public void setSelectedCities(List<String> selectedCities) {
+        this.selectedCities = selectedCities;
+    }
+    
+    public boolean isInterestflag() {
+        return interestflag;
+    }
+
+    public void setInterestflag(boolean interestflag) {
+        this.interestflag = interestflag;
+    }
+    
+    public static String getContactsToSend() {
+        return contactsToSend;
+    }
+
+    public void setContactsToSend(String contactsToSend) {
+        this.contactsToSend = contactsToSend;
+    }
+
+    public String getAddedBy() {
+        addedBy = sessionhandler.addedBy;
+        return addedBy;
+    }
+
+    public void setAddedBy(String addedBy) {
+        this.addedBy = addedBy;
+    }
+    
+    public int getdoesEmailExistFlag() {
+        return doesEmailExistFlag;
+    }
+
+    public void setdoesEmailExistFlag(int doesEmailExistFlag) {
+        this.doesEmailExistFlag = doesEmailExistFlag;
+    }
+
 
     public HiberManage() {
         helper = new ContactHelper();
@@ -205,7 +309,6 @@ public class HiberManage {
         distinctDesignations = helper.getDistinctDesignations();
         distinctLocations = helper.getDistinctLocations();
         distinctInterests = helper.getDistinctInterests();
-
     }
 
     public Contacts getSelected() {
@@ -237,93 +340,6 @@ public class HiberManage {
         selectedLocations = null;
     }
 
-    void recreateModel() {
-        contacts = null;
-    }
-
-    // The following methods are used for display of data and navigation of pages
-    public String searchContact() {
-        return "";
-    }
-
-    public String prepareView() {
-
-        return "browse";
-    }
-    //code for autocomplete
-    public List<Contacts> conts;
-
-    public List<Contacts> getConts() {
-        return conts;
-    }
-
-    public void setConts(List<Contacts> conts) {
-        this.conts = conts;
-    }
-    protected List<Contacts> selectedNames;
-
-    public List<Contacts> getSelectedNames() {
-        return selectedNames;
-    }
-
-    public void setSelectedNames(List<Contacts> selectedNames) {
-        this.selectedNames = selectedNames;
-    }
-    protected List<String> selectedCompanies;
-
-    public List<String> getSelectedCompanies() {
-        return selectedCompanies;
-    }
-
-    public void setSelectedCompanies(List<String> selectedCompanies) {
-        this.selectedCompanies = selectedCompanies;
-    }
-    private List<String> selectedLocations;
-
-    public List<String> getSelectedLocations() {
-        return selectedLocations;
-    }
-
-    public void setSelectedLocations(List<String> selectedLocations) {
-        this.selectedLocations = selectedLocations;
-    }
-    protected List<String> selectedDesignations;
-
-    public List<String> getSelectedDesignations() {
-        return selectedDesignations;
-    }
-
-    public void setSelectedDesignations(List<String> selectedDesignations) {
-        this.selectedDesignations = selectedDesignations;
-    }
-    private List<String> selectedInterests;
-
-    public List<String> getSelectedInterests() {
-        return selectedInterests;
-    }
-
-    public void setSelectedInterests(List<String> selectedInterests) {
-        this.selectedInterests = selectedInterests;
-    }
-    private List<String> selectedCities;
-
-    public List<String> getSelectedCities() {
-        return selectedCities;
-    }
-
-    public void setSelectedCities(List<String> selectedCities) {
-        this.selectedCities = selectedCities;
-    }
-    protected List<String> selectedTexts;
-
-    public List<String> getSelectedTexts() {
-        return selectedTexts;
-    }
-
-    public void setSelectedTexts(List<String> selectedTexts) {
-        this.selectedTexts = selectedTexts;
-    }
-
     public List<Contacts> completeNames(String query) {
         List<Contacts> suggestions = new ArrayList<Contacts>();
 
@@ -332,9 +348,7 @@ public class HiberManage {
                 suggestions.add(p);
             }
         }
-
         return suggestions;
-
     }
 
     public List<String> completeCompany(String query) {
@@ -372,14 +386,20 @@ public class HiberManage {
         }
         return suggestions;
     }
-    public boolean interestflag = false;
+    
+    public List<String> completeCities(String query) {
+        List<String> suggestions = new ArrayList<String>();
 
-    public boolean isInterestflag() {
-        return interestflag;
-    }
-
-    public void setInterestflag(boolean interestflag) {
-        this.interestflag = interestflag;
+        for (String p : distinctLocations) {
+            if (p.toLowerCase().contains(query.toLowerCase())) {
+                suggestions.add(p.toLowerCase());
+            }
+        }
+        if (suggestions.isEmpty()) {
+            interestflag = true;
+            suggestions.add(query.toLowerCase());
+        }
+        return suggestions;
     }
 
     public List<String> completeInterestsForAdd(String query) {
@@ -394,7 +414,6 @@ public class HiberManage {
             interestflag = true;
             suggestions.add(query.toLowerCase());
         }
-
         return suggestions;
     }
     
@@ -406,37 +425,12 @@ public class HiberManage {
                 suggestions.add(p.toLowerCase());
             }
         }
-
         return suggestions;
     }
 
-    public List<String> completeCities(String query) {
-        List<String> suggestions = new ArrayList<String>();
-
-        for (String p : distinctLocations) {
-            if (p.toLowerCase().contains(query.toLowerCase())) {
-                suggestions.add(p.toLowerCase());
-            }
-        }
-        if (suggestions.isEmpty()) {
-            interestflag = true;
-            suggestions.add(query.toLowerCase());
-        }
-
-        return suggestions;
-    }
-    public static String contactsToSend;
-
-    public static String getContactsToSend() {
-        return contactsToSend;
-    }
-
-    public void setContactsToSend(String contactsToSend) {
-        this.contactsToSend = contactsToSend;
-    }
-
+    //The following method is used for sending the emails to the mail page
+    
     public String getEmailIds() {
-
         contactsToSend = "";
         for (Contacts c : contacts) {
             if (contacts.indexOf(c) == contacts.size() - 1) {
@@ -445,7 +439,6 @@ public class HiberManage {
                 contactsToSend = contactsToSend + c.getEmail() + ",";
             }
         }
-
         mailBean.setEmails(contactsToSend);
         if (contacts != null) {
             return "Success";
@@ -453,23 +446,12 @@ public class HiberManage {
             return "fail";
         }
     }
-    public boolean flag = false;
-    public int aurekflag;
-
-    public String getAddedBy() {
-        addedBy = sessionhandler.addedBy;
-        return addedBy;
-    }
-
-    public void setAddedBy(String addedBy) {
-        this.addedBy = addedBy;
-    }
-
+    
     public String addContact() {
-
         String temp = helper.addContact(firstName, lastName, email, mobNo, comName, comLoc, designation, url, addedBy, notes, selectedInterests);
+
         if (temp == "success") {
-            flag = true;
+            isContactAddedFlag = true;
         }
 
         firstName = null;
@@ -486,9 +468,9 @@ public class HiberManage {
         return temp;
     }
 
-    public boolean isContactAdded() {
-        return flag;
-    }
+//    public boolean isContactAdded() {
+//        return flag;
+//    }
 
     public void handleUnselect(UnselectEvent event) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Unselected:" + event.getObject().toString(), null);
@@ -499,20 +481,12 @@ public class HiberManage {
     public void validateEmail(String email) {
         System.out.println(email);
         if (helper.doesEmailExist(email)) {
-            aurekflag = 1;
+            doesEmailExistFlag = 1;
             FacesContext.getCurrentInstance().addMessage("myform:email", new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Email Already Exists: Please try again."));
         } else {
-            aurekflag = 0;
+            doesEmailExistFlag = 0;
         }
 
-    }
-
-    public int getAurekflag() {
-        return aurekflag;
-    }
-
-    public void setAurekflag(int aurekflag) {
-        this.aurekflag = aurekflag;
     }
 
     public String getInterestsForUser(String email) {
@@ -524,5 +498,20 @@ public class HiberManage {
     public void showAdddedDetails() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("The contact has been Added."));
+    }
+
+    // The following methods are used for display of data and navigation of pages
+    
+    void recreateModel() {
+        contacts = null;
+    }
+
+    public String searchContact() {
+        return "";
+    }
+
+    public String prepareView() {
+
+        return "browse";
     }
 }

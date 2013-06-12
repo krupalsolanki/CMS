@@ -30,7 +30,6 @@ public class SessionHandler {
         this.addedBy = addedBy;
     }
 
-    
     public String getUsername() {
         return username;
     }
@@ -52,5 +51,4 @@ public class SessionHandler {
         return "success";
     }
     
-   
 }

@@ -58,15 +58,9 @@ public class mailBean {
         return selectedContacts;
     }
 
-    /**
-     * Set the value of selectedContacts
-     *
-     * @param selectedContacts new value of selectedContacts
-     */
     public void setSelectedContacts(List<Contacts> selectedContacts) {
         this.selectedContacts = selectedContacts;
     }
-
     
     public String sendContent() throws MessagingException, UnsupportedEncodingException {
         String htmltext=content.replaceAll("\n","<br/>");
