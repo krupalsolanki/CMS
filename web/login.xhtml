@@ -1,7 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>HandShake</title>
@@ -25,17 +26,21 @@
                 <div id="nav_wrapper">
                     <ul id="nav">
                         <h:form id="myform">
-                        <li><span style="color: black; font-weight: bold">Username <p:inputText id="username" required="true" requiredMessage="Please enter username!" 
+                            
+                                <p:growl id="message" />
+                            
+                        <li>
+                                <span style="color: black; font-weight: bold">Username <p:inputText id="username" required="true" requiredMessage="Please enter username!" 
                                                      value="#{sessionHandler.username}" tabindex="1" maxlength="100">
                                             
                                 </p:inputText><br/></span>
-                                        <h6 align="right"><h:outputLabel value="@compassitesinc.com" /> </h6>
+                                <h6 align="right"><h:outputLabel value="@compassitesinc.com" /></h6>
                         </li>
                         <li><span style="color: black; font-weight: bold">
                             Password <p:password id="password"  tabindex="2" /></span>
                         </li><br/>
                         
-                        <div align="right"><h:commandButton id="loginButton" action="#{sessionHandler.login()}" tabindex="3" value="Login"  />
+                        <div align="right"><p:commandButton id="loginButton" action="#{sessionHandler.login()}" tabindex="3" value="Login" update="message" />
                         </div>
                         </h:form>
                     </ul>

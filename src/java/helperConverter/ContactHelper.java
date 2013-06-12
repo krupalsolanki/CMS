@@ -330,6 +330,15 @@ public class ContactHelper {
         }
         return intlist;
     }
+    
+    public boolean verifyUser(String username) {
+        System.out.println("i am here login helper");
+        
+        if(username.equals("walter")){
+            return true;
+        }
+        return false;
+    }
  
     public void openSession() {
         SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();

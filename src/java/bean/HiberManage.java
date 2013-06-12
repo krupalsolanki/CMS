@@ -66,6 +66,8 @@ public class HiberManage {
 
     public static String contactsToSend;
     
+    private List<String> images;
+    
     // The following are the getter and setter methods for the properties
     
     public String getUsername() {
@@ -507,6 +509,16 @@ public class HiberManage {
         context.addMessage(null, new FacesMessage("The contact has been Added."));
     }
 
+    
+    //code for images in login
+    
+    public List<String> imageSwitch() {
+        images = new ArrayList<String>();
+        
+        images.add("resources/images/handshake1.png");
+        images.add("resources/images/logo.png");
+        return images;
+    }
     // The following methods are used for display of data and navigation of pages
     
     void recreateModel() {
