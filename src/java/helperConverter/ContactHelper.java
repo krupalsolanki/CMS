@@ -234,6 +234,7 @@ public class ContactHelper {
         System.out.println("check1.." + firstName);
         if (firstName != null && lastName != null && email != null && comName != null && comLoc != null && designation != null && addedBy != null) {
             session.save(contact);
+            
             addInterestBridge(selectedInterests);
             System.out.println("save in the database..");
             check = true;

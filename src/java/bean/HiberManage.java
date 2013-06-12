@@ -1,27 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package bean;
 
 import helperConverter.ContactHelper;
 import entities.Contacts;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionContext;
 
 import org.primefaces.event.UnselectEvent;
-
 
 /**
  *
@@ -35,26 +23,16 @@ public class HiberManage {
     protected String selectedField;
     private String username;
     SessionHandler sessionhandler;
+    private String addedBy;
 
-    /**
-     * Get the value of username
-     *
-     * @return the value of username
-     */
     public String getUsername() {
         return username;
     }
 
-    /**
-     * Set the value of username
-     *
-     * @param username new value of username
-     */
     public void setUsername(String username) {
         this.username = username;
     }
 
-    
     public String getSelectedField() {
         return selectedField;
     }
@@ -133,7 +111,6 @@ public class HiberManage {
     public void setUrl(String url) {
         this.url = url;
     }
-   
     private String notes;
 
     public String getNotes() {
@@ -224,12 +201,11 @@ public class HiberManage {
     public HiberManage() {
         helper = new ContactHelper();
         conts = helper.getContacts();
-        
         distinctCompanies = helper.getDistinctCompanies();
         distinctDesignations = helper.getDistinctDesignations();
         distinctLocations = helper.getDistinctLocations();
         distinctInterests = helper.getDistinctInterests();
-        
+
     }
 
     public Contacts getSelected() {
@@ -243,11 +219,8 @@ public class HiberManage {
     public List<Contacts> getContacts() {
         System.out.println("I am in hibermanage");
 
-
         if (selectedLocations != null || selectedNames != null || selectedCompanies != null || selectedDesignations != null || selectedInterests != null) {
-            //System.out.println("I am in hibermanage,selected"+selectedNames.get(0).getFirstName());
             contacts = helper.getUpdatedContacts(selectedNames, selectedCompanies, selectedLocations, selectedDesignations, selectedInterests);
-            //selectedContacts = null;
             System.out.println(contacts);
         } else if (contacts == null) {
             contacts = helper.getContacts();
@@ -280,20 +253,10 @@ public class HiberManage {
     //code for autocomplete
     public List<Contacts> conts;
 
-    /**
-     * Get the value of conts
-     *
-     * @return the value of conts
-     */
     public List<Contacts> getConts() {
         return conts;
     }
 
-    /**
-     * Set the value of conts
-     *
-     * @param conts new value of conts
-     */
     public void setConts(List<Contacts> conts) {
         this.conts = conts;
     }
@@ -303,74 +266,38 @@ public class HiberManage {
         return selectedNames;
     }
 
-    /**
-     * Set the value of selectedContacts
-     *
-     * @param selectedContacts new value of selectedContacts
-     */
     public void setSelectedNames(List<Contacts> selectedNames) {
         this.selectedNames = selectedNames;
     }
     protected List<String> selectedCompanies;
 
-    /**
-     * Get the value of selectedCompanies
-     *
-     * @return the value of selectedCompanies
-     */
     public List<String> getSelectedCompanies() {
         return selectedCompanies;
     }
 
-    /**
-     * Set the value of selectedCompanies
-     *
-     * @param selectedCompanies new value of selectedCompanies
-     */
     public void setSelectedCompanies(List<String> selectedCompanies) {
         this.selectedCompanies = selectedCompanies;
     }
     private List<String> selectedLocations;
 
-    /**
-     * Get the value of selectedLocations
-     *
-     * @return the value of selectedLocations
-     */
     public List<String> getSelectedLocations() {
         return selectedLocations;
     }
 
-    /**
-     * Set the value of selectedLocations
-     *
-     * @param selectedLocations new value of selectedLocations
-     */
     public void setSelectedLocations(List<String> selectedLocations) {
         this.selectedLocations = selectedLocations;
     }
     protected List<String> selectedDesignations;
 
-    /**
-     * Get the value of selectedDesignations
-     *
-     *
-     * @return the value of selectedDesignations
-     */
     public List<String> getSelectedDesignations() {
         return selectedDesignations;
     }
 
-    /**
-     * Set the value of selectedDesignations
-     *
-     * @param selectedDesignations new value of selectedDesignations
-     */
     public void setSelectedDesignations(List<String> selectedDesignations) {
         this.selectedDesignations = selectedDesignations;
     }
     private List<String> selectedInterests;
-    
+
     public List<String> getSelectedInterests() {
         return selectedInterests;
     }
@@ -378,7 +305,6 @@ public class HiberManage {
     public void setSelectedInterests(List<String> selectedInterests) {
         this.selectedInterests = selectedInterests;
     }
-    
     private List<String> selectedCities;
 
     public List<String> getSelectedCities() {
@@ -388,24 +314,12 @@ public class HiberManage {
     public void setSelectedCities(List<String> selectedCities) {
         this.selectedCities = selectedCities;
     }
-    
     protected List<String> selectedTexts;
 
-    
-    /**
-     * Get the value of selectedText
-     *
-     * @return the value of selectedTexts
-     */
     public List<String> getSelectedTexts() {
         return selectedTexts;
     }
 
-    /**
-     * Set the value of selectedTexts
-     *
-     * @param selectedTexts new value of selectedTexts
-     */
     public void setSelectedTexts(List<String> selectedTexts) {
         this.selectedTexts = selectedTexts;
     }
@@ -468,7 +382,7 @@ public class HiberManage {
         this.interestflag = interestflag;
     }
 
-    public List<String> completeInterests(String query) {
+    public List<String> completeInterestsForAdd(String query) {
         List<String> suggestions = new ArrayList<String>();
 
         for (String p : distinctInterests) {
@@ -484,6 +398,18 @@ public class HiberManage {
         return suggestions;
     }
     
+    public List<String> completeInterestsForSearch(String query) {
+        List<String> suggestions = new ArrayList<String>();
+
+        for (String p : distinctInterests) {
+            if (p.toLowerCase().contains(query.toLowerCase())) {
+                suggestions.add(p.toLowerCase());
+            }
+        }
+
+        return suggestions;
+    }
+
     public List<String> completeCities(String query) {
         List<String> suggestions = new ArrayList<String>();
 
@@ -499,23 +425,12 @@ public class HiberManage {
 
         return suggestions;
     }
-    
     public static String contactsToSend;
 
-    /**
-     * Get the value of contactsToSend
-     *
-     * @return the value of contactsToSend
-     */
     public static String getContactsToSend() {
         return contactsToSend;
     }
 
-    /**
-     * Set the value of contactsToSend
-     *
-     * @param contactsToSend new value of contactsToSend
-     */
     public void setContactsToSend(String contactsToSend) {
         this.contactsToSend = contactsToSend;
     }
@@ -523,8 +438,6 @@ public class HiberManage {
     public String getEmailIds() {
 
         contactsToSend = "";
-
-
         for (Contacts c : contacts) {
             if (contacts.indexOf(c) == contacts.size() - 1) {
                 contactsToSend = contactsToSend + c.getEmail();
@@ -543,10 +456,18 @@ public class HiberManage {
     public boolean flag = false;
     public int aurekflag;
 
-    
+    public String getAddedBy() {
+        addedBy = sessionhandler.addedBy;
+        return addedBy;
+    }
+
+    public void setAddedBy(String addedBy) {
+        this.addedBy = addedBy;
+    }
+
     public String addContact() {
 
-        String temp = helper.addContact(firstName, lastName, email, mobNo, comName, comLoc, designation, url, sessionhandler.addedBy, notes, selectedInterests);
+        String temp = helper.addContact(firstName, lastName, email, mobNo, comName, comLoc, designation, url, addedBy, notes, selectedInterests);
         if (temp == "success") {
             flag = true;
         }
@@ -571,13 +492,11 @@ public class HiberManage {
 
     public void handleUnselect(UnselectEvent event) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Unselected:" + event.getObject().toString(), null);
-
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
     // code for email validation against db
     public void validateEmail(String email) {
-
         System.out.println(email);
         if (helper.doesEmailExist(email)) {
             aurekflag = 1;
@@ -601,6 +520,9 @@ public class HiberManage {
         return helper.getInterestsForUser(email);
 
     }
-    
-    
+
+    public void showAdddedDetails() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("The contact has been Added."));
+    }
 }

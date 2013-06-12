@@ -8,7 +8,6 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 template="./MainTemplate.xhtml">
 
-
     <ui:define name="menu">
         <div id="nav_wrapper">
             <ul id="nav">
@@ -23,21 +22,11 @@
     <ui:define name="content">
 
         <h:form id="myform">
-            <img src="resources/images/conDetail.png" style="margin-left: -10px"></img>
+            <img src="resources/images/conDetail.png" style="margin-left: -5px"></img>
             <h4>
                 <table cellpadding="5">
+                    <p:growl id="msg"/>
                     <tr>
-                        <c:if test="#{hiberManage.isContactAdded()}">
-                            <h:outputLabel value="The contact has been added." style="color: red; font-size:25px; font-style: oblique; margin-left: 340px;"/>
-                        </c:if>
-                    </tr>
-                    <!--                    <tr>
-                                            <td colspan="4"><h2>Contact Detail</h2></td>
-                    
-                                        </tr>-->
-
-                    <tr>
-
                         <td>First Name<h:outputText value="*" style="color: red;" /></td>
                         <td><p:inputText id="fname" tabindex="1" required="true" requiredMessage="Please enter First Name!" validatorMessage="Alphabets only!"
                                          value="#{hiberManage.firstName}" maxlength="30">
@@ -46,7 +35,6 @@
                             <br/><h3> <p:message for="fname" /></h3>
                         </td>
 
-
                         <td>LinkedIn URL</td>
                         <td>
                             <p:inputText id="linkedin" tabindex="8"
@@ -54,9 +42,7 @@
                                 <f:validateRegex pattern="^$|^(http://)?[A-Za-z]*\.linkedin.com\/[\.A-Za-z0-9\-\/]*$"/>
                             </p:inputText>
                             <br/><h3><p:message for="linkedin" /></h3></td>
-
                     </tr>
-
                     <tr>
                         <td>Last Name<h:outputText value="*" style="color: red;" /></td>
                         <td><p:inputText id="lname" tabindex="2" required="true" requiredMessage="Please enter Last Name!"
@@ -65,14 +51,11 @@
                             </p:inputText>
                             <br/><h3><p:message for="lname" /></h3></td>
 
-
                         <td>Area of Interest</td>
-                        <td><p:autoComplete value="#{hiberManage.selectedInterests}" completeMethod="#{hiberManage.completeInterests}"  
+                        <td><p:autoComplete value="#{hiberManage.selectedInterests}" completeMethod="#{hiberManage.completeInterestsForAdd}"  
                                             multiple="true" tabindex="9" >  
                             </p:autoComplete></td>
-
                     </tr>
-
                     <tr>
                         <td>Email<h:outputText value="*" style="color: red;" /></td>
                         <td>
@@ -90,7 +73,6 @@
                             <!--<p:watermark for="email" value="Email Address *" />-->
                         </td>
 
-
                         <td rowspan="3" style="vertical-align: top;">Notes</td>
                         <td rowspan="3"><p class="mailContent">
                                 <p:inputTextarea tabindex="10" value="#{hiberManage.notes}" counter="counter" maxlength="150"       
@@ -99,8 +81,6 @@
                         </td>
 
                     </tr>
-
-
                     <tr>
                         <td><h:outputText value="Contact No. " />  </td>
                         <td><p:inputMask id="contactNo" tabindex="4" value="#{hiberManage.mobNo}" 
@@ -109,38 +89,25 @@
                             <br/><h3><p:message for="contactNo" /></h3>
                         </td>
                     </tr>   
-
                     <tr>
                         <td>Company Name<h:outputText value="*" style="color: red;" /></td>
                         <td><p:inputText id="comName" tabindex="5" required="true" requiredMessage="Please enter Company name!"
                                          value="#{hiberManage.comName}" maxlength="100">
-
                             </p:inputText>
                             <br/><h3><p:message for="comName" /></h3>
                         </td>
-
                     </tr>
-
                     <tr>
                         <td>Company Location<h:outputText value="*" style="color: red;" /></td>
-                        <!--<td>-->
-                            <!--                            <p:inputText id="comLoc" required="true" requiredMessage="Please enter Company location!"
-                                                                     tabindex="6" value="#{hiberManage.comLoc}" validatorMessage="Alphabets only!" maxlength="30">
-                                                            <f:validateRegex pattern="[ a-zA-Z]+"/>
-                                                        </p:inputText>-->
-                            <!--</td>-->
-                            <td><p:autoComplete value="#{hiberManage.selectedCities}" completeMethod="#{hiberManage.completeCities}"  
-                                                multiple="false" tabindex="6">  
-                                    <br/><h3><p:message for="comLoc" /></h3>
+                        <td><p:autoComplete value="#{hiberManage.comLoc}" completeMethod="#{hiberManage.completeCities}"  
+                                            multiple="false" tabindex="6">  
+                                <br/><h3><p:message for="comLoc" /></h3>
 
-                                </p:autoComplete></td>
-                        
+                            </p:autoComplete></td>
                         <td>Contact Added By<h:outputText value="*" style="color: red;" /></td>
                         <td><p:inputText id="addedBy" tabindex="11" value="#{sessionHandler.addedBy}" ></p:inputText>
                             <br/><h3><p:message for="addedBy" /></h3></td>
-
                     </tr>
-
                     <tr>
                         <td>Designation<h:outputText value="*" style="color: red;" /></td>
                         <td><p:inputText id="desgn" tabindex="7" required="true" requiredMessage="Please enter Designation!"
@@ -148,25 +115,21 @@
                             </p:inputText>
                             <br/><h3><p:message for="desgn" /></h3>
                         </td>
-
                     </tr>
-
                     <tr>
 
                         <td colspan="2">
                             <p:commandButton id="addButton" value="Add" disabled="#{hiberManage.aurekflag!=0}" style="margin:20px; width: 100px;height:40px "
-                                             action="#{hiberManage.addContact()}" ajax="false" onclick="textbox.show()" tabindex="12"/>
-
+                                             action="#{hiberManage.addContact()}" ajax="false" onclick="textbox.show()" tabindex="12" update="msg" actionListener="#{hiberManage.showAdddedDetails()}">
+                                <f:setPropertyActionListener value="#{sessionHandler.addedBy}" 
+                                                             target="#{hiberManage.addedBy}"/>
+                            </p:commandButton>
                             <p:commandButton value="Cancel" style="margin:20px; width: 100px;height:40px "
                                              type="reset" ajax="false" tabindex="13"/>
-                            <h:outputText id="msg" value="#{buttonBean.text}"/>  
                         </td>
                     </tr>
                 </table>
             </h4>
         </h:form>
-
-
     </ui:define>
-
 </ui:composition>
