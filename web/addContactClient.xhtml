@@ -25,14 +25,16 @@
             <img src="resources/images/conDetail.png" style="margin-left: -5px"></img>
             <h4>
                 <table cellpadding="5">
-                    <p:growl id="msg"/>
+                    <c:if test="#{hiberManage.isContactAddedFlag}">
+                        <p:growl id="msg"/>
+                    </c:if>
                     <tr>
                         <td>First Name<h:outputText value="*" style="color: red;" /></td>
                         <td><p:inputText id="fname" tabindex="1" required="true" requiredMessage="Please enter First Name!" validatorMessage="Alphabets only!"
                                          value="#{hiberManage.firstName}" maxlength="30">
                                 <f:validateRegex pattern="[ a-zA-Z]+"/>
                             </p:inputText>
-                            <br/><h3> <p:message for="fname" /></h3>
+                            <br/><p:message for="fname" />
                         </td>
 
                         <td>LinkedIn URL</td>
@@ -49,7 +51,7 @@
                                          value="#{hiberManage.lastName}" validatorMessage="Alphabets only!" maxlength="30">
                                 <f:validateRegex pattern="[ a-zA-Z]+"/>
                             </p:inputText>
-                            <br/><h3><p:message for="lname" /></h3></td>
+                            <br/><p:message for="lname" /></td>
 
                         <td>Area of Interest</td>
                         <td><p:autoComplete value="#{hiberManage.selectedInterests}" completeMethod="#{hiberManage.completeInterestsForAdd}"  
@@ -69,7 +71,7 @@
                                 <f:validateRegex
                                     pattern="^[A-Za-z0-9][A-Za-z0-9_-]+(\.[_A-Za-z0-9-]+)*[A-Za-z0-9]@[A-Za-z0-9]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                             </p:inputText>
-                            <br/><h3><h:message id="emailmessage" for="email" /> </h3>
+                            <br/><h:message id="emailmessage" for="email" />
                             <!--<p:watermark for="email" value="Email Address *" />-->
                         </td>
 
@@ -86,7 +88,7 @@
                         <td><p:inputMask id="contactNo" tabindex="4" value="#{hiberManage.mobNo}" 
                                          mask="(999)-9999999999"/> 
                             <p:watermark for="contactNo" value="(ISDCode)-(10DigitNo)" />
-                            <br/><h3><p:message for="contactNo" /></h3>
+                            <br/><p:message for="contactNo" />
                         </td>
                     </tr>   
                     <tr>
@@ -94,7 +96,7 @@
                         <td><p:inputText id="comName" tabindex="5" required="true" requiredMessage="Please enter Company name!"
                                          value="#{hiberManage.comName}" maxlength="100">
                             </p:inputText>
-                            <br/><h3><p:message for="comName" /></h3>
+                            <br/><p:message for="comName" />
                         </td>
                     </tr>
                     <tr>
@@ -106,20 +108,20 @@
                             </p:autoComplete></td>
                         <td>Contact Added By<h:outputText value="*" style="color: red;" /></td>
                         <td><p:inputText id="addedBy" tabindex="11" value="#{sessionHandler.addedBy}" ></p:inputText>
-                            <br/><h3><p:message for="addedBy" /></h3></td>
+                            <br/><p:message for="addedBy" /></td>
                     </tr>
                     <tr>
                         <td>Designation<h:outputText value="*" style="color: red;" /></td>
                         <td><p:inputText id="desgn" tabindex="7" required="true" requiredMessage="Please enter Designation!"
                                          value="#{hiberManage.designation}" maxlength="120">
                             </p:inputText>
-                            <br/><h3><p:message for="desgn" /></h3>
+                            <br/><p:message for="desgn" />
                         </td>
                     </tr>
                     <tr>
 
                         <td colspan="2">
-                            <p:commandButton id="addButton" value="Add" disabled="#{hiberManage.aurekflag!=0}" style="margin:20px; width: 100px;height:40px "
+                            <p:commandButton id="addButton" value="Add" disabled="#{hiberManage.doesEmailExistFlag!=0}" style="margin:20px; width: 100px;height:40px "
                                              action="#{hiberManage.addContact()}" ajax="false" onclick="textbox.show()" tabindex="12" update="msg" actionListener="#{hiberManage.showAdddedDetails()}">
                                 <f:setPropertyActionListener value="#{sessionHandler.addedBy}" 
                                                              target="#{hiberManage.addedBy}"/>

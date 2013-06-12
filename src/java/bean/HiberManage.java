@@ -301,7 +301,14 @@ public class HiberManage {
         this.doesEmailExistFlag = doesEmailExistFlag;
     }
 
+    public boolean getIsContactAddedFlag() {
+        return isContactAddedFlag;
+    }
 
+    public void setIsContactAddedFlag(boolean isContactAddedFlag) {
+        this.isContactAddedFlag = isContactAddedFlag;
+    }
+        
     public HiberManage() {
         helper = new ContactHelper();
         conts = helper.getContacts();
