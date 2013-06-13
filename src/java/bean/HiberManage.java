@@ -41,6 +41,7 @@ public class HiberManage {
     
     List<Contacts> contacts;
     public List<Contacts> conts;
+    private Contacts editContact = new Contacts();
     
     ContactHelper helper;
     private int recordCount = 20;
@@ -295,11 +296,11 @@ public class HiberManage {
         this.addedBy = addedBy;
     }
     
-    public int getdoesEmailExistFlag() {
+    public int getDoesEmailExistFlag() {
         return doesEmailExistFlag;
     }
 
-    public void setdoesEmailExistFlag(int doesEmailExistFlag) {
+    public void setDoesEmailExistFlag(int doesEmailExistFlag) {
         this.doesEmailExistFlag = doesEmailExistFlag;
     }
 
@@ -309,6 +310,15 @@ public class HiberManage {
 
     public void setIsContactAddedFlag(boolean isContactAddedFlag) {
         this.isContactAddedFlag = isContactAddedFlag;
+    }
+    
+    public Contacts getEditContact() {
+        
+        return editContact;
+    }
+
+    public void setEditContact(Contacts editContact) {
+        this.editContact = editContact;
     }
         
     public HiberManage() {

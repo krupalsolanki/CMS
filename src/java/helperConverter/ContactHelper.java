@@ -326,7 +326,7 @@ public class ContactHelper {
         List<String> interestList = q.list();
         String intlist = "";
         for (int i = 0; i < interestList.size(); i++) {
-            intlist = intlist + interestList.get(0) + " ";
+            intlist = intlist + interestList.get(i) + " | ";
         }
         return intlist;
     }

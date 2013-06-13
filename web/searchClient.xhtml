@@ -12,6 +12,7 @@
         <div id="nav_wrapper">
             <ul id="nav">
                 <li><a href="index.xhtml">Home</a></li>
+                <li><a href="manageContact.xhtml">Manage Contact</a></li>
                 <li><a href="addContactClient.xhtml">Add Contact</a></li>
                 <li class="current_page_item"><a href="searchClient.xhtml">Search</a></li>
                 <li><a href="mailClient.xhtml">Mail</a></li>
@@ -88,6 +89,15 @@
                 </p:column>
                 <p:column headerText="Designation">
                     <h:outputText value="#{item.designation}"/>
+                </p:column>
+                
+                <p:column headerText="Interests">
+                    <h:outputLink id="lnk" value="#">  
+                        <h:outputText value="More Details" />  
+                    </h:outputLink>  
+                    <p:tooltip for="lnk">  
+                        <h:outputText value="#{hiberManage.getInterestsForUser(item.email)}" />  
+                    </p:tooltip>
                 </p:column>
 
             </p:dataTable>

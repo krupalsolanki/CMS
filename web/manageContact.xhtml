@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="./MainTemplate.xhtml">
+
+    <ui:define name="menu">
+        <div id="nav_wrapper">
+            <ul id="nav">
+                <li><a href="index.xhtml">Home</a></li>
+                <li class="current_page_item"><a href="manageContact.xhtml">Manage Contact</a></li>
+                <li><a href="addContactClient.xhtml">Add Contact</a></li>
+                <li><a href="searchClient.xhtml">Search</a></li>
+                <li><a href="mailClient.xhtml">Mail</a></li>
+                <li><a href="aboutusClient.xhtml">About us</a></li>
+            </ul>
+        </div>
+    </ui:define>
+    <ui:define name="content">
+
+        <h:form id="form">
+            <p:growl id="growl" /> 
+            <img src="resources/images/search_detail.png" style="margin-left: -5px"></img>
+
+            <p:separator style="margin-top:20px"/> 
+            <p:dataTable id="display" value="#{hiberManage.contacts}" paginator="true" rows="10" var="item" style="border:solid 1px">
+                
+                                
+                <p:column headerText="First Name">
+                    <h:outputText value="#{item.firstName}"/>
+                </p:column>
+                <p:column headerText="Last Name">
+                    <h:outputText value="#{item.lastName}"/>
+                </p:column>
+                <p:column headerText="Company Name">
+                    <h:outputText value="#{item.companyName}"/>
+                </p:column>
+                <p:column headerText="Company Location">
+                    <h:outputText value="#{item.companyLoc}"/>
+                </p:column>
+                <p:column headerText="Phone">
+                    <h:outputText value="#{item.phoneNo}"/>
+                </p:column>
+                <p:column headerText="Email">
+                    <h:outputText value="#{item.email}"/>
+                </p:column>
+                <p:column headerText="Designation">
+                    <h:outputText value="#{item.designation}"/>
+                    
+                </p:column>
+                <p:column style="width:4%">  
+                    <p:commandButton id="selectButton" update=":form:display_contact" oncomplete="contactDialog.show()" icon="ui-icon-pencil" title="View">  
+                        <f:setPropertyActionListener value="#{item}" target="#{hiberManage.editContact}" />  
+                    </p:commandButton>  
+                </p:column>  
+
+            </p:dataTable>
+            <p:dialog header="Edit Contact" widgetVar="contactDialog" resizable="false" id="carDlg"  
+                showEffect="fade" hideEffect="explode" modal="true">  
+  
+                <h:panelGrid id="display_contact" columns="2" cellpadding="4" style="margin:0 auto;">  
+
+                    <h:outputText value="Click on the values to edit!" style="font-size: 18px;color: red"/><br/><br/>
+                    
+                    <h:outputLabel for="inplaceFirstName" value="First Name :" />
+                    <p:inplace id="inplaceFirstName">
+                        <p:inputText value="#{hiberManage.editContact.firstName}" />
+                    </p:inplace>
+                    
+                    <h:outputLabel for="inplaceLastName" value="Last Name :" />
+                    <p:inplace id="inplaceLastName">
+                        <p:inputText value="#{hiberManage.editContact.lastName}" />
+                    </p:inplace>
+                    
+                    <h:outputLabel for="inplaceComapanyName" value="Comapany Name :" />
+                    <p:inplace id="inplaceComapanyName">
+                        <p:inputText value="#{hiberManage.editContact.companyName}" />
+                    </p:inplace>
+                    
+                    <h:outputLabel for="inplaceComapanyLocation" value="Comapany Location :" />
+                    <p:inplace id="inplaceComapanyLocation">
+                        <p:inputText value="#{hiberManage.editContact.companyLoc}" />
+                    </p:inplace>
+                    
+                    <h:outputLabel for="inplacePhoneNo" value="Phone No :" />
+                    <p:inplace id="inplacePhoneNo">
+                        <p:inputMask id="contactNo" tabindex="4" value="#{hiberManage.editContact.phoneNo}" 
+                                         mask="(999)-9999999999"/>
+                    </p:inplace>
+                    
+                    <h:outputLabel for="inplaceDesignation" value="Designation :" />
+                    <p:inplace id="inplaceDesignation">
+                        <p:inputText value="#{hiberManage.editContact.designation}" />
+                    </p:inplace>
+
+                    <p:commandButton value="Update Contact" /> 
+                </h:panelGrid>  
+  
+            </p:dialog>  
+            
+        </h:form>
+
+
+    </ui:define>
+
+</ui:composition>
