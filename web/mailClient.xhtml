@@ -21,7 +21,7 @@
     </ui:define>
     <ui:define name="content">
         <h:form>
-            <img src="resources/images/maildetail.png" style="margin-left: -10px"></img>
+            <img src="resources/images/maildetail.png" style="margin-left: -5px"></img>
             <h4>
                 <table>
 
@@ -50,7 +50,9 @@
                                              value="Send" widgetVar="sendButton" style="width: 100px;height: 40px"/>
 
                             <p:commandButton action="#{mailBean.can()}" value="Cancel" style="width: 100px;height: 40px"/>
-
+                            <p:notificationBar position="top" effect="slide" widgetVar="bar" styleClass="top" >
+                                <h:outputText value="Please wait while your mail is being sent" style="color:#FFCC00; font-size: 40px;" />
+                            </p:notificationBar>
                         </td>
                     </tr>
                 </table>

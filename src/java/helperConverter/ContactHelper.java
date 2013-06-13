@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -24,7 +23,7 @@ public class ContactHelper {
 
     String email = null;
     Session session = null;
-    protected EntityManager em;
+    //protected EntityManager em;
     public static List<Contacts> cont;
 
     public ContactHelper() {
@@ -234,6 +233,7 @@ public class ContactHelper {
         System.out.println("check1.." + firstName);
         if (firstName != null && lastName != null && email != null && comName != null && comLoc != null && designation != null && addedBy != null) {
             session.save(contact);
+            
             addInterestBridge(selectedInterests);
             System.out.println("save in the database..");
             check = true;
@@ -330,7 +330,7 @@ public class ContactHelper {
         }
         return intlist;
     }
-
+ 
     public void openSession() {
         SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
         session = sessionFactory.openSession();

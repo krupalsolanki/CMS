@@ -73,15 +73,10 @@ public class mailBean implements Serializable {
         return selectedContacts;
     }
 
-    /**
-     * Set the value of selectedContacts
-     *
-     * @param selectedContacts new value of selectedContacts
-     */
     public void setSelectedContacts(List<Contacts> selectedContacts) {
         this.selectedContacts = selectedContacts;
     }
-
+    
     public String sendContent() throws MessagingException, UnsupportedEncodingException {
 
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mail Sent", "Your Mail has been sent.");

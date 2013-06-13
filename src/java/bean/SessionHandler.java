@@ -20,7 +20,7 @@ public class SessionHandler {
 
     private String username;
     protected String addedBy;
-
+    HiberManage hiber;
     
     public String getAddedBy() {
         return addedBy;
@@ -30,7 +30,6 @@ public class SessionHandler {
         this.addedBy = addedBy;
     }
 
-    
     public String getUsername() {
         return username;
     }
@@ -38,9 +37,7 @@ public class SessionHandler {
     public void setUsername(String username) {
         this.username = username;
     }
-
-    
-    
+   
     public SessionHandler() {
     }
     
@@ -50,7 +47,6 @@ public class SessionHandler {
         Map<String, Object> sessionMap = externalContext.getSessionMap();
         sessionMap.put("username", username);
         addedBy = (String) sessionMap.get("username");
-        
         System.out.println("Session :" + addedBy);
         return "success";
     }
