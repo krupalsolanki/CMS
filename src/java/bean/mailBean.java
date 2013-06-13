@@ -5,6 +5,7 @@
 package bean;
 
 import entities.Contacts;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -13,7 +14,6 @@ import javax.mail.MessagingException;
 import mail.SendEmail;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import org.primefaces.component.growl.Growl;
 
 /**
  *
@@ -21,8 +21,21 @@ import org.primefaces.component.growl.Growl;
  */
 @ManagedBean(name = "mailBean")
 @RequestScoped
-public class mailBean {
+public class mailBean implements Serializable {
 
+    /**
+     * @return the count
+     */
+    public static int getCount() {
+        return count;
+    }
+
+    /**
+     * @param aCount the count to set
+     */
+    public static void setCount(int aCount) {
+        count = aCount;
+    }
     public String content;
     public static String to;
     public String subject;
@@ -40,11 +53,12 @@ public class mailBean {
     }
 
     public String getTo() {
+        count=0;
         return to;
     }
 
     public void setTo(String to) {
-        this.to = to;
+        mailBean.to = to;
     }
 
     public String getSubject() {
@@ -69,26 +83,26 @@ public class mailBean {
     }
 
     public String sendContent() throws MessagingException, UnsupportedEncodingException {
-        
-//         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Sending Mail!", "Please Wait!"));  
-        
-//        FacesContext context = FacesContext.getCurrentInstance();  
-//        context.addMessage(null, new FacesMessage("Successful", "Your mail has beent sent.")); 
+
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mail Sent", "Your Mail has been sent.");
         FacesContext.getCurrentInstance().addMessage(null, message);
-FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+
         String htmltext = content.replaceAll("\n", "<br/>");
         SendEmail se = new SendEmail(subject);
         String s[] = to.split(",");
 
         for (int i = 0; i < s.length; i++) {
             System.out.println(s[i]);
-          //  se.composeSend(s[i], htmltext);
+           se.composeSend(s[i], htmltext);
         }
 
         sentFlag = true;
         return "success";
     }
+
+    public void onComplete() {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mail Sent", "Your Mail has been sent."));
+ }
 
     public static void setEmails(String searched) {
         to = searched;
@@ -102,5 +116,38 @@ FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessage
 
     public boolean isMailSent() {
         return sentFlag;
+    }
+    /**
+     * @return the progress
+     */
+    private Integer progress;
+    private static int count;
+
+    public Integer getProgress() {
+        
+        if (count == 0) {
+            progress = 0;
+            count++;
+        } else {
+            progress = count;
+            
+            progress = progress + (int) (Math.random() * 35);
+            count = progress;
+            
+            if (progress >=  100) {
+                progress = 100;
+                count = 0;
+                
+            }
+
+        }
+        return progress;
+    }
+
+    /**
+     * @param progress the progress to set
+     */
+    public void setProgress(Integer progress) {
+        this.progress = progress;
     }
 }

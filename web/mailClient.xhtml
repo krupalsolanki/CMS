@@ -45,28 +45,32 @@
                             <p:growl id="messages" globalOnly="true" /> 
 
                             <p:commandButton id="showDialogButton" onclick="confirmation.show();" type="button" 
-                                             value="Send" style="width: 100px;height: 40px"/>
+                                             value="Send" widgetVar="sendButton" style="width: 100px;height: 40px"/>
 
                             <p:commandButton action="#{mailBean.can()}" value="Cancel" style="width: 100px;height: 40px"/>
-                            <p:notificationBar position="top" effect="slide" widgetVar="bar" styleClass="top">  
-                                <h:outputText value="Please Wait! Your Mail is being Sent" style="color:#FFCC00;font-size:36px;" />  
-                            </p:notificationBar>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
+
                         </td>
                     </tr>
                 </table>
             </h4>
+            
             <p:confirmDialog id="confirmDialog" message="Are you sure you want to send Mail?"  
                              header="Initiating mail process" severity="alert" widgetVar="confirmation">  
 
-                <p:commandButton id="confirm" value="Yes" update="messages" onclick="confirmation.hide();
-                                    bar.show();" action="#{mailBean.sendContent()}" />  
+                <p:commandButton id="confirm" value="Yes" update="messages" onclick= "confirmation.hide(); bar.show();
+                                    sendButton.disable();
+                                    pbAjax.start();" oncomplete="pbAjax.cancel();" action="#{mailBean.sendContent()}" />  
                 <p:commandButton id="decline" value="No" onclick="confirmation.hide();" type="button" />   
 
+
             </p:confirmDialog> 
+            <p:notificationBar position="top" effect="slide" widgetVar="bar" styleClass="top">  
+                <h:outputText value="Please Wait! Your Mail is being Sent" style="color:#FFCC00; margin: 50px; font-size:36px;" />  
+            </p:notificationBar>
+            <p:progressBar widgetVar="pbAjax" ajax="true"  value="#{mailBean.progress}" labelTemplate="{value}%" styleClass="animated">  
+                <p:ajax event="complete" listener="#{mailBean.onComplete()}" update="messages" />  
+            </p:progressBar>
+
         </h:form>
 
     </ui:define>
