@@ -14,6 +14,9 @@ import javax.mail.MessagingException;
 import mail.SendEmail;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -36,11 +39,24 @@ public class mailBean implements Serializable {
     public static void setCount(int aCount) {
         count = aCount;
     }
+    Session session = null;
     public String content;
     public static String to;
     public String subject;
     private List<Contacts> selectedContacts;
 
+    public void openSession() {
+        SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+        System.out.println("opening session");
+    }
+
+    public void closeSession() {
+        session.getTransaction().commit();
+        session.flush();
+        session.close();
+    }
     public mailBean() {
     }
 
@@ -76,19 +92,27 @@ public class mailBean implements Serializable {
     public void setSelectedContacts(List<Contacts> selectedContacts) {
         this.selectedContacts = selectedContacts;
     }
-    
+    List<String> contactList = null;
     public String sendContent() throws MessagingException, UnsupportedEncodingException {
-
+        openSession();
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mail Sent", "Your Mail has been sent.");
         FacesContext.getCurrentInstance().addMessage(null, message);
 
         String htmltext = content.replaceAll("\n", "<br/>");
+        
+     
         SendEmail se = new SendEmail(subject);
         String s[] = to.split(",");
+        
 
         for (int i = 0; i < s.length; i++) {
             System.out.println(s[i]);
-           se.composeSend(s[i], htmltext);
+            Query q = session.createQuery("select c.firstName from Contacts c where c.email ='"+s[i]+"'");
+            contactList = (List<String>) q.list();
+            System.out.println("contact list size :"+contactList.size());
+            String firstName = contactList.get(0);
+            
+           se.composeSend(s[i], htmltext, firstName);
         }
 
         sentFlag = true;

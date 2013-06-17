@@ -22,6 +22,13 @@
     </ui:define>
     <ui:define name="content">
         <h:form>
+            <div style="float: right; width: 200px;" class="mailManual">
+                <p>Shortcuts for mailing</p>
+                <li>
+                    Email : ##email##
+                </li>
+                <li>First Name : ##fName##</li>
+            </div>
             <img src="resources/images/maildetail.png" style="margin-left: -5px"></img>
             <h4>
                 <table>
@@ -38,7 +45,7 @@
                     <tr>
                         <td style="padding-top: 15px; vertical-align: top" >Body :</td> 
                         <td><p:editor id="editor" value="#{mailBean.content}" width="800"/>
-                            
+
                         </td>
                     </tr>
                     <tr>
@@ -64,7 +71,8 @@
 
                 <p:commandButton id="confirm" value="Yes" update="messages" onclick= "confirmation.hide();
                                     sendButton.disable();
-                                    pbAjax.start(); dlg.show();" oncomplete="pbAjax.cancel();" action="#{mailBean.sendContent()}" />  
+                                    pbAjax.start();
+                                    dlg.show();" oncomplete="pbAjax.cancel();" action="#{mailBean.sendContent()}" />  
                 <p:commandButton id="decline" value="No" onclick="confirmation.hide();" type="button" />   
 
 
