@@ -92,7 +92,7 @@ public class mailBean implements Serializable {
     public void setSelectedContacts(List<Contacts> selectedContacts) {
         this.selectedContacts = selectedContacts;
     }
-    List<String> contactList = null;
+    List<Contacts> contactList = null;
     public String sendContent() throws MessagingException, UnsupportedEncodingException {
         openSession();
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mail Sent", "Your Mail has been sent.");
@@ -107,12 +107,15 @@ public class mailBean implements Serializable {
 
         for (int i = 0; i < s.length; i++) {
             System.out.println(s[i]);
-            Query q = session.createQuery("select c.firstName from Contacts c where c.email ='"+s[i]+"'");
-            contactList = (List<String>) q.list();
+            Query q = session.createQuery("select c from Contacts c where c.email ='"+s[i]+"'");
+            contactList = (List<Contacts>) q.list();
             System.out.println("contact list size :"+contactList.size());
-            String firstName = contactList.get(0);
+            String firstName = contactList.get(0).getFirstName();
+            String lastName = contactList.get(0).getLastName();
+            String notes = contactList.get(0).getNotes();
             
-           se.composeSend(s[i], htmltext, firstName);
+            
+           se.composeSend(s[i], htmltext, contactList);
         }
 
         sentFlag = true;

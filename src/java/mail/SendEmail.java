@@ -2,7 +2,9 @@
 //Satyam Singh(satyam.mgs@gmail.com)
 package mail;
 
+import entities.Contacts;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Properties;
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -55,7 +57,7 @@ public class SendEmail {
         }
     }
 
-    public void composeSend(String toMail, String content, String firstName) throws MessagingException, UnsupportedEncodingException {
+    public void composeSend(String toMail, String content, List<Contacts> contactList) throws MessagingException, UnsupportedEncodingException {
 
         Message msg = new MimeMessage(session);
         //For Read Receipt
@@ -70,7 +72,9 @@ public class SendEmail {
         Multipart multipart = new MimeMultipart("related");
         BodyPart htmlPart = new MimeBodyPart();
         content = content.replaceAll("##email##", toMail);
-        content = content.replaceAll("##fName##", firstName);
+        content = content.replaceAll("##firstName##", contactList.get(0).getFirstName());
+        content = content.replaceAll("##lastName##", contactList.get(0).getLastName());
+        content = content.replaceAll("##notes##", contactList.get(0).getNotes());
         
         htmlPart.setContent("<html><body>" + content + "<br/>" + "<img src=\"54.225.23.238/test.php?email="+toMail+"\"/></body></html>", "text/html");
         multipart.addBodyPart(htmlPart);
