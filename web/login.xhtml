@@ -26,22 +26,22 @@
                 <div id="nav_wrapper">
                     <ul id="nav">
                         <h:form id="myform">
-                            
-                                <p:growl id="message" />
-                            
-                        <li>
+
+                            <p:growl id="message" />
+
+                            <li>
                                 <span style="color: black; font-weight: bold">Username <p:inputText id="username" required="true" requiredMessage="Please enter username!" 
-                                                     value="#{sessionHandler.username}" tabindex="1" maxlength="100">
-                                            
-                                </p:inputText><br/></span>
+                                                                                                    value="#{sessionHandler.username}" tabindex="1" maxlength="100">
+
+                                    </p:inputText><br/></span>
                                 <h6 align="right"><h:outputLabel value="@compassitesinc.com" /></h6>
-                        </li>
-                        <li><span style="color: black; font-weight: bold">
-                            Password <p:password id="password"  tabindex="2" /></span>
-                        </li><br/>
-                        
-                        <div align="right"><p:commandButton id="loginButton" action="#{sessionHandler.login()}" tabindex="3" value="Login" update="message" />
-                        </div>
+                            </li>
+                            <li><span style="color: black; font-weight: bold">
+                                    Password <p:password id="password"  tabindex="2" /></span>
+                            </li><br/>
+
+                            <div align="right"><p:commandButton id="loginButton" action="#{sessionHandler.login()}" tabindex="3" value="Login" update="message" />
+                            </div>
                         </h:form>
                     </ul>
                 </div>
@@ -52,18 +52,18 @@
             </div>
             <!--grid_12 end here-->
             <div class="clear"></div>
-            <!--grid_12 start here-->
-            <div class="grid_12" style="margin-left: 50px">
-                <div id="slider">
-                    <div id="slideshow">
-                        <div class="slide_entry">
-                            <ul>
-                                <li>
-                                    <img src="resources/images/handshake1.png" ></img>
-                                </li>
-                                <li>
+            <div style="margin-left: 15px;">
 
-                                    <p class="subtitle">HandShake, Connect Seamlessly</p>
+                <div id="slider" style=" width:500px; float: left;">
+                    <div id="slideshow" style=" height: 300px; width:500px; float: left;">
+                        <div class="slide_entry" style=" height: 600px; width: 500px; float: left;">
+                            <ul style="width: 500px; height: 600px;">
+                                <li style="width: 500px; ">
+                                    <img src="resources/images/handshake2.png" ></img>
+                                </li>
+                                <li style="width: 500px;">
+
+                                    <p class="subtitle" style="width: 300px;">HandShake, Connect Seamlessly</p>
                                     <img src="resources/images/logo.png" ></img>
                                 </li>
                             </ul>
@@ -74,26 +74,32 @@
                     </div>
                     <!-- end slideshow_full div --> 
                 </div>
-                <!--slider end here--> 
+
+                <div style="float: right; display: inline-block">
+                    <p style="font-size: 25px;">Sign Up </p>
+                    <table class="loginTable" style="margin-top:40px; margin-right:120px;">
+                        <tr>
+                            <td>Name :</td>
+                            <td><input type="text" name="username" id="uname" class="input" /></td>
+                        </tr>
+                        <tr>
+                            <td>Password :</td>
+                            <td><input type="password" name="password" id="pass" class="input"/></td>
+                        </tr>
+
+                        <tr>
+                            <td>Retype Password :</td>
+                            <td><input type="password" name="password" class="input"/></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td align="right"><input type="submit" name="ok" id="okbtn" value="Submit" class="button"/></td>
+                        </tr>
+                    </table>
+                </div>
+
             </div>
-            <!--grid_12 end here-->
-            <div class="clear"></div>
-            <!--grid_3 start here-->
-<!--            <div style="margin-left: 165px;" class="grid_3">
-                <div class="circle"><a href="addContactClient.xhtml"><img src="resources/images/add.png" width="140" height="131" alt="" /></a></div>
-            </div>
-            grid_3 end here 
-            grid_3 start here
-            <div class="grid_3">
-                <div class="circle"><a href="searchClient.xhtml"><img src="resources/images/Search.png" width="140" height="131" alt="" /></a></div>
-            </div>
-            grid_3 end here 
-            grid_3 start here
-            <div class="grid_3">
-                <div class="circle"><a href="mailClient.xhtml"><img src="resources/images/mail.png" width="140" height="131" alt="" /></a></div>
-            </div>-->
-            <!--grid_3 end here--> 
-            <!--grid_12 start here-->
+
             <div class="grid_12">
                 <div class="divider"></div>
             </div>
