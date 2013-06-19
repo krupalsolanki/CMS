@@ -4,6 +4,7 @@ import helperConverter.ContactHelper;
 import entities.Contacts;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -39,7 +40,8 @@ public class HiberManage {
     List<Contacts> contacts;
     public List<Contacts> conts;
     private Contacts editContact;
-    ContactHelper helper;
+    private Contacts deleteContact;
+    ContactHelper helper = new ContactHelper();
     private int recordCount = 20;
     private Contacts current;
     private int selectedItemIndex;
@@ -309,9 +311,18 @@ public class HiberManage {
     public void setEditContact(Contacts editContact) {
         this.editContact = editContact;
     }
+    
+    public Contacts getDeleteContact() {
+        return deleteContact;
+    }
+
+    public void setDeleteContact(Contacts deleteContact) {
+        this.deleteContact = deleteContact;
+    }
 
     public HiberManage() {
         editContact = new Contacts();
+        deleteContact = new Contacts();
         helper = new ContactHelper();
         conts = helper.getContacts();
         distinctCompanies = helper.getDistinctCompanies();
@@ -443,12 +454,27 @@ public class HiberManage {
         System.out.println("email " + editCon.getEmail());
 //        return helper.editSelectedContact(email, firstName, lastName, comName, comLoc, phoneNo, designation);
         
-    
         boolean updateContactFlag = helper.editSelectedContact(editCon.getEmail(), editCon.getFirstName(), editCon.getLastName(), editCon.getCompanyName(), editCon.getCompanyLoc(), editCon.getPhoneNo(), editCon.getDesignation());
         RequestContext.getCurrentInstance().execute("contactDialog.hide();");
         RequestContext.getCurrentInstance().update("@form");
         
+        contacts = helper.getContacts();
+        
         return updateContactFlag;
+    }
+    
+    public boolean deleteSelectedContact() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map requestParams = context.getExternalContext().getRequestParameterMap();
+        String delEmail = (String) requestParams.get("some");
+        
+        boolean deleteContactFlag = helper.deleteSelectedContact(delEmail);
+        RequestContext.getCurrentInstance().execute("deleteDialogDialog.hide();");
+        RequestContext.getCurrentInstance().update("@form");
+        
+        contacts = helper.getContacts();
+        
+        return deleteContactFlag;
     }
 
     //The following method is used for sending the emails to the mail page
