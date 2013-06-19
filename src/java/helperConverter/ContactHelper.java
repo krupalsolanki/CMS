@@ -309,6 +309,27 @@ public class ContactHelper {
         return contactList;
     }
 
+    public boolean editSelectedContact(String email,String firstName,String lastName,String comName,String comLoc,String phoneNo,String designation) {
+    
+        openSession();
+        Query query = session.createQuery("update Contacts set firstName = :firstName , lastName = :lastName , companyName = :companyName , companyLoc = :companyLoc , phoneNo = :phoneNo , designation = :designation where email = :email ");
+        
+        System.out.println("Yeh hai first name "+firstName+" | "+lastName+" | "+comName+" | "+comLoc+" | "+phoneNo+" | "+email);
+        query.setParameter("firstName", firstName);
+        query.setParameter("lastName", lastName);
+        query.setParameter("companyName", comName);
+        query.setParameter("companyLoc", comLoc);
+        query.setParameter("phoneNo", phoneNo);
+        query.setParameter("designation", designation);
+        query.setParameter("email", email);
+        
+        int result = query.executeUpdate();
+        
+        closeSession();
+        return true;
+        
+    }
+    
     public boolean doesEmailExist(String email) {
         Query q = session.createQuery("select c from Contacts c where c.email='" + email + "'");
 
