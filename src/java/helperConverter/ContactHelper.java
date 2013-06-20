@@ -31,9 +31,12 @@ public class ContactHelper {
         SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
         session = sessionFactory.openSession();
         org.hibernate.Transaction tx = session.beginTransaction();
+        session.beginTransaction();
+        System.out.println("opening session");
     }
     
     public List getContacts() {
+//        this.openSession();
         List<Contacts> contactList = null;
         try {
 
@@ -43,6 +46,7 @@ public class ContactHelper {
             e.printStackTrace();
         }
 
+//        this.closeSession();
         return contactList;
     }
 
@@ -202,7 +206,7 @@ public class ContactHelper {
     public String addContact(String firstName, String lastName, String email, String mobNo, String comName, String comLoc, String designation, String url, String addedBy, String notes, List<String> selectedInterests) {
         this.email = email;
         System.out.println("addContact()");
-        openSession();
+//        openSession();
         System.out.println("Inside add");
         Contacts contact = new Contacts();
         contact.setFirstName(firstName);
@@ -240,11 +244,11 @@ public class ContactHelper {
         }
 
         if (check) {
-            closeSession();
+//            closeSession();
             flag = true;
             return "success";
         } else {
-            closeSession();
+//            closeSession();
             return "error";
         }
     }
@@ -288,7 +292,7 @@ public class ContactHelper {
     public List<Contacts> getContactsDetails() {
         List<Contacts> contactList = new ArrayList<Contacts>();
         try {
-            openSession();
+//            openSession();
             String hql_query = "from Contacts";
             Query query = (Query) session.createQuery(hql_query);
             //prepare statement
@@ -304,14 +308,14 @@ public class ContactHelper {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
-            closeSession();
+//            closeSession();
         }
         return contactList;
     }
 
     public boolean editSelectedContact(String email,String firstName,String lastName,String comName,String comLoc,String phoneNo,String designation) {
     
-        openSession();
+//        openSession();
         Query query = session.createQuery("update Contacts set firstName = :firstName , lastName = :lastName , companyName = :companyName , companyLoc = :companyLoc , phoneNo = :phoneNo , designation = :designation where email = :email ");
         
         System.out.println("Yeh hai first name "+firstName+" | "+lastName+" | "+comName+" | "+comLoc+" | "+phoneNo+" | "+email);
@@ -325,7 +329,21 @@ public class ContactHelper {
         
         int result = query.executeUpdate();
         
-        closeSession();
+//        closeSession();
+        return true;
+        
+    }
+    
+    public boolean deleteSelectedContact(String email) {
+    
+//        this.openSession();
+        System.out.println("Email in hiber :"+email);
+        Query query = session.createQuery("delete from Contacts c where c.email = :email ");
+        query.setParameter("email", email);
+       
+        int result = query.executeUpdate();
+        
+//        this.closeSession();
         return true;
         
     }
@@ -361,16 +379,27 @@ public class ContactHelper {
         return false;
     }
  
-    public void openSession() {
-        SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        System.out.println("opening session");
-    }
-
-    public void closeSession() {
-        session.getTransaction().commit();
-        session.flush();
-        session.close();
+//    public void openSession() {
+//        SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
+//        session = sessionFactory.openSession();
+//        session.beginTransaction();
+//        System.out.println("opening session");
+//    }
+//
+//    public void closeSession() {
+//        session.getTransaction().commit();
+//        session.flush();
+//        session.close();
+//    }
+    
+    @Override
+    protected void finalize() throws Throwable {
+        try {
+            session.getTransaction().commit();
+            session.flush();
+            session.close();
+        } finally {
+            super.finalize();
+        }
     }
 }
