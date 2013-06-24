@@ -409,7 +409,7 @@ public class HiberManage {
 
     public List<String> completeCities(String query) {
         List<String> suggestions = new ArrayList<String>();
-
+        System.out.println("get it here but not there...");
         for (String p : distinctLocations) {
             if (p.toLowerCase().contains(query.toLowerCase())) {
                 suggestions.add(p.toLowerCase());

@@ -112,7 +112,7 @@ public class mailBean implements Serializable {
             System.out.println("contact list size :"+contactList.size());
             String firstName = contactList.get(0).getFirstName();
             String lastName = contactList.get(0).getLastName();
-            String notes = contactList.get(0).getNotes();
+//            String notes = contactList.get(0).getNotes();
             
             
            se.composeSend(s[i], htmltext, contactList);

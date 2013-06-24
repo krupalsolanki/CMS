@@ -1,21 +1,27 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Jun 5, 2013 5:07:46 PM by Hibernate Tools 3.2.1.GA -->
+<!-- Generated Jun 20, 2013 5:40:32 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
     <class name="entities.Contactrelation" table="contactrelation" catalog="contactmanagementsystem">
         <id name="contactRelationId" type="java.lang.Integer">
             <column name="contactRelationId" />
             <generator class="identity" />
         </id>
-        <property name="contactlistId" type="java.lang.Integer">
-            <column name="contactlistId" />
+        <many-to-one name="contactlist" class="entities.Contactlist" fetch="select">
+            <column name="contactListId" />
+        </many-to-one>
+        <property name="nickName" type="string">
+            <column name="nickName" length="30" />
         </property>
         <property name="rating" type="java.lang.Integer">
             <column name="rating" />
         </property>
         <property name="notes" type="string">
             <column name="notes" length="300" />
+        </property>
+        <property name="personalMsg" type="string">
+            <column name="personalMsg" length="300" />
         </property>
     </class>
 </hibernate-mapping>
