@@ -37,7 +37,7 @@
                                 <h6 align="right"><h:outputLabel value="@compassitesinc.com" /></h6>
                             </li>
                             <li><span style="color: black; font-weight: bold">
-                                    Password <p:password id="password"  tabindex="2" /></span>
+                                    Password <p:password id="password"  value="#{sessionHandler.password}" tabindex="2" /></span>
                             </li><br/>
 
                             <div align="right"><p:commandButton id="loginButton" action="#{sessionHandler.login()}" tabindex="3" value="Login" update="message" />

@@ -21,11 +21,20 @@ import javax.faces.context.FacesContext;
 public class SessionHandler {
 
     private String username;
+    private String password;
     protected String addedBy;
     HiberManage hiber;
     ContactHelper helper;
     
     boolean verifyUserFlag = false;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
     
     public String getAddedBy() {
         return addedBy;
@@ -59,7 +68,8 @@ public class SessionHandler {
         
         System.out.println("i am here login session");
         System.out.println("username "+username);
-        verifyUserFlag =  helper.verifyUser(username);
+        System.out.println("password "+password);
+        verifyUserFlag =  helper.verifyUser(username,password);
         
         if(verifyUserFlag) {
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
