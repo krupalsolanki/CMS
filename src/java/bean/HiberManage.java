@@ -1,5 +1,6 @@
 package bean;
 
+import entities.Category;
 import helperConverter.ContactHelper;
 import entities.Contacts;
 import java.util.ArrayList;
@@ -9,6 +10,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.primefaces.context.RequestContext;
 
 import org.primefaces.event.UnselectEvent;
@@ -21,8 +25,11 @@ import org.primefaces.event.UnselectEvent;
 @RequestScoped
 public class HiberManage {
 
+    Session session = null;
     SessionHandler sessionhandler;
-    private String username;
+    private String category;
+    private String emailForSignUp;
+    private String password;
     private String addedBy;
     private String firstName;
     private String lastName;
@@ -58,16 +65,33 @@ public class HiberManage {
     public boolean interestflag = false;
     public boolean isContactAddedFlag = false;
     public int doesEmailExistFlag;
+    public int doesEmployeeEmailExistFlag;
     public static String contactsToSend;
     private List<String> images;
 
     // The following are the getter and setter methods for the properties
-    public String getUsername() {
-        return username;
+    public String getCategory() {
+        return category;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getEmailForSignUp() {
+        return emailForSignUp;
+    }
+
+    public void setEmailForSignUp(String emailForSignUp) {
+        this.emailForSignUp = emailForSignUp;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {
@@ -249,6 +273,19 @@ public class HiberManage {
     public List<String> getSelectedInterests() {
         return selectedInterests;
     }
+    List<SelectItem> categoryList;
+
+    public List<SelectItem> categoryList() {
+        categoryList = new ArrayList<SelectItem>();
+        List<Category> cList = null;
+        Query q = session.createQuery("from Category as c ");
+        cList = (List<Category>) q.list();
+        for (Category c : cList) {
+            categoryList.add(new SelectItem(c.getCategoryName()));
+        }
+
+        return categoryList;
+    }
 
     public void setSelectedInterests(List<String> selectedInterests) {
         this.selectedInterests = selectedInterests;
@@ -295,6 +332,14 @@ public class HiberManage {
         this.doesEmailExistFlag = doesEmailExistFlag;
     }
 
+    public int getDoesEmployeeEmailExistFlag() {
+        return doesEmployeeEmailExistFlag;
+    }
+
+    public void setDoesEmployeeEmailExistFlag(int doesEmployeeEmailExistFlag) {
+        this.doesEmployeeEmailExistFlag = doesEmployeeEmailExistFlag;
+    }
+
     public boolean getIsContactAddedFlag() {
         return isContactAddedFlag;
     }
@@ -311,7 +356,7 @@ public class HiberManage {
     public void setEditContact(Contacts editContact) {
         this.editContact = editContact;
     }
-    
+
     public Contacts getDeleteContact() {
         return deleteContact;
     }
@@ -385,7 +430,6 @@ public class HiberManage {
 
     public List<String> completeLocation(String query) {
         List<String> suggestions = new ArrayList<String>();
-
         for (String p : distinctLocations) {
             if (p.toLowerCase().startsWith(query.toLowerCase())) {
                 suggestions.add(p);
@@ -412,7 +456,7 @@ public class HiberManage {
         System.out.println("get it here but not there...");
         for (String p : distinctLocations) {
             if (p.toLowerCase().contains(query.toLowerCase())) {
-                suggestions.add(p.toLowerCase());
+                suggestions.add(p);
             }
         }
         if (suggestions.isEmpty()) {
@@ -453,27 +497,27 @@ public class HiberManage {
     public boolean editSelectedContact(Contacts editCon) {
         System.out.println("email " + editCon.getEmail());
 //        return helper.editSelectedContact(email, firstName, lastName, comName, comLoc, phoneNo, designation);
-        
+
         boolean updateContactFlag = helper.editSelectedContact(editCon.getEmail(), editCon.getFirstName(), editCon.getLastName(), editCon.getCompanyName(), editCon.getCompanyLoc(), editCon.getPhoneNo(), editCon.getDesignation());
         RequestContext.getCurrentInstance().execute("contactDialog.hide();");
         RequestContext.getCurrentInstance().update("@form");
-        
+
         contacts = helper.getContacts();
-        
+
         return updateContactFlag;
     }
-    
+
     public boolean deleteSelectedContact() {
         FacesContext context = FacesContext.getCurrentInstance();
         Map requestParams = context.getExternalContext().getRequestParameterMap();
         String delEmail = (String) requestParams.get("some");
-        
+
         boolean deleteContactFlag = helper.deleteSelectedContact(delEmail);
         RequestContext.getCurrentInstance().execute("deleteDialogDialog.hide();");
         RequestContext.getCurrentInstance().update("@form");
-        
+
         contacts = helper.getContacts();
-        
+
         return deleteContactFlag;
     }
 
@@ -536,6 +580,17 @@ public class HiberManage {
 
     }
 
+    public void validateEmployeeEmail(String email) {
+        System.out.println(email);
+        if (helper.doesEmployeeEmailExist(email)) {
+            doesEmployeeEmailExistFlag = 1;
+            FacesContext.getCurrentInstance().addMessage("signUpForm:emailSign", new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Email Already Exists: Please try again."));
+        } else {
+            doesEmployeeEmailExistFlag = 0;
+        }
+
+    }
+
     public String getInterestsForUser(String email) {
 
         return helper.getInterestsForUser(email);
@@ -568,5 +623,13 @@ public class HiberManage {
     public String prepareView() {
 
         return "browse";
+    }
+
+    public String addNewUser() {
+        System.out.println("sign up email " + emailForSignUp);
+        System.out.println("password " + password);
+
+        return helper.addNewUser(emailForSignUp, password);
+
     }
 }

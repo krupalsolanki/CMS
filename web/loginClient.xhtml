@@ -16,14 +16,25 @@
 
 
                 <span style="color: black; font-weight: bold;font-size: 15px">Username <p:inputText id="username" required="true" requiredMessage="Please enter username!" 
-                                                                                    value="#{sessionHandler.username}" tabindex="1" maxlength="100">
+                                                                                                    value="#{sessionHandler.username}" tabindex="1" maxlength="100">
 
                     </p:inputText></span>
                 &nbsp;
                 <span style="color: black; font-weight: bold;font-size: 15px">
                     Password <p:password id="password"  tabindex="2" /></span>
 
+                <p:inputText id="emailSign" required="true"
+                             requiredMessage="Please enter email address!"
+                             validatorMessage="Invalid email format"
+                             value="#{hiberManage.emailForSignUp}">
 
+                    <p:ajax event="change" update="signUpForm:emailmessage" listener="#{hiberManage.validateEmployeeEmail(hiberManage.emailForSignUp)}" />
+
+                    <f:validateRegex
+                        pattern="^[A-Za-z0-9][A-Za-z0-9_-]+(\.[_A-Za-z0-9-]+)*[A-Za-z0-9]@[A-Za-z0-9]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                </p:inputText>
+                <br/><h:message id="emailmessage" for="emailSign" />
+  
                 <p:commandButton id="loginButton" action="#{sessionHandler.login()}" tabindex="3" value="Login" update="message" />
 
             </h:form>
@@ -31,14 +42,14 @@
     </ui:define>
 
     <ui:define name="content">
-        
+
         <p:imageSwitch effect="fade">
             <ui:repeat var="image" value="#{hiberManage.imageSwitch()}">
                 <p:graphicImage value="#{image}" />
             </ui:repeat>
         </p:imageSwitch>
-        
-        
+
+
     </ui:define>
 
 </ui:composition>

@@ -6,6 +6,9 @@ import entities.Contacts;
 import entities.Employee;
 import entities.Interestbridge;
 import entities.Interests;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Query;
@@ -397,6 +400,17 @@ public class ContactHelper {
             return true;
         }
     }
+    
+    public boolean doesEmployeeEmailExist(String email) {
+
+        Query q = session.createQuery("select e from Employee e where e.empEmailId='" + email + "'");
+
+        if (q.list().isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     public String getInterestsForUser(String email) {
 //        openSession();
@@ -414,7 +428,7 @@ public class ContactHelper {
         List<Employee> empl = new ArrayList<Employee>();
         System.out.println("i am here login helper");
         String email = username + "@compassitesinc.com";
-        
+
         try {
             String hql_query = "select e from Employee e where e.empEmailId = '" + email + "'";
             Query query = (Query) session.createQuery(hql_query);
@@ -422,13 +436,13 @@ public class ContactHelper {
             List<Employee> empList = (List<Employee>) query.list();
             String checkEmail = "";
             String checkPassword = "";
-                checkEmail = empList.get(0).getEmpEmailId();
-                checkPassword = empList.get(0).getPassword();
-            
-            System.out.println("email "+ checkEmail);
-            System.out.println("password "+ checkPassword);
-            System.out.println("email "+ username);
-            System.out.println("password "+ password);
+            checkEmail = empList.get(0).getEmpEmailId();
+            checkPassword = empList.get(0).getPassword();
+
+            System.out.println("email " + checkEmail);
+            System.out.println("password " + checkPassword);
+            System.out.println("email " + username);
+            System.out.println("password " + password);
             if (checkEmail.equals(email)) {
                 if (checkPassword.equals(password)) {
                     System.out.println("sadsd");
@@ -439,7 +453,37 @@ public class ContactHelper {
             e.printStackTrace();
         }
         return false;
+
+    }
+
+    public String addNewUser(String email, String password) {
+
+        String md5 = null;
         
+        try {
+
+            //Create MessageDigest object for MD5
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+
+            //Update input string in message digest
+            digest.update(password.getBytes(), 0, password.length());
+
+            //Converts message digest value in base 16 (hex)
+            md5 = new BigInteger(1, digest.digest()).toString(16);
+            
+        } catch (NoSuchAlgorithmException e) {
+
+            e.printStackTrace();
+        }
+        Employee em = new Employee();
+        em.setEmpEmailId(email);
+        em.setPassword(md5);
+        
+        session.beginTransaction();
+        session.save(em);
+        session.getTransaction().commit();
+        return "Success";
+
     }
 
 //    public void openSession() {

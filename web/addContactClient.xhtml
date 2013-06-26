@@ -81,7 +81,7 @@
                         <td rowspan="3">
                             <p class="mailContent">
                                 <p:inputTextarea  tabindex="10" value="#{hiberManage.notes}" counter="counter" maxlength="150"       
-                                                 counterTemplate="{0} characters remaining." autoResize="false"/>  
+                                                  counterTemplate="{0} characters remaining." autoResize="false"/>  
                             </p>
                             <br/><h:outputText id="counter" />
 
@@ -112,9 +112,14 @@
                                 <br/><h3><p:message for="comLoc" /></h3>
 
                             </p:autoComplete></td>
-                        <td><h4>Contact Added By</h4><h:outputText value="*" style="color: red;" /></td>
-                        <td><p:inputText id="addedBy" tabindex="11" value="#{sessionHandler.addedBy}" ></p:inputText>
-                            <br/><p:message for="addedBy" /></td>
+                        <td><h4>Category</h4><h:outputText value="*" style="color: red;" /></td>
+                        <td><p:selectOneMenu value="#{hiberManage.category}" id="categoryList">  
+                                <f:selectItem itemLabel="Personal" itemValue="1" />  
+                                <f:selectItem itemLabel="Business" itemValue="2" />  
+                                <f:selectItem itemLabel="Both" itemValue="3" />
+                                
+                            </p:selectOneMenu>  
+                            <br/><p:message for="categoryList" /></td>
                     </tr>
                     <tr>
                         <td><h4>Designation</h4><h:outputText value="*" style="color: red;" /></td>
