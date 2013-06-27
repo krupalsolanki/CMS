@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.5
+-- version 3.3.9
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 26, 2013 at 09:16 AM
--- Server version: 5.5.16
--- PHP Version: 5.3.8
+-- Generation Time: Jun 27, 2013 at 10:50 AM
+-- Server version: 5.1.68
+-- PHP Version: 5.3.4
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -54,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `contactlist` (
   PRIMARY KEY (`contactListId`),
   KEY `empId` (`empId`),
   KEY `contactId` (`contactId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `contactlist`
@@ -65,7 +64,8 @@ INSERT INTO `contactlist` (`contactListId`, `empId`, `contactId`) VALUES
 (2, 1, 4),
 (4, 1, 6),
 (5, 1, 7),
-(6, 1, 8);
+(6, 1, 8),
+(7, 1, 9);
 
 -- --------------------------------------------------------
 
@@ -83,6 +83,11 @@ CREATE TABLE IF NOT EXISTS `contactrelation` (
   PRIMARY KEY (`contactRelationId`),
   KEY `contactListId` (`contactListId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `contactrelation`
+--
+
 
 -- --------------------------------------------------------
 
@@ -103,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   `categoryId` int(11) DEFAULT NULL,
   PRIMARY KEY (`contactId`),
   KEY `categoryId` (`categoryId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `contacts`
@@ -116,7 +121,8 @@ INSERT INTO `contacts` (`contactId`, `firstName`, `lastName`, `email`, `phoneNo`
 (4, 'sachin', 'khumbhojkar', 'sachin@gmail.com', '(111)-1111111111', 'cognizant', 'pune', 'BA', '', 1),
 (6, 'walter', 'Solanki', 'waltery2w@gmail.com', '(091)-8783764287', 'cognizant', 'pune', 'CEO', '', 1),
 (7, 'jai', 'patel', 'jai@gmail.com', '(901)-7234817230', 'cognizant', 'mumbai', 'CEO', '', 1),
-(8, 'nagesh', 'nagraj', 'nagesh.nagraj@gmail.com', '(097)-8239469178', 'compassites', 'pune', 'BA', '', 1);
+(8, 'nagesh', 'nagraj', 'nagesh.nagraj@gmail.com', '(097)-8239469178', 'compassites', 'pune', 'BA', '', 1),
+(9, 'Banish', 'Singh', 'invinciblemanish@gmail.com', '', 'Compassites', 'Pune', 'Navro', '', 1);
 
 -- --------------------------------------------------------
 
@@ -128,17 +134,21 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `empId` int(11) NOT NULL AUTO_INCREMENT,
   `empEmailId` varchar(78) DEFAULT NULL,
   `password` varchar(64) DEFAULT NULL,
+  `firstName` varchar(30) NOT NULL,
+  `lastName` varchar(30) NOT NULL,
+  `Type` int(11) NOT NULL,
   PRIMARY KEY (`empId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `employee`
 --
 
-INSERT INTO `employee` (`empId`, `empEmailId`, `password`) VALUES
-(1, 'jay.butani@compassitesinc.com', 'jay'),
-(3, 'disha.shah@compassitesinc.com', 'disha'),
-(5, 'krupal.solanki@compassitesinc.com', '202cb962ac59075b964b07152d234b70');
+INSERT INTO `employee` (`empId`, `empEmailId`, `password`, `firstName`, `lastName`, `Type`) VALUES
+(1, 'jay.butani@compassitesinc.com', 'jay', '', '', 0),
+(3, 'disha.shah@compassitesinc.com', 'disha', '', '', 0),
+(5, 'krupal.solanki@compassitesinc.com', '202cb962ac59075b964b07152d234b70', '', '', 0),
+(6, 'satyam.joshi@compassitesinc.com', 'f2cdafc6b1adf94892b17f355bd9110', 'Satyam', 'Sehgal', 0);
 
 -- --------------------------------------------------------
 
@@ -217,7 +227,3 @@ ALTER TABLE `contacts`
 ALTER TABLE `interestbridge`
   ADD CONSTRAINT `interestbridge_ibfk_1` FOREIGN KEY (`interestId`) REFERENCES `interests` (`interestId`),
   ADD CONSTRAINT `interestbridge_ibfk_2` FOREIGN KEY (`contactId`) REFERENCES `contacts` (`contactId`);
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

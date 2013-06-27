@@ -483,7 +483,7 @@ public class ContactHelper {
 
     }
 
-    public String addNewUser(String email, String password) {
+    public String addNewUser(String email, String password, String firstName, String lastName) {
 
         String md5 = null;
         try {
@@ -501,7 +501,9 @@ public class ContactHelper {
         Employee em = new Employee();
         em.setEmpEmailId(email);
         em.setPassword(md5);
-
+        em.setFirstName(firstName);
+        em.setLastName(lastName);
+        
         session.beginTransaction();
         session.save(em);
         session.getTransaction().commit();

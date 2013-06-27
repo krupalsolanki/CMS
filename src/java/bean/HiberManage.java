@@ -27,6 +27,8 @@ public class HiberManage {
 
     Session session = null;
     SessionHandler sessionhandler;
+    private String firstNameSignUp;
+    private String lastNameSignUp;
     private String nickName;
     private String category;
     private String emailForSignUp;
@@ -103,6 +105,24 @@ public class HiberManage {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getFirstNameSignUp() {
+        return firstNameSignUp;
+    }
+
+    public void setFirstNameSignUp(String firstNameSignUp) {
+        this.firstNameSignUp = firstNameSignUp;
+    }
+
+    public String getLastNameSignUp() {
+        return lastNameSignUp;
+    }
+
+    public void setLastNameSignUp(String lastNameSignUp) {
+        this.lastNameSignUp = lastNameSignUp;
+    }
+    
+    
 
     public String getFirstName() {
         return firstName;
@@ -639,7 +659,7 @@ public class HiberManage {
         System.out.println("sign up email " + emailForSignUp);
         System.out.println("password " + password);
 
-        return helper.addNewUser(emailForSignUp, password);
+        return helper.addNewUser(emailForSignUp, password, firstNameSignUp, lastNameSignUp);
 
     }
 }

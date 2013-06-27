@@ -80,9 +80,19 @@
                     <h:form id="signUpForm">
                         <p style="font-size: 25px;">Sign Up </p>
                         <table class="loginTable" style="margin-top:40px; margin-right:120px;">
+                            
+                            <tr>
+                                <td>First Name :</td>
+                                <td><p:inputText id="firstNameSign" value="#{hiberManage.firstNameSignUp}" /></td>
+                            </tr>
+                            <tr>
+                                <td>Last Name :</td>
+                                <td><p:inputText id="lastNameSign" value="#{hiberManage.lastNameSignUp}" /></td>
+                            </tr>
                             <tr>
                                 <td>Email :</td>
                                 <td><p:inputText id="emailSign" required="true"
+                                                 
                                                  requiredMessage="Please enter email address!"
                                                  validatorMessage="Invalid email format"
                                                  value="#{hiberManage.emailForSignUp}">
@@ -97,12 +107,12 @@
                             </tr>
                             <tr>
                                 <td>Password :</td>
-                                <td><h:inputSecret id="password" class="input" value="#{hiberManage.password}"/></td>
+                                <td><p:password id="password" value="#{hiberManage.password}"/></td>
                             </tr>
 
                             <tr>
                                 <td>Retype Password :</td>
-                                <td><h:inputSecret id="retypePassword" class="input" /></td>
+                                <td><p:password id="retypePassword" /></td>
                             </tr>
                             <tr>
                                 <td></td>
