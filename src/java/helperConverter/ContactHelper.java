@@ -1,6 +1,5 @@
 package helperConverter;
 
-import entities.Category;
 import entities.Contactlist;
 import entities.Contactrelation;
 import entities.Contacts;
@@ -207,7 +206,7 @@ public class ContactHelper {
     }
     boolean flag = false;
 
-    public String addContact(String firstName, String lastName, String email, String mobNo, String comName, String comLoc, String designation, String url, String notes, List<String> selectedInterests, String category, String nickName) {
+    public String addContact(String firstName, String lastName, String email, String mobNo, String comName, String comLoc, String designation, String url, String notes, List<String> selectedInterests, String nickName, int categoryId) {
 
         this.email = email;
         System.out.println("addContact()");
@@ -223,9 +222,9 @@ public class ContactHelper {
         contact.setDesignation(designation);
         contact.setLinkedInUrl(url);
 
-        Category catg = new Category();
-        catg.setCategoryId(Integer.parseInt(category));
-        contact.setCategory(catg);   // category id from the category table
+        //Category catg = new Category();
+        //catg.setCategoryId(Integer.parseInt(category));
+        //contact.setCategory(catg);   // category id from the category table
 
         List<String> InterestsInTable = getDistinctInterests();
         List<String> temp = null;
@@ -249,7 +248,9 @@ public class ContactHelper {
             if (selectedInterests != null) {
                 addInterestBridge(selectedInterests);
             }
-            addContactList(email, nickName);
+            
+            
+            addContactList(email, nickName, categoryId );
             System.out.println("save in the database..");
             check = true;
         }
@@ -301,7 +302,7 @@ public class ContactHelper {
         return "success";
     }
 
-    public String addContactList(String email, String nickName) {
+    public String addContactList(String email, String nickName, int categoryId) {
 
         System.out.print(email);
         try {
@@ -320,10 +321,10 @@ public class ContactHelper {
             Contactlist cl = new Contactlist();
             cl.setEmployee(emp);
             cl.setContacts(c);
-
+            
             session.save(cl);
             System.out.println("Contact Id is " + c.getContactId());
-            addContactRelation(conId, nickName);
+            addContactRelation(conId, nickName, categoryId);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -332,7 +333,7 @@ public class ContactHelper {
         return "success";
     }
 
-    public String addContactRelation(int conId, String nickName) {
+    public String addContactRelation(int conId, String nickName, int categoryId) {
         try {
             
             String hql_query = "select c from Contactlist c where c.contacts.contactId="+ conId;
@@ -348,6 +349,7 @@ public class ContactHelper {
 
             Contactrelation cr = new Contactrelation();
             cr.setNickName(nickName);
+            cr.setCategoryId(categoryId);
             cr.setContactlist(cl);
             session.save(cr);
             session.getTransaction().commit();

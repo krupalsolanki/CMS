@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 27, 2013 at 10:50 AM
+-- Generation Time: Jun 27, 2013 at 11:21 AM
 -- Server version: 5.1.68
 -- PHP Version: 5.3.4
 
@@ -18,27 +18,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Database: `contactmanagementsystem`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `category`
---
-
-CREATE TABLE IF NOT EXISTS `category` (
-  `categoryId` int(11) NOT NULL AUTO_INCREMENT,
-  `categoryName` varchar(15) DEFAULT NULL,
-  PRIMARY KEY (`categoryId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
-
---
--- Dumping data for table `category`
---
-
-INSERT INTO `category` (`categoryId`, `categoryName`) VALUES
-(1, 'Personal'),
-(2, 'Business'),
-(3, 'Both');
 
 -- --------------------------------------------------------
 
@@ -80,6 +59,7 @@ CREATE TABLE IF NOT EXISTS `contactrelation` (
   `rating` int(11) DEFAULT NULL,
   `notes` varchar(300) DEFAULT NULL,
   `personalMsg` varchar(300) DEFAULT NULL,
+  `categoryId` int(11) NOT NULL,
   PRIMARY KEY (`contactRelationId`),
   KEY `contactListId` (`contactListId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
@@ -105,24 +85,22 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   `companyLoc` varchar(50) DEFAULT NULL,
   `designation` varchar(120) DEFAULT NULL,
   `linkedInUrl` varchar(256) DEFAULT NULL,
-  `categoryId` int(11) DEFAULT NULL,
-  PRIMARY KEY (`contactId`),
-  KEY `categoryId` (`categoryId`)
+  PRIMARY KEY (`contactId`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `contacts`
 --
 
-INSERT INTO `contacts` (`contactId`, `firstName`, `lastName`, `email`, `phoneNo`, `companyName`, `companyLoc`, `designation`, `linkedInUrl`, `categoryId`) VALUES
-(1, 'jay', 'patel', 'darpan_jay@yahoo.in', '', 'compassites', 'mumbai', 'developer', NULL, 2),
-(2, 'disha', 'shah', 'disha.shah@live.com', '9913324541', 'compassites', 'pune', 'developer', NULL, 1),
-(3, 'satyam', 'singh', 'satyam.mgs@gmail.com', '(091)-8783764287', 'cognizant', 'pune', 'Developer', '', NULL),
-(4, 'sachin', 'khumbhojkar', 'sachin@gmail.com', '(111)-1111111111', 'cognizant', 'pune', 'BA', '', 1),
-(6, 'walter', 'Solanki', 'waltery2w@gmail.com', '(091)-8783764287', 'cognizant', 'pune', 'CEO', '', 1),
-(7, 'jai', 'patel', 'jai@gmail.com', '(901)-7234817230', 'cognizant', 'mumbai', 'CEO', '', 1),
-(8, 'nagesh', 'nagraj', 'nagesh.nagraj@gmail.com', '(097)-8239469178', 'compassites', 'pune', 'BA', '', 1),
-(9, 'Banish', 'Singh', 'invinciblemanish@gmail.com', '', 'Compassites', 'Pune', 'Navro', '', 1);
+INSERT INTO `contacts` (`contactId`, `firstName`, `lastName`, `email`, `phoneNo`, `companyName`, `companyLoc`, `designation`, `linkedInUrl`) VALUES
+(1, 'jay', 'patel', 'darpan_jay@yahoo.in', '', 'compassites', 'mumbai', 'developer', NULL),
+(2, 'disha', 'shah', 'disha.shah@live.com', '9913324541', 'compassites', 'pune', 'developer', NULL),
+(3, 'satyam', 'singh', 'satyam.mgs@gmail.com', '(091)-8783764287', 'cognizant', 'pune', 'Developer', ''),
+(4, 'sachin', 'khumbhojkar', 'sachin@gmail.com', '(111)-1111111111', 'cognizant', 'pune', 'BA', ''),
+(6, 'walter', 'Solanki', 'waltery2w@gmail.com', '(091)-8783764287', 'cognizant', 'pune', 'CEO', ''),
+(7, 'jai', 'patel', 'jai@gmail.com', '(901)-7234817230', 'cognizant', 'mumbai', 'CEO', ''),
+(8, 'nagesh', 'nagraj', 'nagesh.nagraj@gmail.com', '(097)-8239469178', 'compassites', 'pune', 'BA', ''),
+(9, 'Banish', 'Singh', 'invinciblemanish@gmail.com', '', 'Compassites', 'Pune', 'Navro', '');
 
 -- --------------------------------------------------------
 
@@ -214,12 +192,6 @@ ALTER TABLE `contactlist`
 --
 ALTER TABLE `contactrelation`
   ADD CONSTRAINT `contactrelation_ibfk_1` FOREIGN KEY (`contactListId`) REFERENCES `contactlist` (`contactListId`);
-
---
--- Constraints for table `contacts`
---
-ALTER TABLE `contacts`
-  ADD CONSTRAINT `contacts_ibfk_1` FOREIGN KEY (`categoryId`) REFERENCES `category` (`categoryId`);
 
 --
 -- Constraints for table `interestbridge`

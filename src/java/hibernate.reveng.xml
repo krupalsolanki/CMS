@@ -5,7 +5,6 @@
   <table-filter match-name="contactlist"/>
   <table-filter match-name="employee"/>
   <table-filter match-name="contacts"/>
-  <table-filter match-name="category"/>
   <table-filter match-name="interests"/>
   <table-filter match-name="interestbridge"/>
   <table-filter match-name="contactrelation"/>

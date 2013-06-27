@@ -17,6 +17,5 @@
     <mapping resource="entities/Interestbridge.hbm.xml"/>
     <mapping resource="entities/Contactrelation.hbm.xml"/>
     <mapping resource="entities/Employee.hbm.xml"/>
-    <mapping resource="entities/Category.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

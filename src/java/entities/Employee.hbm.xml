@@ -20,6 +20,10 @@
         <property name="lastName" type="string">
             <column name="lastName" length="30" />
         </property>
+        <property name="type" type="java.lang.Integer">
+            <column name="type" />
+        </property>
+        
         <set name="contactlists" inverse="true">
             <key>
                 <column name="empId" />

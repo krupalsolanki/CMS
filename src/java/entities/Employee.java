@@ -29,6 +29,7 @@ public class Employee  implements java.io.Serializable {
      private String password;
      private String firstName;
      private String lastName;
+     private Integer type;
      private Set<Contactlist> contactlists = new HashSet<Contactlist>(0);
 
     public Employee() {
@@ -84,6 +85,14 @@ public class Employee  implements java.io.Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
     
     
     
@@ -95,10 +104,6 @@ public class Employee  implements java.io.Serializable {
     public void setContactlists(Set<Contactlist> contactlists) {
         this.contactlists = contactlists;
     }
-
-
-
-
 }
 
 

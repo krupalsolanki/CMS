@@ -1,6 +1,6 @@
 package bean;
 
-import entities.Category;
+
 import helperConverter.ContactHelper;
 import entities.Contacts;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class HiberManage {
     private String firstNameSignUp;
     private String lastNameSignUp;
     private String nickName;
-    private String category;
+    private int categoryId;
     private String emailForSignUp;
     private String password;
     private String addedBy;
@@ -81,14 +81,16 @@ public class HiberManage {
     public void setNickName(String nickName) {
         this.nickName = nickName;
     }
-    
-    public String getCategory() {
-        return category;
+
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
+    
+    
 
     public String getEmailForSignUp() {
         return emailForSignUp;
@@ -307,12 +309,12 @@ public class HiberManage {
 
     public List<SelectItem> categoryList() {
         categoryList = new ArrayList<SelectItem>();
-        List<Category> cList = null;
+        //List<Category> cList = null;
         Query q = session.createQuery("from Category as c ");
-        cList = (List<Category>) q.list();
-        for (Category c : cList) {
-            categoryList.add(new SelectItem(c.getCategoryName()));
-        }
+        //cList = (List<Category>) q.list();
+//        for (Category c : cList) {
+//            categoryList.add(new SelectItem(c.getCategoryName()));
+//        }
 
         return categoryList;
     }
@@ -570,8 +572,7 @@ public class HiberManage {
     }
 
     public String addContact() {
-        String temp = helper.addContact(firstName, lastName, email, mobNo, comName, comLoc, designation, url,notes, selectedInterests,category,nickName);
-
+        String temp = helper.addContact(firstName, lastName, email, mobNo, comName, comLoc, designation, url,notes, selectedInterests,nickName,categoryId);
         if (temp == "success") {
             isContactAddedFlag = true;
         }

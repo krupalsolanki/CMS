@@ -29,6 +29,7 @@ public class Contactlist  implements java.io.Serializable {
      private Integer contactListId;
      private Employee employee;
      private Contacts contacts;
+     
      private Set<Contactrelation> contactrelations = new HashSet<Contactrelation>(0);
 
     public Contactlist() {

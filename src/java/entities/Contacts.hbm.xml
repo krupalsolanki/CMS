@@ -8,9 +8,6 @@
             <column name="contactId" />
             <generator class="identity" />
         </id>
-        <many-to-one name="category" class="entities.Category" fetch="select">
-            <column name="categoryId" />
-        </many-to-one>
         <property name="firstName" type="string">
             <column name="firstName" length="30" not-null="true" />
         </property>
