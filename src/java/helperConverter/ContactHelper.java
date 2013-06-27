@@ -2,6 +2,7 @@ package helperConverter;
 
 import entities.Category;
 import entities.Contactlist;
+import entities.Contactrelation;
 import entities.Contacts;
 import entities.Employee;
 import entities.Interestbridge;
@@ -206,7 +207,7 @@ public class ContactHelper {
     }
     boolean flag = false;
 
-    public String addContact(String firstName, String lastName, String email, String mobNo, String comName, String comLoc, String designation, String url, String addedBy, String notes, List<String> selectedInterests) {
+    public String addContact(String firstName, String lastName, String email, String mobNo, String comName, String comLoc, String designation, String url, String notes, List<String> selectedInterests, String category, String nickName) {
 
         this.email = email;
         System.out.println("addContact()");
@@ -223,12 +224,12 @@ public class ContactHelper {
         contact.setLinkedInUrl(url);
 
         Category catg = new Category();
-        catg.setCategoryId(1);
-        contact.setCategory(catg);   // category id from the category table and login
-//        contact.setAddedBy(addedBy);
-//        contact.setNotes(notes);
+        catg.setCategoryId(Integer.parseInt(category));
+        contact.setCategory(catg);   // category id from the category table
+
         List<String> InterestsInTable = getDistinctInterests();
         List<String> temp = null;
+        session.beginTransaction();
         if (selectedInterests != null) {
             temp = new ArrayList<String>(selectedInterests.size());
             temp.addAll(selectedInterests);
@@ -237,7 +238,6 @@ public class ContactHelper {
             for (int i = 0; i < temp.size(); i++) {
                 Interests ints = new Interests();
                 ints.setInterestName(temp.get(i).toLowerCase());
-                session.beginTransaction();
                 session.save(ints);
             }
         }
@@ -249,7 +249,7 @@ public class ContactHelper {
             if (selectedInterests != null) {
                 addInterestBridge(selectedInterests);
             }
-            addContactList(email);
+            addContactList(email, nickName);
             System.out.println("save in the database..");
             check = true;
         }
@@ -301,7 +301,7 @@ public class ContactHelper {
         return "success";
     }
 
-    public String addContactList(String email) {
+    public String addContactList(String email, String nickName) {
 
         System.out.print(email);
         try {
@@ -322,8 +322,35 @@ public class ContactHelper {
             cl.setContacts(c);
 
             session.save(cl);
-            session.getTransaction().commit();
             System.out.println("Contact Id is " + c.getContactId());
+            addContactRelation(conId, nickName);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "success";
+    }
+
+    public String addContactRelation(int conId, String nickName) {
+        try {
+            
+            String hql_query = "select c from Contactlist c where c.contacts.contactId="+ conId;
+            Query query = (Query) session.createQuery(hql_query);
+            //prepare statement
+            List<Contactlist> conList = (List<Contactlist>) query.list();
+            int conListId = 0;
+            for (Contactlist c : conList) {
+                conListId = c.getContactListId();
+            }
+            Contactlist cl = new Contactlist();
+            cl.setContactListId(conListId);
+
+            Contactrelation cr = new Contactrelation();
+            cr.setNickName(nickName);
+            cr.setContactlist(cl);
+            session.save(cr);
+            session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -400,7 +427,7 @@ public class ContactHelper {
             return true;
         }
     }
-    
+
     public boolean doesEmployeeEmailExist(String email) {
 
         Query q = session.createQuery("select e from Employee e where e.empEmailId='" + email + "'");
@@ -459,18 +486,14 @@ public class ContactHelper {
     public String addNewUser(String email, String password) {
 
         String md5 = null;
-        
         try {
-
             //Create MessageDigest object for MD5
             MessageDigest digest = MessageDigest.getInstance("MD5");
-
             //Update input string in message digest
             digest.update(password.getBytes(), 0, password.length());
-
             //Converts message digest value in base 16 (hex)
             md5 = new BigInteger(1, digest.digest()).toString(16);
-            
+
         } catch (NoSuchAlgorithmException e) {
 
             e.printStackTrace();
@@ -478,7 +501,7 @@ public class ContactHelper {
         Employee em = new Employee();
         em.setEmpEmailId(email);
         em.setPassword(md5);
-        
+
         session.beginTransaction();
         session.save(em);
         session.getTransaction().commit();

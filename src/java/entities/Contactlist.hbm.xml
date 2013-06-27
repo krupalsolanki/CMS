@@ -11,7 +11,7 @@
         <many-to-one name="employee" class="entities.Employee" fetch="select">
             <column name="empId" />
         </many-to-one>
-        <many-to-one name="contacts" class="entities.Contacts" fetch="select">
+        <many-to-one name="contacts" class="entities.Contacts" fetch="join">
             <column name="contactId" />
         </many-to-one>
         <set name="contactrelations" inverse="true">

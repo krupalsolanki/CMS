@@ -27,6 +27,7 @@ public class HiberManage {
 
     Session session = null;
     SessionHandler sessionhandler;
+    private String nickName;
     private String category;
     private String emailForSignUp;
     private String password;
@@ -70,6 +71,15 @@ public class HiberManage {
     private List<String> images;
 
     // The following are the getter and setter methods for the properties
+    
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+    
     public String getCategory() {
         return category;
     }
@@ -540,7 +550,7 @@ public class HiberManage {
     }
 
     public String addContact() {
-        String temp = helper.addContact(firstName, lastName, email, mobNo, comName, comLoc, designation, url, addedBy, notes, selectedInterests);
+        String temp = helper.addContact(firstName, lastName, email, mobNo, comName, comLoc, designation, url,notes, selectedInterests,category,nickName);
 
         if (temp == "success") {
             isContactAddedFlag = true;
@@ -556,7 +566,7 @@ public class HiberManage {
         url = null;
         notes = null;
         selectedInterests = null;
-
+        
         return temp;
     }
 
