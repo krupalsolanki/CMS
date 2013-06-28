@@ -26,7 +26,7 @@ public class SessionHandler {
     HiberManage hiber;
     ContactHelper helper;
     
-    boolean verifyUserFlag = false;
+    String verifyUserFlag = "";
 
     public String getPassword() {
         return password;
@@ -51,14 +51,16 @@ public class SessionHandler {
     public void setUsername(String username) {
         this.username = username;
     }
-    
-    public boolean getVerifyUserFlag() {
+
+    public String getVerifyUserFlag() {
         return verifyUserFlag;
     }
-    
-    public void setVerifyUserFlag(boolean verifyUserFlag) {
+
+    public void setVerifyUserFlag(String verifyUserFlag) {
         this.verifyUserFlag = verifyUserFlag;
     }
+    
+   
    
     public SessionHandler() {
         helper = new ContactHelper();
@@ -71,14 +73,18 @@ public class SessionHandler {
         System.out.println("password "+password);
         verifyUserFlag =  helper.verifyUser(username,password);
         
-        if(verifyUserFlag) {
+        if(verifyUserFlag.equals("admin") || verifyUserFlag.equals("user")) {
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
             Map<String, Object> sessionMap = externalContext.getSessionMap();
             sessionMap.put("username", username);
             addedBy = (String) sessionMap.get("username");
             System.out.println("Session :" + addedBy);
-            return "success";
+            if(verifyUserFlag.equals("admin"))
+                return "admin";
+            else
+                return "user";
         }
+        
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_FATAL,"Login Failed.","Please retype username and password.");
         FacesContext.getCurrentInstance().addMessage(null, message);
         return "fail";
