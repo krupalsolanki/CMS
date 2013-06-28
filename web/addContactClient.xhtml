@@ -118,7 +118,6 @@
                                 <f:selectItem itemLabel="Personal" itemValue="1" />  
                                 <f:selectItem itemLabel="Business" itemValue="2" />  
                                 <f:selectItem itemLabel="Both" itemValue="3" />
-                                
                             </p:selectOneMenu>  
                             <br/><p:message for="categoryList" /></td>
                     </tr>
@@ -129,9 +128,13 @@
                             </p:inputText>
                             <br/><p:message for="desgn" />
                         </td>
+                        <td><h4>Nick Name</h4></td>
+                        <td><p:inputText id="nickName" maxlength="120" value="#{hiberManage.nickName}">
+                            </p:inputText>
+
+                        </td>
                     </tr>
                     <tr>
-
                         <td colspan="2">
                             <p:commandButton id="addButton" value="Add" disabled="#{hiberManage.doesEmailExistFlag!=0}" style="margin:20px; width: 75px "
                                              action="#{hiberManage.addContact()}" ajax="false" onclick="textbox.show();" tabindex="12" update="msg" actionListener="#{hiberManage.showAdddedDetails()}">

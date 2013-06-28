@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.5
+-- version 3.3.9
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 26, 2013 at 09:16 AM
--- Server version: 5.5.16
--- PHP Version: 5.3.8
+-- Generation Time: Jun 27, 2013 at 12:11 PM
+-- Server version: 5.1.68
+-- PHP Version: 5.3.4
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -23,27 +22,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `category`
---
-
-CREATE TABLE IF NOT EXISTS `category` (
-  `categoryId` int(11) NOT NULL AUTO_INCREMENT,
-  `categoryName` varchar(15) DEFAULT NULL,
-  PRIMARY KEY (`categoryId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
-
---
--- Dumping data for table `category`
---
-
-INSERT INTO `category` (`categoryId`, `categoryName`) VALUES
-(1, 'Personal'),
-(2, 'Business'),
-(3, 'Both');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `contactlist`
 --
 
@@ -54,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `contactlist` (
   PRIMARY KEY (`contactListId`),
   KEY `empId` (`empId`),
   KEY `contactId` (`contactId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `contactlist`
@@ -65,7 +43,8 @@ INSERT INTO `contactlist` (`contactListId`, `empId`, `contactId`) VALUES
 (2, 1, 4),
 (4, 1, 6),
 (5, 1, 7),
-(6, 1, 8);
+(6, 1, 8),
+(7, 1, 9);
 
 -- --------------------------------------------------------
 
@@ -80,9 +59,15 @@ CREATE TABLE IF NOT EXISTS `contactrelation` (
   `rating` int(11) DEFAULT NULL,
   `notes` varchar(300) DEFAULT NULL,
   `personalMsg` varchar(300) DEFAULT NULL,
+  `categoryId` int(11) NOT NULL,
   PRIMARY KEY (`contactRelationId`),
   KEY `contactListId` (`contactListId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `contactrelation`
+--
+
 
 -- --------------------------------------------------------
 
@@ -100,23 +85,22 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   `companyLoc` varchar(50) DEFAULT NULL,
   `designation` varchar(120) DEFAULT NULL,
   `linkedInUrl` varchar(256) DEFAULT NULL,
-  `categoryId` int(11) DEFAULT NULL,
-  PRIMARY KEY (`contactId`),
-  KEY `categoryId` (`categoryId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+  PRIMARY KEY (`contactId`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `contacts`
 --
 
-INSERT INTO `contacts` (`contactId`, `firstName`, `lastName`, `email`, `phoneNo`, `companyName`, `companyLoc`, `designation`, `linkedInUrl`, `categoryId`) VALUES
-(1, 'jay', 'patel', 'darpan_jay@yahoo.in', '', 'compassites', 'mumbai', 'developer', NULL, 2),
-(2, 'disha', 'shah', 'disha.shah@live.com', '9913324541', 'compassites', 'pune', 'developer', NULL, 1),
-(3, 'satyam', 'singh', 'satyam.mgs@gmail.com', '(091)-8783764287', 'cognizant', 'pune', 'Developer', '', NULL),
-(4, 'sachin', 'khumbhojkar', 'sachin@gmail.com', '(111)-1111111111', 'cognizant', 'pune', 'BA', '', 1),
-(6, 'walter', 'Solanki', 'waltery2w@gmail.com', '(091)-8783764287', 'cognizant', 'pune', 'CEO', '', 1),
-(7, 'jai', 'patel', 'jai@gmail.com', '(901)-7234817230', 'cognizant', 'mumbai', 'CEO', '', 1),
-(8, 'nagesh', 'nagraj', 'nagesh.nagraj@gmail.com', '(097)-8239469178', 'compassites', 'pune', 'BA', '', 1);
+INSERT INTO `contacts` (`contactId`, `firstName`, `lastName`, `email`, `phoneNo`, `companyName`, `companyLoc`, `designation`, `linkedInUrl`) VALUES
+(1, 'jay', 'patel', 'darpan_jay@yahoo.in', '', 'compassites', 'mumbai', 'developer', NULL),
+(2, 'disha', 'shah', 'disha.shah@live.com', '9913324541', 'compassites', 'pune', 'developer', NULL),
+(3, 'satyam', 'singh', 'satyam.mgs@gmail.com', '(091)-8783764287', 'cognizant', 'pune', 'Developer', ''),
+(4, 'sachin', 'khumbhojkar', 'sachin@gmail.com', '(111)-1111111111', 'cognizant', 'pune', 'BA', ''),
+(6, 'walter', 'Solanki', 'waltery2w@gmail.com', '(091)-8783764287', 'cognizant', 'pune', 'CEO', ''),
+(7, 'jai', 'patel', 'jai@gmail.com', '(901)-7234817230', 'cognizant', 'mumbai', 'CEO', ''),
+(8, 'nagesh', 'nagraj', 'nagesh.nagraj@gmail.com', '(097)-8239469178', 'compassites', 'pune', 'BA', ''),
+(9, 'Banish', 'Singh', 'invinciblemanish@gmail.com', '', 'Compassites', 'Pune', 'Navro', '');
 
 -- --------------------------------------------------------
 
@@ -128,17 +112,21 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `empId` int(11) NOT NULL AUTO_INCREMENT,
   `empEmailId` varchar(78) DEFAULT NULL,
   `password` varchar(64) DEFAULT NULL,
+  `firstName` varchar(30) NOT NULL,
+  `lastName` varchar(30) NOT NULL,
+  `Type` int(11) NOT NULL,
   PRIMARY KEY (`empId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `employee`
 --
 
-INSERT INTO `employee` (`empId`, `empEmailId`, `password`) VALUES
-(1, 'jay.butani@compassitesinc.com', 'jay'),
-(3, 'disha.shah@compassitesinc.com', 'disha'),
-(5, 'krupal.solanki@compassitesinc.com', '202cb962ac59075b964b07152d234b70');
+INSERT INTO `employee` (`empId`, `empEmailId`, `password`, `firstName`, `lastName`, `Type`) VALUES
+(1, 'jay.butani@compassitesinc.com', 'jay', '', '', 0),
+(3, 'disha.shah@compassitesinc.com', 'disha', '', '', 0),
+(5, 'krupal.solanki@compassitesinc.com', '202cb962ac59075b964b07152d234b70', '', '', 0),
+(6, 'satyam.joshi@compassitesinc.com', 'f2cdafc6b1adf94892b17f355bd9110', 'Satyam', 'Sehgal', 0);
 
 -- --------------------------------------------------------
 
@@ -206,18 +194,8 @@ ALTER TABLE `contactrelation`
   ADD CONSTRAINT `contactrelation_ibfk_1` FOREIGN KEY (`contactListId`) REFERENCES `contactlist` (`contactListId`);
 
 --
--- Constraints for table `contacts`
---
-ALTER TABLE `contacts`
-  ADD CONSTRAINT `contacts_ibfk_1` FOREIGN KEY (`categoryId`) REFERENCES `category` (`categoryId`);
-
---
 -- Constraints for table `interestbridge`
 --
 ALTER TABLE `interestbridge`
   ADD CONSTRAINT `interestbridge_ibfk_1` FOREIGN KEY (`interestId`) REFERENCES `interests` (`interestId`),
   ADD CONSTRAINT `interestbridge_ibfk_2` FOREIGN KEY (`contactId`) REFERENCES `contacts` (`contactId`);
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

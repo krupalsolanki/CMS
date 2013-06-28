@@ -27,7 +27,6 @@ public class Contacts  implements java.io.Serializable {
 
 
      private Integer contactId;
-     private Category category;
      private String firstName;
      private String lastName;
      private String email;
@@ -47,8 +46,7 @@ public class Contacts  implements java.io.Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
     }
-    public Contacts(Category category, String firstName, String lastName, String email, String phoneNo, String companyName, String companyLoc, String designation, String linkedInUrl, Set<Interestbridge> interestbridges, Set<Contactlist> contactlists) {
-       this.category = category;
+    public Contacts(String firstName, String lastName, String email, String phoneNo, String companyName, String companyLoc, String designation, String linkedInUrl, Set<Interestbridge> interestbridges, Set<Contactlist> contactlists) {
        this.firstName = firstName;
        this.lastName = lastName;
        this.email = email;
@@ -70,15 +68,6 @@ public class Contacts  implements java.io.Serializable {
     
     public void setContactId(Integer contactId) {
         this.contactId = contactId;
-    }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="categoryId")
-    public Category getCategory() {
-        return this.category;
-    }
-    
-    public void setCategory(Category category) {
-        this.category = category;
     }
     
     @Column(name="firstName", nullable=false, length=30)

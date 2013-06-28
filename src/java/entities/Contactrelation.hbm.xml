@@ -23,5 +23,9 @@
         <property name="personalMsg" type="string">
             <column name="personalMsg" length="300" />
         </property>
+        <property name="categoryId" type="java.lang.Integer">
+            <column name="categoryId" />
+        </property>
+        
     </class>
 </hibernate-mapping>

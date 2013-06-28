@@ -27,6 +27,9 @@ public class Employee  implements java.io.Serializable {
      private Integer empId;
      private String empEmailId;
      private String password;
+     private String firstName;
+     private String lastName;
+     private Integer type;
      private Set<Contactlist> contactlists = new HashSet<Contactlist>(0);
 
     public Employee() {
@@ -66,6 +69,33 @@ public class Employee  implements java.io.Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+    
+    
+    
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="employee")
     public Set<Contactlist> getContactlists() {
         return this.contactlists;
@@ -74,10 +104,6 @@ public class Employee  implements java.io.Serializable {
     public void setContactlists(Set<Contactlist> contactlists) {
         this.contactlists = contactlists;
     }
-
-
-
-
 }
 
 

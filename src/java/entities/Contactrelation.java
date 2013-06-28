@@ -28,7 +28,7 @@ public class Contactrelation  implements java.io.Serializable {
      private Integer rating;
      private String notes;
      private String personalMsg;
-
+     private Integer categoryId;
     public Contactrelation() {
     }
 
@@ -96,6 +96,15 @@ public class Contactrelation  implements java.io.Serializable {
         this.personalMsg = personalMsg;
     }
 
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    
 
 
 
