@@ -248,9 +248,9 @@ public class ContactHelper {
             if (selectedInterests != null) {
                 addInterestBridge(selectedInterests);
             }
-            
-            
-            addContactList(email, nickName, categoryId );
+
+
+            addContactList(email, nickName, categoryId);
             System.out.println("save in the database..");
             check = true;
         }
@@ -321,7 +321,7 @@ public class ContactHelper {
             Contactlist cl = new Contactlist();
             cl.setEmployee(emp);
             cl.setContacts(c);
-            
+
             session.save(cl);
             System.out.println("Contact Id is " + c.getContactId());
             addContactRelation(conId, nickName, categoryId);
@@ -335,8 +335,8 @@ public class ContactHelper {
 
     public String addContactRelation(int conId, String nickName, int categoryId) {
         try {
-            
-            String hql_query = "select c from Contactlist c where c.contacts.contactId="+ conId;
+
+            String hql_query = "select c from Contactlist c where c.contacts.contactId=" + conId;
             Query query = (Query) session.createQuery(hql_query);
             //prepare statement
             List<Contactlist> conList = (List<Contactlist>) query.list();
@@ -455,11 +455,26 @@ public class ContactHelper {
         return intlist;
     }
 
-    public boolean verifyUser(String username, String password) {
+    public String verifyUser(String username, String password) {
         List<Employee> empl = new ArrayList<Employee>();
         System.out.println("i am here login helper");
         String email = username + "@compassitesinc.com";
 
+        String md5Password = null;
+        
+        try {
+            //Create MessageDigest object for MD5
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            //Update input string in message digest
+            digest.update(password.getBytes(), 0, password.length());
+            //Converts message digest value in base 16 (hex)
+            md5Password = new BigInteger(1, digest.digest()).toString(16);
+
+        } catch (NoSuchAlgorithmException e) {
+
+            e.printStackTrace();
+        }
+        
         try {
             String hql_query = "select e from Employee e where e.empEmailId = '" + email + "'";
             Query query = (Query) session.createQuery(hql_query);
@@ -467,23 +482,33 @@ public class ContactHelper {
             List<Employee> empList = (List<Employee>) query.list();
             String checkEmail = "";
             String checkPassword = "";
+            int checkType = 0;
+
             checkEmail = empList.get(0).getEmpEmailId();
             checkPassword = empList.get(0).getPassword();
+            checkType = empList.get(0).getType();
+
 
             System.out.println("email " + checkEmail);
             System.out.println("password " + checkPassword);
             System.out.println("email " + username);
             System.out.println("password " + password);
             if (checkEmail.equals(email)) {
-                if (checkPassword.equals(password)) {
+                if (checkPassword.equals(md5Password)) {
                     System.out.println("sadsd");
-                    return true;
+
+                    if (checkType == 1) {
+                        // Go to admin Page
+                        return "admin";
+                    } else {
+                        return "user";
+                    }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+        return "false";
 
     }
 
@@ -508,7 +533,9 @@ public class ContactHelper {
         em.setPassword(md5);
         em.setFirstName(firstName);
         em.setLastName(lastName);
-        
+        em.setType(2);
+
+
         session.beginTransaction();
         session.save(em);
         session.getTransaction().commit();
