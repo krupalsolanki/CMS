@@ -79,31 +79,41 @@
                 <div style="float: right; display: inline-block">
                     <h:form id="signUpForm">
                         <p style="font-size: 25px;">Sign Up </p>
-                        <table class="loginTable" style="margin-top:40px; margin-right:120px;">
+                        <table class="loginTable" style="margin-top:40px; margin-right:50px; width: 350px;">
                             <tr>
                                 <td>Email :</td>
-                                <td><p:inputText id="emailSign" required="true"
+                                <td><h:inputText id="emailSign" required="true"
                                                  requiredMessage="Please enter email address!"
                                                  validatorMessage="Invalid email format"
                                                  value="#{hiberManage.emailForSignUp}">
-
-                                        <p:ajax event="change" update="signUpForm:emailmessage" listener="#{hiberManage.validateEmployeeEmail(hiberManage.emailForSignUp)}" />
-
                                         <f:validateRegex
-                                            pattern="^[A-Za-z0-9][A-Za-z0-9_-]+(\.[_A-Za-z0-9-]+)*[A-Za-z0-9]@[A-Za-z0-9]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-                                    </p:inputText>
-                                    <br/><h:message id="emailmessage" for="emailSign" /></td>
+                                            pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                                    </h:inputText>
+                                    <br/><h:message for="emailSign" />
+                                </td> <td><h:outputText value="#{hiberManage.emailMessage}" /></td>
 
                             </tr>
                             <tr>
-                                <td>Password :</td>
-                                <td><h:inputSecret id="password" class="input" value="#{hiberManage.password}"/></td>
+                                <td>
+                                    Password: </td>
+                                <td>
+                                    <h:inputSecret binding="#{passwordComponent}" id="pwd" required="true" requiredMessage="Enter Password" styleClass="input" value="#{hiberManage.password}" />     
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>  
+                                    Confirm Password: </td>
+                                <td>
+                                    <h:inputSecret id="confirm" required="#{not empty passwordComponent.value}" requiredMessage="Enter Confirm Password" styleClass="input" validator="#{hiberManage.validatePassword}" value="#{hiberManage.confirmPassword}"> 
+                                        <f:attribute name="passwordComponent" value="#{passwordComponent}"> </f:attribute>
+                                        
+                                    </h:inputSecret>     </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><h:outputText id="passError" value="#{hiberManage.errorMessage}" style="color: red;" />
+                                    <h:message for="pwd" style="float: right;" /></td>
                             </tr>
 
-                            <tr>
-                                <td>Retype Password :</td>
-                                <td><h:inputSecret id="retypePassword" class="input" /></td>
-                            </tr>
                             <tr>
                                 <td></td>
                                 <td align="right"><h:commandButton id="okbtn" value="Submit" class="button" action="#{hiberManage.addNewUser()}"/></td>

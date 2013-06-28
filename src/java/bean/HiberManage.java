@@ -9,8 +9,11 @@ import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.faces.validator.ValidatorException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.primefaces.context.RequestContext;
@@ -27,6 +30,7 @@ public class HiberManage {
 
     Session session = null;
     SessionHandler sessionhandler;
+    private String emailMessage;
     private String category;
     private String emailForSignUp;
     private String password;
@@ -582,11 +586,17 @@ public class HiberManage {
 
     public void validateEmployeeEmail(String email) {
         System.out.println(email);
-        if (helper.doesEmployeeEmailExist(email)) {
-            doesEmployeeEmailExistFlag = 1;
-            FacesContext.getCurrentInstance().addMessage("signUpForm:emailSign", new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Email Already Exists: Please try again."));
-        } else {
+        if (!helper.doesEmployeeEmailExist(email)) {
+            System.out.println("employee no existss");
             doesEmployeeEmailExistFlag = 0;
+            
+        } else {
+             System.out.println("employee existss");
+             emailMessage = "Email Already Exists: Please try again.";
+//            FacesMessage message = new FacesMessage("Password and Confirm Password Should match"); 
+            doesEmployeeEmailExistFlag = 1;
+           
+           
         }
 
     }
@@ -626,10 +636,69 @@ public class HiberManage {
     }
 
     public String addNewUser() {
+        validateEmployeeEmail(emailForSignUp);
         System.out.println("sign up email " + emailForSignUp);
         System.out.println("password " + password);
-
         return helper.addNewUser(emailForSignUp, password);
 
+    }
+    
+    private String errorMessage;
+    private String confirmPassword;
+    public void validatePassword(FacesContext context, UIComponent toValidate, Object value) {     
+        String confirm = (String) value;     
+        UIInput passComp = (UIInput) toValidate.getAttributes().get("passwordComponent");     
+        String password=(String)passComp.getValue();     
+        if (!password.equals(confirm)) {     
+            FacesMessage message = new FacesMessage("Password and Confirm Password Should match"); 
+            System.out.println("password should match");
+            errorMessage = "Password and Confirm Password Should match";
+            throw new ValidatorException(message);     
+        }     
+        if(password.equals(confirm)){
+            errorMessage = null;
+        }
+    }     
+
+    /**
+     * @return the confirmPassword
+     */
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    /**
+     * @param confirmPassword the confirmPassword to set
+     */
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+    /**
+     * @return the errorMessage
+     */
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    /**
+     * @param errorMessage the errorMessage to set
+     */
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
+    /**
+     * @return the emailMessage
+     */
+    public String getEmailMessage() {
+        return emailMessage;
+    }
+
+    /**
+     * @param emailMessage the emailMessage to set
+     */
+    public void setEmailMessage(String emailMessage) {
+        this.emailMessage = emailMessage;
     }
 }

@@ -406,8 +406,10 @@ public class ContactHelper {
         Query q = session.createQuery("select e from Employee e where e.empEmailId='" + email + "'");
 
         if (q.list().isEmpty()) {
+            System.out.println("list is empty");
             return false;
         } else {
+            System.out.println("list is not empty");
             return true;
         }
     }
@@ -458,6 +460,7 @@ public class ContactHelper {
 
     public String addNewUser(String email, String password) {
 
+        if(!doesEmployeeEmailExist(email)){
         String md5 = null;
         
         try {
@@ -482,8 +485,13 @@ public class ContactHelper {
         session.beginTransaction();
         session.save(em);
         session.getTransaction().commit();
-        return "Success";
-
+        
+        return "success";
+        }
+        else{
+            
+        return "fail";
+        }
     }
 
 //    public void openSession() {
