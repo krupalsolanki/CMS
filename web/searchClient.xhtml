@@ -10,6 +10,7 @@
 
     <ui:define name="menu">
         <div id="nav_wrapper">
+            <h:form id="menu">
             <ul id="nav">
                 <li><a href="index.xhtml">Home</a></li>
                 <li><a href="manageContact.xhtml">Manage Contact</a></li>
@@ -17,8 +18,9 @@
                 <li class="current_page_item"><a href="searchClient.xhtml">Search</a></li>
                 <li><a href="mailClient.xhtml">Mail</a></li>
                 <li><a href="aboutusClient.xhtml">About us</a></li>
-                <li><a href="#">Logout</a></li>
+                <li><h:commandLink value="Logout" action="#{sessionHandler.logout()}"></h:commandLink></li>
             </ul>
+            </h:form>
         </div>
     </ui:define>
     <ui:define name="content">

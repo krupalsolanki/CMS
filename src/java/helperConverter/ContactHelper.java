@@ -411,9 +411,11 @@ public class ContactHelper {
         System.out.println("Email in hiber :" + email);
         Query query = session.createQuery("delete from Contacts c where c.email = :email ");
         query.setParameter("email", email);
-
+        
+        session.beginTransaction();
         int result = query.executeUpdate();
-
+        session.getTransaction().commit();
+        
 //        closeSession();
         return true;
 

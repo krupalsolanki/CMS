@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 27, 2013 at 12:11 PM
+-- Generation Time: Jun 28, 2013 at 10:29 AM
 -- Server version: 5.1.68
 -- PHP Version: 5.3.4
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `contactlist` (
   PRIMARY KEY (`contactListId`),
   KEY `empId` (`empId`),
   KEY `contactId` (`contactId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `contactlist`
@@ -44,7 +44,8 @@ INSERT INTO `contactlist` (`contactListId`, `empId`, `contactId`) VALUES
 (4, 1, 6),
 (5, 1, 7),
 (6, 1, 8),
-(7, 1, 9);
+(7, 1, 9),
+(8, 1, 10);
 
 -- --------------------------------------------------------
 
@@ -62,12 +63,14 @@ CREATE TABLE IF NOT EXISTS `contactrelation` (
   `categoryId` int(11) NOT NULL,
   PRIMARY KEY (`contactRelationId`),
   KEY `contactListId` (`contactListId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `contactrelation`
 --
 
+INSERT INTO `contactrelation` (`contactRelationId`, `contactListId`, `nickName`, `rating`, `notes`, `personalMsg`, `categoryId`) VALUES
+(1, 8, '', NULL, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -86,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   `designation` varchar(120) DEFAULT NULL,
   `linkedInUrl` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`contactId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `contacts`
@@ -100,7 +103,8 @@ INSERT INTO `contacts` (`contactId`, `firstName`, `lastName`, `email`, `phoneNo`
 (6, 'walter', 'Solanki', 'waltery2w@gmail.com', '(091)-8783764287', 'cognizant', 'pune', 'CEO', ''),
 (7, 'jai', 'patel', 'jai@gmail.com', '(901)-7234817230', 'cognizant', 'mumbai', 'CEO', ''),
 (8, 'nagesh', 'nagraj', 'nagesh.nagraj@gmail.com', '(097)-8239469178', 'compassites', 'pune', 'BA', ''),
-(9, 'Banish', 'Singh', 'invinciblemanish@gmail.com', '', 'Compassites', 'Pune', 'Navro', '');
+(9, 'Banish', 'Singh', 'invinciblemanish@gmail.com', '', 'Compassites', 'Pune', 'Navro', ''),
+(10, 'Barry', 'Superman', 'barry.superman@live.coom', '', 'Compassites', 'pune', 'Developer', '');
 
 -- --------------------------------------------------------
 
@@ -116,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `lastName` varchar(30) NOT NULL,
   `Type` int(11) NOT NULL,
   PRIMARY KEY (`empId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `employee`
@@ -126,7 +130,8 @@ INSERT INTO `employee` (`empId`, `empEmailId`, `password`, `firstName`, `lastNam
 (1, 'jay.butani@compassitesinc.com', 'jay', '', '', 0),
 (3, 'disha.shah@compassitesinc.com', 'disha', '', '', 0),
 (5, 'krupal.solanki@compassitesinc.com', '202cb962ac59075b964b07152d234b70', '', '', 0),
-(6, 'satyam.joshi@compassitesinc.com', 'f2cdafc6b1adf94892b17f355bd9110', 'Satyam', 'Sehgal', 0);
+(6, 'satyam.joshi@compassitesinc.com', 'f2cdafc6b1adf94892b17f355bd9110', 'Satyam', 'Sehgal', 0),
+(7, 'admin@compassitesinc.com', '21232f297a57a5a743894a0e4a801fc3', 'Superman', 'Chaddiman', 1);
 
 -- --------------------------------------------------------
 
@@ -141,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `interestbridge` (
   PRIMARY KEY (`IB_id`),
   KEY `interestId` (`interestId`),
   KEY `contactId` (`contactId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `interestbridge`
@@ -152,7 +157,8 @@ INSERT INTO `interestbridge` (`IB_id`, `interestId`, `contactId`) VALUES
 (5, 5, 6),
 (6, 4, 7),
 (7, 6, 7),
-(8, 7, 7);
+(8, 7, 7),
+(9, 8, 10);
 
 -- --------------------------------------------------------
 
@@ -164,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `interests` (
   `interestId` int(11) NOT NULL AUTO_INCREMENT,
   `interestName` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`interestId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `interests`
@@ -174,7 +180,8 @@ INSERT INTO `interests` (`interestId`, `interestName`) VALUES
 (4, 'java'),
 (5, 'mava'),
 (6, 'sql'),
-(7, 'python');
+(7, 'python'),
+(8, 'spring');
 
 --
 -- Constraints for dumped tables
@@ -184,18 +191,18 @@ INSERT INTO `interests` (`interestId`, `interestName`) VALUES
 -- Constraints for table `contactlist`
 --
 ALTER TABLE `contactlist`
-  ADD CONSTRAINT `contactlist_ibfk_3` FOREIGN KEY (`empId`) REFERENCES `employee` (`empId`),
-  ADD CONSTRAINT `contactlist_ibfk_4` FOREIGN KEY (`contactId`) REFERENCES `contacts` (`contactId`);
+  ADD CONSTRAINT `contactlist_ibfk_3` FOREIGN KEY (`empId`) REFERENCES `employee` (`empId`) ON DELETE CASCADE,
+  ADD CONSTRAINT `contactlist_ibfk_4` FOREIGN KEY (`contactId`) REFERENCES `contacts` (`contactId`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `contactrelation`
 --
 ALTER TABLE `contactrelation`
-  ADD CONSTRAINT `contactrelation_ibfk_1` FOREIGN KEY (`contactListId`) REFERENCES `contactlist` (`contactListId`);
+  ADD CONSTRAINT `contactrelation_ibfk_1` FOREIGN KEY (`contactListId`) REFERENCES `contactlist` (`contactListId`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `interestbridge`
 --
 ALTER TABLE `interestbridge`
-  ADD CONSTRAINT `interestbridge_ibfk_1` FOREIGN KEY (`interestId`) REFERENCES `interests` (`interestId`),
-  ADD CONSTRAINT `interestbridge_ibfk_2` FOREIGN KEY (`contactId`) REFERENCES `contacts` (`contactId`);
+  ADD CONSTRAINT `interestbridge_ibfk_1` FOREIGN KEY (`interestId`) REFERENCES `interests` (`interestId`) ON DELETE CASCADE,
+  ADD CONSTRAINT `interestbridge_ibfk_2` FOREIGN KEY (`contactId`) REFERENCES `contacts` (`contactId`) ON DELETE CASCADE;
