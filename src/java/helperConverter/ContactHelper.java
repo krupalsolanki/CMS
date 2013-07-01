@@ -411,9 +411,11 @@ public class ContactHelper {
         System.out.println("Email in hiber :" + email);
         Query query = session.createQuery("delete from Contacts c where c.email = :email ");
         query.setParameter("email", email);
-
+        
+        session.beginTransaction();
         int result = query.executeUpdate();
-
+        session.getTransaction().commit();
+        
 //        closeSession();
         return true;
 
@@ -499,7 +501,8 @@ public class ContactHelper {
 
                     if (checkType == 1) {
                         // Go to admin Page
-                        return "admin";
+                      return "admin";
+                        
                     } else {
                         return "user";
                     }

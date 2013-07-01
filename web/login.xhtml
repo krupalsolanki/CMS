@@ -24,9 +24,10 @@
                     <div class="clear"></div>
                 </div>
                 <!--logo_container end here-->
+                <h:form id="myform">
                 <div id="nav_wrapper">
                     <ul id="nav">
-                        <h:form id="myform">
+                        
 
                             <p:growl id="message" />
 
@@ -43,9 +44,10 @@
 
                             <div align="right"><p:commandButton id="loginButton" action="#{sessionHandler.login()}" tabindex="3" value="Login" update="message" />
                             </div>
-                        </h:form>
+                        
                     </ul>
                 </div>
+               </h:form>
                 <!--#nav_wrapper--> 
                 <div class="grid_12">
                     <div class="divider"></div>
