@@ -5,6 +5,7 @@
 package bean;
 
 import entities.Contacts;
+import helperConverter.ContactHelper;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -44,6 +45,7 @@ public class mailBean implements Serializable {
     public static String to;
     public String subject;
     private List<Contacts> selectedContacts;
+    private ContactHelper helper = new ContactHelper();
 
     public void openSession() {
         SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
@@ -103,7 +105,7 @@ public class mailBean implements Serializable {
      
         SendEmail se = new SendEmail(subject);
         String s[] = to.split(",");
-        
+        String from = "default";
 
         for (int i = 0; i < s.length; i++) {
             System.out.println(s[i]);
@@ -113,9 +115,9 @@ public class mailBean implements Serializable {
             String firstName = contactList.get(0).getFirstName();
             String lastName = contactList.get(0).getLastName();
 //            String notes = contactList.get(0).getNotes();
+            from = helper.getNameForEmail(s[i]);
             
-            
-           se.composeSend(s[i], htmltext, contactList);
+           se.composeSend(s[i], htmltext, contactList,from);
         }
 
         sentFlag = true;

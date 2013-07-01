@@ -57,8 +57,10 @@ public class SendEmail {
         }
     }
 
-    public void composeSend(String toMail, String content, List<Contacts> contactList) throws MessagingException, UnsupportedEncodingException {
-
+    public void composeSend(String toMail, String content, List<Contacts> contactList,String fromName) throws MessagingException, UnsupportedEncodingException {
+        
+        fromMail = fromName;
+        
         Message msg = new MimeMessage(session);
         //For Read Receipt
         msg.setHeader("Return-Receipt-To", "<compassitessolution@gmail.com>");
