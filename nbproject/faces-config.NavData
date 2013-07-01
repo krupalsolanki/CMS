@@ -12,6 +12,7 @@
         <Node id="loginClient.xhtml" x="150" y="150" zoom="true"/>
         <Node id="manageContact.xhtml" x="650" y="150" zoom="true"/>
         <Node id="aboutusClient.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="employeeHome.xhtml" x="400" y="150" zoom="true"/>
         <Node id="searchClient.xhtml" x="900" y="150" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>

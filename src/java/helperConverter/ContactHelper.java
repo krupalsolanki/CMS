@@ -499,7 +499,8 @@ public class ContactHelper {
 
                     if (checkType == 1) {
                         // Go to admin Page
-                        return "admin";
+                      return "admin";
+                        
                     } else {
                         return "user";
                     }

@@ -30,7 +30,8 @@ public class HiberManage {
 
     Session session = null;
     SessionHandler sessionhandler;
-
+    Map<String, Object> sessionMap;
+    
     private String emailMessage;
 
 
@@ -738,4 +739,8 @@ public class HiberManage {
     public void setEmailMessage(String emailMessage) {
         this.emailMessage = emailMessage;
     }
+    
+    
+    
+    
 }
