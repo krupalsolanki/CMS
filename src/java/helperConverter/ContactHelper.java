@@ -1,5 +1,6 @@
 package helperConverter;
 
+import bean.SessionHandler;
 import entities.Contactlist;
 import entities.Contactrelation;
 import entities.Contacts;
@@ -11,12 +12,15 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 public class ContactHelper {
-
+    Map<String, Object> sessionMap;
     String email = null;
     Session session = null;
     public static List<Contacts> cont;
@@ -411,11 +415,11 @@ public class ContactHelper {
         System.out.println("Email in hiber :" + email);
         Query query = session.createQuery("delete from Contacts c where c.email = :email ");
         query.setParameter("email", email);
-        
+
         session.beginTransaction();
         int result = query.executeUpdate();
         session.getTransaction().commit();
-        
+
 //        closeSession();
         return true;
 
@@ -463,7 +467,7 @@ public class ContactHelper {
         String email = username + "@compassitesinc.com";
 
         String md5Password = null;
-        
+
         try {
             //Create MessageDigest object for MD5
             MessageDigest digest = MessageDigest.getInstance("MD5");
@@ -476,7 +480,7 @@ public class ContactHelper {
 
             e.printStackTrace();
         }
-        
+
         try {
             String hql_query = "select e from Employee e where e.empEmailId = '" + email + "'";
             Query query = (Query) session.createQuery(hql_query);
@@ -501,8 +505,8 @@ public class ContactHelper {
 
                     if (checkType == 1) {
                         // Go to admin Page
-                      return "admin";
-                        
+                        return "admin";
+
                     } else {
                         return "user";
                     }
@@ -517,37 +521,44 @@ public class ContactHelper {
 
     public String addNewUser(String email, String password, String firstName, String lastName) {
 
-        if(!doesEmployeeEmailExist(email)){
-        String md5 = null;
-        try {
-            //Create MessageDigest object for MD5
-            MessageDigest digest = MessageDigest.getInstance("MD5");
-            //Update input string in message digest
-            digest.update(password.getBytes(), 0, password.length());
-            //Converts message digest value in base 16 (hex)
-            md5 = new BigInteger(1, digest.digest()).toString(16);
+        if (!doesEmployeeEmailExist(email)) {
+            String md5 = null;
+            try {
+                //Create MessageDigest object for MD5
+                MessageDigest digest = MessageDigest.getInstance("MD5");
+                //Update input string in message digest
+                digest.update(password.getBytes(), 0, password.length());
+                //Converts message digest value in base 16 (hex)
+                md5 = new BigInteger(1, digest.digest()).toString(16);
 
-        } catch (NoSuchAlgorithmException e) {
+            } catch (NoSuchAlgorithmException e) {
 
-            e.printStackTrace();
-        }
-        Employee em = new Employee();
-        em.setEmpEmailId(email);
-        em.setPassword(md5);
-        em.setFirstName(firstName);
-        em.setLastName(lastName);
-        em.setType(2);
+                e.printStackTrace();
+            }
+            Employee em = new Employee();
+            em.setEmpEmailId(email);
+            em.setPassword(md5);
+            em.setFirstName(firstName);
+            em.setLastName(lastName);
+            em.setType(2);
 
 
-        session.beginTransaction();
-        session.save(em);
-        session.getTransaction().commit();
-        
-        return "user";
-        }
-        else{
-            
-        return "fail";
+            session.beginTransaction();
+            session.save(em);
+            session.getTransaction().commit();
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            sessionMap = externalContext.getSessionMap();
+            sessionMap.put("username", email);
+            SessionHandler sh = new SessionHandler();
+            email = email.replaceAll("@compassitesinc.com", "");
+            System.out.println("email after replacement is "+email);
+            sh.setAddedBy((String) sessionMap.get("email")); 
+            System.out.println("Session :" + email);
+
+            return "user";
+        } else {
+
+            return "fail";
         }
     }
 
