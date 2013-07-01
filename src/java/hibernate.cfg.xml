@@ -10,7 +10,6 @@
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.query.factory_class">org.hibernate.hql.ast.ASTQueryTranslatorFactory</property>
     <property name="hibernate.connection.autocommit">True</property>
-    <property name="hibernate.connection.password">root</property>
     <mapping resource="entities/Contacts.hbm.xml"/>
     <mapping resource="entities/Contactlist.hbm.xml"/>
     <mapping resource="entities/Interests.hbm.xml"/>

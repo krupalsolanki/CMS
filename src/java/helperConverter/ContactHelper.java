@@ -550,6 +550,23 @@ public class ContactHelper {
         return "fail";
         }
     }
+    
+    public String getNameForEmail(String emailToSend) {
+        
+        String hql_query = "select c from Contacts c where c.email='" + emailToSend + "'";
+        Query query = (Query) session.createQuery(hql_query);
+        List<Contacts> con = (List<Contacts>) query.list();
+        int contactId = con.get(0).getContactId();
+        
+        String hql_query2 = "select cl from Contactlist cl where cl.contacts.contactId='" + contactId + "'";
+        Query query2 = (Query) session.createQuery(hql_query2);
+        List<Contactlist> conList = (List<Contactlist>) query2.list();
+                
+        String firstName = conList.get(0).getEmployee().getFirstName();
+        String lastName = conList.get(0).getEmployee().getLastName();
+        String name = firstName+ " " +lastName;
+        return name;
+    }
 
 //    public void openSession() {
 //        SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
