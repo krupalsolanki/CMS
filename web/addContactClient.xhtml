@@ -32,9 +32,22 @@
                         <p:growl id="msg"/>
                     </c:if>
                     <tr>
+                        <td>
+                            <h4>Category</h4><h:outputText value="*" style="color:red;" />
+                        </td>
+                        <td>
+                            <p:selectOneMenu value="#{hiberManage.categoryId}">  
+                                <f:selectItem itemLabel="Personal" itemValue="1" />  
+                                <f:selectItem itemLabel="Professional" itemValue="2" />  
+                                <f:selectItem itemLabel="Both" itemValue="3" />  
+                            </p:selectOneMenu>  
+
+                        </td>
+                    </tr>
+                    <tr>
                         <td><h4>First Name</h4><h:outputText value="*" style="color: red;" /></td>
                         <td><p:inputText id="fname" tabindex="1" required="true" requiredMessage="Please enter First Name!" validatorMessage="Alphabets only!"
-                                         value="#{hiberManage.firstName}" maxlength="30">
+                                         style="text-transform: capitalize"   value="#{hiberManage.firstName}" maxlength="30">
                                 <f:validateRegex pattern="[ a-zA-Z]+"/>
                             </p:inputText>
                             <br/><p:message for="fname" />
@@ -51,14 +64,14 @@
                     <tr>
                         <td><h4>Last Name</h4><h:outputText value="*" style="color: red;" /></td>
                         <td><p:inputText id="lname" tabindex="2" required="true" requiredMessage="Please enter Last Name!"
-                                         value="#{hiberManage.lastName}" validatorMessage="Alphabets only!" maxlength="30">
+                                         style="text-transform: capitalize"   value="#{hiberManage.lastName}" validatorMessage="Alphabets only!" maxlength="30">
                                 <f:validateRegex pattern="[ a-zA-Z]+"/>
                             </p:inputText>
                             <br/><p:message for="lname" /></td>
 
                         <td><h4>Area of Interest</h4></td>
                         <td><p:autoComplete value="#{hiberManage.selectedInterests}" completeMethod="#{hiberManage.completeInterestsForAdd}"  
-                                            multiple="true" tabindex="9" >  
+                                            style="text-transform: capitalize"   multiple="true" tabindex="9" >  
                             </p:autoComplete></td>
                     </tr>
                     <tr>
@@ -101,7 +114,7 @@
                     <tr>
                         <td><h4>Company Name</h4><h:outputText value="*" style="color: red;" /></td>
                         <td><p:inputText id="comName" tabindex="5" required="true" requiredMessage="Please enter Company name!"
-                                         value="#{hiberManage.comName}" maxlength="100">
+                                         style="text-transform: capitalize"  value="#{hiberManage.comName}" maxlength="100">
                             </p:inputText>
                             <br/><p:message for="comName" />
                         </td>
@@ -109,7 +122,7 @@
                     <tr>
                         <td><h4>Company Location</h4><h:outputText value="*" style="color: red;" /></td>
                         <td><p:autoComplete value="#{hiberManage.comLoc}" completeMethod="#{hiberManage.completeCities}"  
-                                            multiple="false" tabindex="6">  
+                                            style="text-transform: capitalize"    multiple="false" tabindex="6">  
                                 <br/><h3><p:message for="comLoc" /></h3>
 
                             </p:autoComplete></td>
@@ -124,13 +137,12 @@
                     <tr>
                         <td><h4>Designation</h4><h:outputText value="*" style="color: red;" /></td>
                         <td><p:inputText id="desgn" tabindex="7" required="true" requiredMessage="Please enter Designation!"
-                                         value="#{hiberManage.designation}" maxlength="120">
+                                         style="text-transform: capitalize"   value="#{hiberManage.designation}" maxlength="120">
                             </p:inputText>
                             <br/><p:message for="desgn" />
                         </td>
                         <td><h4>Nick Name</h4></td>
-                        <td><p:inputText id="nickName" maxlength="120" value="#{hiberManage.nickName}">
-                            </p:inputText>
+                        <td><p:inputText id="nickName" maxlength="120" value="#{hiberManage.nickName}" style="text-transform: capitalize" />
 
                         </td>
                     </tr>

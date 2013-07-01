@@ -627,7 +627,7 @@ public class HiberManage {
             
         } else {
              System.out.println("employee existss");
-             emailMessage = "Email Already Exists: Please try again.";
+             emailMessage = "Email Already Exists.";
 //            FacesMessage message = new FacesMessage("Password and Confirm Password Should match"); 
             doesEmployeeEmailExistFlag = 1;
            

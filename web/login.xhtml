@@ -82,43 +82,49 @@
                         <table class="loginTable" style="margin-top:40px; margin-right:50px; width: 350px;">
                             <tr>
                                 <td>First Name :</td>
-                                <td><p:inputText id="firstNameSign" value="#{hiberManage.firstNameSignUp}" /></td>
+                                <td><h:inputText style="text-transform: capitalize" id="firstNameSign" styleClass="input" value="#{hiberManage.firstNameSignUp}" /></td>
                             </tr>
                             <tr>
                                 <td>Last Name :</td>
-                                <td><p:inputText id="lastNameSign" value="#{hiberManage.lastNameSignUp}" /></td>
+                                <td><h:inputText id="lastNameSign" style="text-transform: capitalize" styleClass="input" value="#{hiberManage.lastNameSignUp}" /></td>
                             </tr>
+                            <tr>
                                 <td>Email :</td>
                                 <td><h:inputText id="emailSign" required="true"
                                                  requiredMessage="Please enter email address!"
                                                  validatorMessage="Invalid email format"
+                                                 styleClass="input"
                                                  value="#{hiberManage.emailForSignUp}">
                                         <f:validateRegex
                                             pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
                                     </h:inputText>
-                                    <br/><h:message for="emailSign" />
-                                </td> <td><h:outputText value="#{hiberManage.emailMessage}" /></td>
+                                    <br/><h:message for="emailSign"  />
 
+                                </td>
                             </tr>
                             <tr>
                                 <td>
                                     Password: </td>
                                 <td>
-                                    <h:inputSecret binding="#{passwordComponent}" id="pwd" required="true" requiredMessage="Enter Password" styleClass="input" value="#{hiberManage.password}" />     
+                                    <h:inputSecret binding="#{passwordComponent}" id="pwd" required="true" requiredMessage="Please Enter Password" styleClass="input" value="#{hiberManage.password}" />     
                                 </td>
                             </tr>
                             <tr>
                                 <td>  
                                     Confirm Password: </td>
                                 <td>
-                                    <h:inputSecret id="confirm" required="#{not empty passwordComponent.value}" requiredMessage="Enter Confirm Password" styleClass="input" validator="#{hiberManage.validatePassword}" value="#{hiberManage.confirmPassword}"> 
+                                    <h:inputSecret id="confirm" required="#{not empty passwordComponent.value}" requiredMessage="Please Enter Confirm Password" styleClass="input" validator="#{hiberManage.validatePassword}" value="#{hiberManage.confirmPassword}"> 
                                         <f:attribute name="passwordComponent" value="#{passwordComponent}"> </f:attribute>
-                                        
-                                    </h:inputSecret>     </td>
+
+                                    </h:inputSecret>     
+                                    <br/><h:message for="pwd" style="margin-left: 30px;"/>
+                                </td>
                             </tr>
                             <tr>
-                                <td colspan="2"><h:outputText id="passError" value="#{hiberManage.errorMessage}" style="color: red;" />
-                                    <h:message for="pwd" style="float: right;" /></td>
+                                <td colspan="2">
+                                    <h:outputText id="passError" value="#{hiberManage.errorMessage}" style="color: red;" />
+                                    <h:outputText style="margin-left:160px; color: red" value="#{hiberManage.emailMessage}" />
+                                </td>
                             </tr>
 
                             <tr>

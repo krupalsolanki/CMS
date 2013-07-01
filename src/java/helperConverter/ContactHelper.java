@@ -540,7 +540,7 @@ public class ContactHelper {
         session.save(em);
         session.getTransaction().commit();
         
-        return "success";
+        return "user";
         }
         else{
             
