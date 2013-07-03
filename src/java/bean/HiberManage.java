@@ -11,6 +11,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
@@ -57,6 +58,7 @@ public class HiberManage {
     protected String searchLocation;
     protected String searchInterest;
     List<Contacts> contacts;
+    List<Contacts> myContacts;
     public List<Contacts> conts;
     private Contacts editContact;
     private Contacts deleteContact;
@@ -81,7 +83,13 @@ public class HiberManage {
     public static String contactsToSend;
     private List<String> images;
 
+    public int sessionEmpId;
+    
     // The following are the getter and setter methods for the properties
+    private int empId;
+    
+    
+    
     
     public String getNickName() {
         return nickName;
@@ -439,6 +447,14 @@ public class HiberManage {
         return contacts;
     }
 
+    public List<Contacts> getMyContacts(){
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        sessionMap = externalContext.getSessionMap();
+        String username = (String)sessionMap.get("username");
+        myContacts = helper.getMyContacts(username);
+        return myContacts;
+    }
+    
     public void setFieldsToNull() {
         selectedNames = null;
         selectedCompanies = null;
@@ -740,6 +756,12 @@ public class HiberManage {
         this.emailMessage = emailMessage;
     }
     
+    public int getSessionEmpId(String username)
+    {
+        int empId =7; 
+        System.out.println("Inside Hiber : SessionEMpID");
+        return empId;
+    }
     
     
     

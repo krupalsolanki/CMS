@@ -24,6 +24,9 @@ public class ContactHelper {
     String email = null;
     Session session = null;
     public static List<Contacts> cont;
+    private int sessionEmpId;
+   
+   
 
     public ContactHelper() {
         //this.session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -208,6 +211,33 @@ public class ContactHelper {
 //        closeSession();
         return contactList;
     }
+    
+    public List getMyContacts(String username)
+    {
+        List<Contacts> contactList = null;
+        int empId = 0;
+        try {
+            
+            Query q1 = session.createQuery("Select e from Employee e where e.empEmailId='" +username +"@compassitesinc.com'");
+            List<Employee> empIdList = (List<Employee>) q1.list();
+            for(Employee e : empIdList)
+            {
+                empId = e.getEmpId();
+                System.out.println("****" + empId);
+            } 
+            
+            Query q3 = session.createQuery("from Contacts c where c.contactId in (Select cl.contacts.contactId from Contactlist cl where cl.employee.empId=" + empId+ ")");
+            //Query q3 = session.createQuery("from Contacts c where c.contactId in (Select cl from Contactlist cl where cl.Employee.empId=1)");
+            contactList = (List<Contacts>) q3.list();
+            System.out.println("contactList" + contactList.size());
+          
+            } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return contactList;
+    }
+    
+    
     boolean flag = false;
 
     public String addContact(String firstName, String lastName, String email, String mobNo, String comName, String comLoc, String designation, String url, String notes, List<String> selectedInterests, String nickName, int categoryId) {
@@ -579,6 +609,19 @@ public class ContactHelper {
         return name;
     }
 
+    public int getEmpID(String username)
+    {
+//        Query q1 = session.createQuery("Select e from Employee e where e.empEmailId='" +username +"@compassitesinc.com'");
+//        System.out.println(q1);
+//        List<Employee> empIdList = (List<Employee>) q1.list();
+//        for(Employee e : empIdList)
+//        {
+//                sessionEmpId = e.getEmpId();
+//                System.out.println("****" +sessionEmpId);
+//        } 
+        return sessionEmpId;
+    }    
+    
 //    public void openSession() {
 //        SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
 //        session = sessionFactory.openSession();
@@ -594,7 +637,7 @@ public class ContactHelper {
     protected void finalize() throws Throwable {
         try {
             System.out.println("close session..");
-            session.getTransaction().commit();
+            //sssession.getTransaction().commit();
             session.flush();
             session.close();
         } finally {

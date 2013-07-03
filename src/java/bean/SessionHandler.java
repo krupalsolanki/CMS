@@ -34,6 +34,7 @@ public class SessionHandler{
     String verifyUserFlag = "";
 
     Map<String, Object> sessionMap;
+    private int empId;
     
     public String getPassword() {
         return password;
@@ -81,25 +82,6 @@ public class SessionHandler{
         helper = new ContactHelper();
     }
     
-    public String logout()
-    {
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        sessionMap = externalContext.getSessionMap();
-        System.out.println(sessionMap.get("username"));
-        sessionMap.remove("username");
-        System.out.println("**************************************");
-        System.out.println("LOGOUT");
-        System.out.println("**************************************");
-        System.out.println(sessionMap.get("username"));
-        
-        if(sessionMap.get("username")==null)
-        {
-            return "logout";
-        }
-        else
-            return "fail";
-    }
-    
     
     public String login() {
         
@@ -109,9 +91,12 @@ public class SessionHandler{
         verifyUserFlag =  helper.verifyUser(username,password);
 
         if(verifyUserFlag.equals("admin") || verifyUserFlag.equals("user")) {
+            System.out.println("Inside");
+            empId = hiber.getSessionEmpId(username);
+            System.out.println(empId);
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
             sessionMap = externalContext.getSessionMap();
-            sessionMap.put("username", username);
+            sessionMap.put("empId",empId);
            
             
             addedBy = (String) sessionMap.get("username");
@@ -131,6 +116,26 @@ public class SessionHandler{
         FacesContext.getCurrentInstance().addMessage(null, message);
         return "fail";
     }
+    
+    public String logout()
+    {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        sessionMap = externalContext.getSessionMap();
+        System.out.println(sessionMap.get("empId"));
+        sessionMap.remove("empId");
+        System.out.println("**************************************");
+        System.out.println("LOGOUT");
+        System.out.println("**************************************");
+        System.out.println(sessionMap.get("empId"));
+        
+        if(sessionMap.get("username")==null)
+        {
+            return "logout";
+        }
+        else
+            return "fail";
+    }
+    
     
 
     
