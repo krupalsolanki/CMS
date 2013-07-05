@@ -9,24 +9,37 @@
                 template="./MainTemplate.xhtml">
 
     <ui:define name="menu">
-        <div id="nav_wrapper">
-            <h:form id="menu">
-            <ul id="nav">
-                <li><a href="index.xhtml">Home</a></li>
-                <li><a href="manageContact.xhtml">Manage Contact</a></li>
-                <li><a href="addContactClient.xhtml">Add Contact</a></li>
-                <li class="current_page_item"><a href="searchClient.xhtml">Search</a></li>
-                <li><a href="mailClient.xhtml">Mail</a></li>
-                <li><a href="aboutusClient.xhtml">About us</a></li>
-                <li><p:commandLink value="Logout" action="#{sessionHandler.logout()}" style="font-size: 14px;"></p:commandLink></li>
-            </ul>
-            </h:form>
-        </div>
+        <h:form>
+            <c:if test="#{sessionHandler.getSessionVariables()==true}">
+                <div id="nav_wrapper">
+                    <ul id="nav">
+                        <li><a href="index.xhtml">Home</a></li>
+                        <li><a href="manageContact.xhtml">Manage Contact</a></li>
+                        <li ><a href="addContactClient.xhtml">Add Contact</a></li>
+                        <li class="current_page_item"><a href="searchClient.xhtml">Search</a></li>
+                        <li><a href="mailClient.xhtml">Mail</a></li>
+                        <li><a href="aboutusClient.xhtml">About us</a></li>
+                        <li><h:commandLink value="Logout" action="#{sessionHandler.logout()}"></h:commandLink></li>
+                    </ul><bt/>
+                </div>
+            </c:if>
+            <c:if test="#{sessionHandler.getSessionVariables()==false}">
+                <div id="nav_wrapper">
+                    <ul id="nav">
+                        <li><a href="index.xhtml">Home</a></li>
+                        <li><a href="manageContact.xhtml">Manage Contact</a></li>
+                        <li ><a href="addContactClient.xhtml">Add Contact</a></li>
+                        <li class="current_page_item"><a href="searchClient.xhtml">Search</a></li>
+                        <li><a href="aboutusClient.xhtml">About us</a></li>
+                        <li><h:commandLink value="Logout" action="#{sessionHandler.logout()}"></h:commandLink></li>
+                    </ul><bt/>
+                </div>
+            </c:if>
+        </h:form>
     </ui:define>
     <ui:define name="content">
 
         <h:form >
-            <p:growl id="messages" />
             <img src="resources/images/search_detail.png" style="margin-left: -10px"></img>
             <!--            <h2>Search By</h2>-->
             <h3>    
@@ -93,19 +106,21 @@
                 <p:column headerText="Designation">
                     <h:outputText value="#{item.designation}"/>
                 </p:column>
-                
-<!--                <p:column headerText="Interests">
-                    <h:outputLink id="lnk" value="#">  
-                        <h:outputText value="More Details" />  
-                    </h:outputLink>  
-                    <p:tooltip for="lnk">  
-                        <h:outputText value="#{hiberManage.getInterestsForUser(item.email)}" />  
-                    </p:tooltip>
-                </p:column>-->
+
+                <!--                <p:column headerText="Interests">
+                                    <h:outputLink id="lnk" value="#">  
+                                        <h:outputText value="More Details" />  
+                                    </h:outputLink>  
+                                    <p:tooltip for="lnk">  
+                                        <h:outputText value="#{hiberManage.getInterestsForUser(item.email)}" />  
+                                    </p:tooltip>
+                                </p:column>-->
 
             </p:dataTable>
             <br/>
-            <p:commandButton value="Send Email" id="send" style="margin:10px 0" action="#{hiberManage.getEmailIds()}" />  
+            <c:if test="#{sessionHandler.getSessionVariables()==true}">
+                <p:commandButton value="Send Email" id="send" style="margin:10px 0" action="#{hiberManage.getEmailIds()}" />  
+            </c:if>
         </h:form>
 
 

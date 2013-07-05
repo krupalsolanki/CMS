@@ -25,16 +25,12 @@
                 </div>
                 <!--logo_container end here-->
                 <h:form id="myform">
-                <div id="nav_wrapper">
-                    <ul id="nav">
-                        
-
+                    <div id="nav_wrapper">
+                        <ul id="nav">
                             <p:growl id="message" />
-
                             <li>
                                 <span style="color: black; font-weight: bold">Username <p:inputText id="username" required="true" requiredMessage="Please enter username!" 
                                                                                                     value="#{sessionHandler.username}" tabindex="1" maxlength="100">
-
                                     </p:inputText><br/></span>
                                 <h6 align="right"><h:outputLabel value="@compassitesinc.com" /></h6>
                             </li>
@@ -44,10 +40,9 @@
 
                             <div align="right"><p:commandButton id="loginButton" action="#{sessionHandler.login()}" tabindex="3" value="Login" update="message" />
                             </div>
-                        
-                    </ul>
-                </div>
-               </h:form>
+                        </ul>
+                    </div>
+                </h:form>
                 <!--#nav_wrapper--> 
                 <div class="grid_12">
                     <div class="divider"></div>
@@ -151,11 +146,9 @@
                     <!--grid_3 start here-->
                     <div class="grid_2 nomarginright paddingleft">
                         <h1>Connect with us</h1>
-                        <div class="social_icon"><a href="#"><img src="resources/images/fb.png" width="16" height="16" alt="" /></a></div>
-                        <div class="social_icon"><a href="#"><img src="resources/images/twt.png" width="16" height="16" alt="" /></a></div>
-                        <div class="social_icon"><a href="#"><img src="resources/images/in.png" width="16" height="16" alt="" /></a></div>
-                        <div class="social_icon"><a href="#"><img src="resources/images/di.png" width="16" height="16" alt="" /></a></div>
-
+                        <div class="social_icon"><a href="https://www.facebook.com/compassites" target="_blank"><img src="resources/images/fb.png" width="16" height="16" alt="" /></a></div>
+                        <div class="social_icon"><a href="https://www.twitter.com/compassites" target="_blank"><img src="resources/images/twt.png" width="16" height="16" alt="" /></a></div>
+                        <div class="social_icon"><a href="http://www.linkedin.com/company/compassites-software-solutions" target="_blank"><img src="resources/images/in.png" width="16" height="16" alt="" /></a></div>
                     </div>
                     <div class="copyright">© Copyright 2013</div>
                     <!--grid_3 end here--> 

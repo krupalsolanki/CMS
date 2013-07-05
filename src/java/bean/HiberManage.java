@@ -1,6 +1,5 @@
 package bean;
 
-
 import helperConverter.ContactHelper;
 import entities.Contacts;
 import java.util.ArrayList;
@@ -32,15 +31,11 @@ public class HiberManage {
     Session session = null;
     SessionHandler sessionhandler;
     Map<String, Object> sessionMap;
-    
     private String emailMessage;
-
-
     private String firstNameSignUp;
     private String lastNameSignUp;
     private String nickName;
     private int categoryId;
-
     private String emailForSignUp;
     private String password;
     private String addedBy;
@@ -82,15 +77,19 @@ public class HiberManage {
     public int doesEmployeeEmailExistFlag;
     public static String contactsToSend;
     private List<String> images;
-
     public int sessionEmpId;
-    
     // The following are the getter and setter methods for the properties
     private int empId;
-    
-    
-    
-    
+    private String category;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public String getNickName() {
         return nickName;
     }
@@ -106,8 +105,6 @@ public class HiberManage {
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
-    
-    
 
     public String getEmailForSignUp() {
         return emailForSignUp;
@@ -140,8 +137,6 @@ public class HiberManage {
     public void setLastNameSignUp(String lastNameSignUp) {
         this.lastNameSignUp = lastNameSignUp;
     }
-    
-    
 
     public String getFirstName() {
         return firstName;
@@ -423,6 +418,8 @@ public class HiberManage {
         distinctDesignations = helper.getDistinctDesignations();
         distinctLocations = helper.getDistinctLocations();
         distinctInterests = helper.getDistinctInterests();
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        sessionMap = externalContext.getSessionMap();
     }
 
     public Contacts getSelected() {
@@ -435,7 +432,10 @@ public class HiberManage {
 
     public List<Contacts> getContacts() {
         System.out.println("I am in hibermanage");
-
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        sessionMap = externalContext.getSessionMap();
+        System.out.println(sessionMap.get("empid"));
+        System.out.println(sessionMap.get("type"));
         if (selectedLocations != null || selectedNames != null || selectedCompanies != null || selectedDesignations != null || selectedInterests != null) {
             contacts = helper.getUpdatedContacts(selectedNames, selectedCompanies, selectedLocations, selectedDesignations, selectedInterests);
             System.out.println(contacts);
@@ -447,14 +447,14 @@ public class HiberManage {
         return contacts;
     }
 
-    public List<Contacts> getMyContacts(){
+    public List<Contacts> getMyContacts() {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         sessionMap = externalContext.getSessionMap();
-        String username = (String)sessionMap.get("username");
-        myContacts = helper.getMyContacts(username);
+        String empid = sessionMap.get("empid").toString();
+        myContacts = helper.getMyContacts(empid);
         return myContacts;
     }
-    
+
     public void setFieldsToNull() {
         selectedNames = null;
         selectedCompanies = null;
@@ -597,7 +597,8 @@ public class HiberManage {
     }
 
     public String addContact() {
-        String temp = helper.addContact(firstName, lastName, email, mobNo, comName, comLoc, designation, url,notes, selectedInterests,nickName,categoryId);
+        System.out.println("category id "+category);
+        String temp = helper.addContact(firstName, lastName, email, mobNo, comName, comLoc, designation, url, notes, selectedInterests, nickName, categoryId);
         if (temp == "success") {
             isContactAddedFlag = true;
         }
@@ -609,10 +610,11 @@ public class HiberManage {
         comName = null;
         comLoc = null;
         designation = null;
-        url = null;
+        url = null; 
         notes = null;
         selectedInterests = null;
-        
+        nickName = null;
+
         return temp;
     }
 
@@ -641,14 +643,14 @@ public class HiberManage {
         if (!helper.doesEmployeeEmailExist(email)) {
             System.out.println("employee no existss");
             doesEmployeeEmailExistFlag = 0;
-            
+
         } else {
-             System.out.println("employee existss");
-             emailMessage = "Email Already Exists.";
+            System.out.println("employee existss");
+            emailMessage = "Email Already Exists.";
 //            FacesMessage message = new FacesMessage("Password and Confirm Password Should match"); 
             doesEmployeeEmailExistFlag = 1;
-           
-           
+
+
         }
 
     }
@@ -696,23 +698,23 @@ public class HiberManage {
         return helper.addNewUser(emailForSignUp, password, firstNameSignUp, lastNameSignUp);
 
     }
-    
     private String errorMessage;
     private String confirmPassword;
-    public void validatePassword(FacesContext context, UIComponent toValidate, Object value) {     
-        String confirm = (String) value;     
-        UIInput passComp = (UIInput) toValidate.getAttributes().get("passwordComponent");     
-        String password=(String)passComp.getValue();     
-        if (!password.equals(confirm)) {     
-            FacesMessage message = new FacesMessage("Password and Confirm Password Should match"); 
+
+    public void validatePassword(FacesContext context, UIComponent toValidate, Object value) {
+        String confirm = (String) value;
+        UIInput passComp = (UIInput) toValidate.getAttributes().get("passwordComponent");
+        String password = (String) passComp.getValue();
+        if (!password.equals(confirm)) {
+            FacesMessage message = new FacesMessage("Password and Confirm Password Should match");
             System.out.println("password should match");
             errorMessage = "Password and Confirm Password Should match";
-            throw new ValidatorException(message);     
-        }     
-        if(password.equals(confirm)){
+            throw new ValidatorException(message);
+        }
+        if (password.equals(confirm)) {
             errorMessage = null;
         }
-    }     
+    }
 
     /**
      * @return the confirmPassword
@@ -755,14 +757,31 @@ public class HiberManage {
     public void setEmailMessage(String emailMessage) {
         this.emailMessage = emailMessage;
     }
-    
-    public int getSessionEmpId(String username)
-    {
-        int empId =7; 
+
+    public int getSessionEmpId(String username) {
+        int empId = 7;
         System.out.println("Inside Hiber : SessionEMpID");
         return empId;
     }
-    
-    
-    
+
+    public String categoryRedirect() {
+        System.out.println("catergory : " + category);
+
+        if (category.equals("1")) {
+            categoryId=1;
+            this.setCategoryId(1);
+            return "personal";
+        } else if(category.equals("2")) {
+            categoryId=2;
+            this.setCategoryId(2);
+            return "business";
+        } else if(category.equals("3")) {
+            categoryId=3;
+            this.setCategoryId(3);
+            return "business";
+        } else{
+            return "fail";
+        }
+        
+    }
 }

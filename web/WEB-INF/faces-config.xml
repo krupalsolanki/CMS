@@ -7,21 +7,6 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
     <navigation-rule>
-        <from-view-id>/addContact.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>error</from-outcome>
-            <to-view-id>/addContact.xhtml</to-view-id>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>success</from-outcome>
-            <to-view-id>/addContact.xhtml</to-view-id>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>logout</from-outcome>
-            <to-view-id>/login.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
         <from-view-id>/mailClient.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>can</from-outcome>
@@ -61,20 +46,24 @@
             <from-outcome>logout</from-outcome>
             <to-view-id>/login.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>personal</from-outcome>
+            <to-view-id>/contactPersonalClient.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>business</from-outcome>
+            <to-view-id>/contactBusinessClient.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>/login.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>admin</from-outcome>
+            <from-outcome>login</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-outcome>fail</from-outcome>
             <to-view-id>/login.xhtml</to-view-id>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>user</from-outcome>
-            <to-view-id>/employeeHome.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
@@ -96,14 +85,14 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/employeeHome.xhtml</from-view-id>
+        <from-view-id>/privateMessageClient.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>logout</from-outcome>
             <to-view-id>/login.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/privateMessageClient.xhtml</from-view-id>
+        <from-view-id>/aboutusClient.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>logout</from-outcome>
             <to-view-id>/login.xhtml</to-view-id>

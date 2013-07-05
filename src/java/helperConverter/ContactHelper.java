@@ -20,13 +20,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 public class ContactHelper {
+
     Map<String, Object> sessionMap;
     String email = null;
     Session session = null;
     public static List<Contacts> cont;
     private int sessionEmpId;
-   
-   
 
     public ContactHelper() {
         //this.session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -211,33 +210,23 @@ public class ContactHelper {
 //        closeSession();
         return contactList;
     }
-    
-    public List getMyContacts(String username)
-    {
+
+    public List getMyContacts(String empid) {
         List<Contacts> contactList = null;
-        int empId = 0;
+        
+        int empIdInt = Integer.parseInt(empid);
         try {
-            
-            Query q1 = session.createQuery("Select e from Employee e where e.empEmailId='" +username +"@compassitesinc.com'");
-            List<Employee> empIdList = (List<Employee>) q1.list();
-            for(Employee e : empIdList)
-            {
-                empId = e.getEmpId();
-                System.out.println("****" + empId);
-            } 
-            
-            Query q3 = session.createQuery("from Contacts c where c.contactId in (Select cl.contacts.contactId from Contactlist cl where cl.employee.empId=" + empId+ ")");
+
+            Query q3 = session.createQuery("from Contacts c where c.contactId in (Select cl.contacts.contactId from Contactlist cl where cl.employee.empId=" + empIdInt + ")");
             //Query q3 = session.createQuery("from Contacts c where c.contactId in (Select cl from Contactlist cl where cl.Employee.empId=1)");
             contactList = (List<Contacts>) q3.list();
             System.out.println("contactList" + contactList.size());
-          
-            } catch (Exception e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return contactList;
     }
-    
-    
     boolean flag = false;
 
     public String addContact(String firstName, String lastName, String email, String mobNo, String comName, String comLoc, String designation, String url, String notes, List<String> selectedInterests, String nickName, int categoryId) {
@@ -277,18 +266,31 @@ public class ContactHelper {
         System.out.println("Phone No : " + mobNo);
         boolean check = false;
         System.out.println("check1.." + firstName);
-        if (firstName != null && lastName != null && email != null && comName != null && comLoc != null && designation != null) {
-            session.save(contact);
-            if (selectedInterests != null) {
-                addInterestBridge(selectedInterests);
+        if (categoryId == 1) {
+            if (firstName != null && lastName != null && email != null) {
+                session.save(contact);
+                if (selectedInterests != null) {
+                    addInterestBridge(selectedInterests);
+                }
+
+
+                addContactList(email, nickName, categoryId);
+                System.out.println("save in the database..");
+                check = true;
             }
+        } else {
+            if (firstName != null && lastName != null && email != null && comName != null && comLoc != null && designation != null) {
+                session.save(contact);
+                if (selectedInterests != null) {
+                    addInterestBridge(selectedInterests);
+                }
 
 
-            addContactList(email, nickName, categoryId);
-            System.out.println("save in the database..");
-            check = true;
+                addContactList(email, nickName, categoryId);
+                System.out.println("save in the database..");
+                check = true;
+            }
         }
-
         if (check) {
 //            closeSession();
             flag = true;
@@ -421,7 +423,8 @@ public class ContactHelper {
     public boolean editSelectedContact(String email, String firstName, String lastName, String comName, String comLoc, String phoneNo, String designation) {
 
 //        openSession();
-        Query query = session.createQuery("update Contacts set firstName = :firstName , lastName = :lastName , companyName = :companyName , companyLoc = :companyLoc , phoneNo = :phoneNo , designation = :designation where email = :email ");
+        session.beginTransaction();
+        Query query = session.createSQLQuery("update Contacts set firstName = :firstName , lastName = :lastName , companyName = :companyName , companyLoc = :companyLoc , phoneNo = :phoneNo , designation = :designation where email = :email ");
 
         System.out.println("Yeh hai first name " + firstName + " | " + lastName + " | " + comName + " | " + comLoc + " | " + phoneNo + " | " + email);
         query.setParameter("firstName", firstName);
@@ -433,20 +436,22 @@ public class ContactHelper {
         query.setParameter("email", email);
 
         int result = query.executeUpdate();
-
+        System.out.println("update executed");
 //        closeSession();
+        session.getTransaction().commit();;
         return true;
 
     }
 
     public boolean deleteSelectedContact(String email) {
 
+        session.beginTransaction();
 //        openSession();
         System.out.println("Email in hiber :" + email);
-        Query query = session.createQuery("delete from Contacts c where c.email = :email ");
+        Query query = session.createSQLQuery("delete from Contacts where email = :email ");
         query.setParameter("email", email);
 
-        session.beginTransaction();
+        
         int result = query.executeUpdate();
         session.getTransaction().commit();
 
@@ -491,11 +496,11 @@ public class ContactHelper {
         return intlist;
     }
 
-    public String verifyUser(String username, String password) {
-        List<Employee> empl = new ArrayList<Employee>();
+    public List verifyUser(String username, String password) {
+        List<String> sessionList = new ArrayList<String>();
+        
         System.out.println("i am here login helper");
-        String email = username + "@compassitesinc.com";
-
+        String emailForLogin = username + "@compassitesinc.com";
         String md5Password = null;
 
         try {
@@ -506,46 +511,43 @@ public class ContactHelper {
             //Converts message digest value in base 16 (hex)
             md5Password = new BigInteger(1, digest.digest()).toString(16);
 
-        } catch (NoSuchAlgorithmException e) {
-
-            e.printStackTrace();
-        }
-
-        try {
-            String hql_query = "select e from Employee e where e.empEmailId = '" + email + "'";
+            String hql_query = "select e from Employee e where e.empEmailId = '" + emailForLogin + "'";
             Query query = (Query) session.createQuery(hql_query);
             //prepare statement
             List<Employee> empList = (List<Employee>) query.list();
             String checkEmail = "";
             String checkPassword = "";
             int checkType = 0;
+            
 
-            checkEmail = empList.get(0).getEmpEmailId();
-            checkPassword = empList.get(0).getPassword();
-            checkType = empList.get(0).getType();
-
-
-            System.out.println("email " + checkEmail);
-            System.out.println("password " + checkPassword);
-            System.out.println("email " + username);
-            System.out.println("password " + password);
-            if (checkEmail.equals(email)) {
+//            System.out.println("email " + checkEmail);
+//            System.out.println("password " + checkPassword);
+//            System.out.println("email " + username);
+//            System.out.println("password " + password);
+            if (empList.size() > 0) {
+                checkPassword = empList.get(0).getPassword();
                 if (checkPassword.equals(md5Password)) {
-                    System.out.println("sadsd");
-
+                    checkType = empList.get(0).getType();
+                    String empIdForSession = empList.get(0).getEmpId().toString();
+                   
+                    sessionList.add(empIdForSession);
+                    
                     if (checkType == 1) {
                         // Go to admin Page
-                        return "admin";
-
+                        sessionList.add("admin");
+                        return sessionList;
                     } else {
-                        return "user";
+                        sessionList.add("user");
+                        return sessionList;
                     }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "false";
+        sessionList.add("0");
+        sessionList.add("false");
+        return sessionList;
 
     }
 
@@ -581,8 +583,8 @@ public class ContactHelper {
             sessionMap.put("username", email);
             SessionHandler sh = new SessionHandler();
             email = email.replaceAll("@compassitesinc.com", "");
-            System.out.println("email after replacement is "+email);
-            sh.setAddedBy((String) sessionMap.get("email")); 
+            System.out.println("email after replacement is " + email);
+            sh.setAddedBy((String) sessionMap.get("email"));
             System.out.println("Session :" + email);
 
             return "user";
@@ -591,26 +593,25 @@ public class ContactHelper {
             return "fail";
         }
     }
-    
+
     public String getNameForEmail(String emailToSend) {
-        
+
         String hql_query = "select c from Contacts c where c.email='" + emailToSend + "'";
         Query query = (Query) session.createQuery(hql_query);
         List<Contacts> con = (List<Contacts>) query.list();
         int contactId = con.get(0).getContactId();
-        
+
         String hql_query2 = "select cl from Contactlist cl where cl.contacts.contactId='" + contactId + "'";
         Query query2 = (Query) session.createQuery(hql_query2);
         List<Contactlist> conList = (List<Contactlist>) query2.list();
-                
+
         String firstName = conList.get(0).getEmployee().getFirstName();
         String lastName = conList.get(0).getEmployee().getLastName();
-        String name = firstName+ " " +lastName;
+        String name = firstName + " " + lastName;
         return name;
     }
 
-    public int getEmpID(String username)
-    {
+    public int getEmpID(String username) {
 //        Query q1 = session.createQuery("Select e from Employee e where e.empEmailId='" +username +"@compassitesinc.com'");
 //        System.out.println(q1);
 //        List<Employee> empIdList = (List<Employee>) q1.list();
@@ -620,8 +621,8 @@ public class ContactHelper {
 //                System.out.println("****" +sessionEmpId);
 //        } 
         return sessionEmpId;
-    }    
-    
+    }
+
 //    public void openSession() {
 //        SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
 //        session = sessionFactory.openSession();

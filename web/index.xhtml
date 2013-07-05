@@ -3,7 +3,8 @@
 
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:p="http://primefaces.org/ui"
-    xmlns:h="http://java.sun.com/jsf/html">
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>HandShake</title>
@@ -14,102 +15,118 @@
         <script type="text/javascript" src="resources/js/min.js"></script>
         <script  type="text/javascript" src="resources/js/script.js"></script>
     </head>
-    
+
     <body> 
         <h:form>
-        <div class="container_12"> 
-            <!--grid_12 start here-->
-            <div class="grid_12"> 
-                <!--logo_container start here-->
-                <div id="logo_container"><img src="resources/images/logo.png" height="70"></img>
-                    <div class="clear"></div>
+            <div class="container_12"> 
+                <!--grid_12 start here-->
+                <div class="grid_12"> 
+                    <!--logo_container start here-->
+                    <div id="logo_container"><img src="resources/images/logo.png" height="70"></img>
+                        <div class="clear"></div>
+                    </div>
+                    <!--logo_container end here-->
+
+
+                    <c:if test="#{sessionHandler.getSessionVariables()==true}">
+                        <div id="nav_wrapper">
+                            <ul id="nav">
+                                <li class="current_page_item"><a href="index.xhtml">Home</a></li>
+                                <li><a href="manageContact.xhtml">Manage Contact</a></li>
+                                <li ><a href="addContactClient.xhtml">Add Contact</a></li>
+                                <li><a href="searchClient.xhtml">Search</a></li>
+                                <li><a href="mailClient.xhtml">Mail</a></li>
+                                <li><a href="aboutusClient.xhtml">About us</a></li>
+                                <li><h:commandLink value="Logout" action="#{sessionHandler.logout()}"></h:commandLink></li>
+                            </ul><bt/>
+                        </div>
+                    </c:if>
+                    <c:if test="#{sessionHandler.getSessionVariables()==false}">
+                        <div id="nav_wrapper">
+                            <ul id="nav">
+                                <li class="current_page_item"><a href="index.xhtml">Home</a></li>
+                                <li><a href="manageContact.xhtml">Manage Contact</a></li>
+                                <li ><a href="addContactClient.xhtml">Add Contact</a></li>
+                                <li><a href="searchClient.xhtml">Search</a></li>
+                                <li><a href="aboutusClient.xhtml">About us</a></li>
+                                <li><h:commandLink value="Logout" action="#{sessionHandler.logout()}"></h:commandLink></li>
+                            </ul><bt/>
+                        </div>
+                    </c:if>
+
+                    <!--#nav_wrapper--> 
+                    <div class="grid_12">
+                        <div class="divider"></div>
+                    </div>  
                 </div>
-                <!--logo_container end here-->
-                <div id="nav_wrapper">
-                    <ul id="nav">
-                        <li class="current_page_item"><a href="index.xhtml">Home</a></li>
-                        <li><a href="manageContact.xhtml">Manage Contact</a></li>
-                        <li ><a href="addContactClient.xhtml">Add Contact</a></li>
-                        <li><a href="searchClient.xhtml">Search</a></li>
-                        <li><a href="mailClient.xhtml">Mail</a></li>
-                        <li><a href="aboutusClient.xhtml">About us</a></li>
-                        <li><h:commandLink value="Logout" action="#{sessionHandler.logout()}"></h:commandLink></li>
-                    </ul><bt/>
-                    <p:growl id="messages" />
+                <!--grid_12 end here-->
+                <div class="clear"></div>
+                <!--grid_12 start here-->
+                <div class="grid_12" style="margin-left: 50px">
+                    <div id="slider">
+                        <div id="slideshow">
+                            <div class="slide_entry">
+                                <ul>
+                                    <li>
+                                        <img src="resources/images/handshake1.png" ></img>
+                                    </li>
+                                    <li>
+
+                                        <p class="subtitle">HandShake, Connect Seamlessly</p>
+                                        <img src="resources/images/logo.png" ></img>
+                                    </li>
+                                </ul>
+
+                                <div id="number"></div>
+                            </div>
+                            <!-- end slide_entry_full div --> 
+                        </div>
+                        <!-- end slideshow_full div --> 
+                    </div>
+                    <!--slider end here--> 
                 </div>
-                <!--#nav_wrapper--> 
+                <!--grid_12 end here-->
+                <div class="clear"></div>
+                <!--grid_3 start here-->
+                <div style="margin-left: 165px;" class="grid_3">
+                    <div class="circle"><a href="addContactClient.xhtml"><img src="resources/images/add.png" width="140" height="131" alt="" /></a></div>
+                </div>
+                <!--grid_3 end here--> 
+                <!--grid_3 start here-->
+                <div class="grid_3">
+                    <div class="circle"><a href="searchClient.xhtml"><img src="resources/images/Search.png" width="140" height="131" alt="" /></a></div>
+                </div>
+                <!--grid_3 end here--> 
+                <!--grid_3 start here-->
+                <div class="grid_3">
+                    <div class="circle"><a href="mailClient.xhtml"><img src="resources/images/mail.png" width="140" height="131" alt="" /></a></div>
+                </div>
+                <!--grid_3 end here--> 
+                <!--grid_12 start here-->
                 <div class="grid_12">
                     <div class="divider"></div>
-                </div>  
-            </div>
-            <!--grid_12 end here-->
-            <div class="clear"></div>
-            <!--grid_12 start here-->
-            <div class="grid_12" style="margin-left: 50px">
-                <div id="slider">
-                    <div id="slideshow">
-                        <div class="slide_entry">
-                            <ul>
-                                <li>
-                                    <img src="resources/images/handshake1.png" ></img>
-                                </li>
-                                <li>
-
-                                    <p class="subtitle">HandShake, Connect Seamlessly</p>
-                                    <img src="resources/images/logo.png" ></img>
-                                </li>
-                            </ul>
-
-                            <div id="number"></div>
-                        </div>
-                        <!-- end slide_entry_full div --> 
-                    </div>
-                    <!-- end slideshow_full div --> 
                 </div>
-                <!--slider end here--> 
-            </div>
-            <!--grid_12 end here-->
-            <div class="clear"></div>
-            <!--grid_3 start here-->
-            <div style="margin-left: 165px;" class="grid_3">
-                <div class="circle"><a href="addContactClient.xhtml"><img src="resources/images/add.png" width="140" height="131" alt="" /></a></div>
-            </div>
-            <!--grid_3 end here--> 
-            <!--grid_3 start here-->
-            <div class="grid_3">
-                <div class="circle"><a href="searchClient.xhtml"><img src="resources/images/Search.png" width="140" height="131" alt="" /></a></div>
-            </div>
-            <!--grid_3 end here--> 
-            <!--grid_3 start here-->
-            <div class="grid_3">
-                <div class="circle"><a href="mailClient.xhtml"><img src="resources/images/mail.png" width="140" height="131" alt="" /></a></div>
-            </div>
-            <!--grid_3 end here--> 
-            <!--grid_12 start here-->
-            <div class="grid_12">
-                <div class="divider"></div>
-            </div>
-            <!--grid_12 end here-->
-            <div class="clear"></div>
-            <!--grid_12 start here-->
-            <div class="grid_12"> 
-                <!--footer start here-->
-                <div id="footer"> 
-                    <!--grid_3 start here-->
-                    <div class="grid_2 nomarginright paddingleft">
-                        <h1>Connect with us</h1>
+                <!--grid_12 end here-->
+                <div class="clear"></div>
+                <!--grid_12 start here-->
+                <div class="grid_12"> 
+                    <!--footer start here-->
+                    <div id="footer"> 
+                        <!--grid_3 start here-->
+                        <div class="grid_2 nomarginright paddingleft">
+                            <h1>Connect with us</h1>
                             <div class="social_icon"><a href="https://www.facebook.com/compassites" target="_blank"><img src="resources/images/fb.png" width="16" height="16" alt="" /></a></div>
                             <div class="social_icon"><a href="https://www.twitter.com/compassites" target="_blank"><img src="resources/images/twt.png" width="16" height="16" alt="" /></a></div>
                             <div class="social_icon"><a href="http://www.linkedin.com/company/compassites-software-solutions" target="_blank"><img src="resources/images/in.png" width="16" height="16" alt="" /></a></div>
-                            
 
+
+                        </div>
+                        <div class="copyright">© Copyright 2013</div>
+                        <!--grid_3 end here--> 
                     </div>
-                    <div class="copyright">© Copyright 2013</div>
-                    <!--grid_3 end here--> 
                 </div>
             </div>
-        </div>
-        <br/>
+            <br/>
         </h:form>
     </body>
 </html>
