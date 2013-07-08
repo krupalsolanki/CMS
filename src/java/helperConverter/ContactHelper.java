@@ -350,8 +350,12 @@ public class ContactHelper {
             for (Contacts c : conList) {
                 conId = c.getContactId();
             }
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            sessionMap = externalContext.getSessionMap();
+            int empId = Integer.parseInt(sessionMap.get("empid").toString());
+            System.out.println("empiddd" +empId);
             Employee emp = new Employee();
-            emp.setEmpId(1);
+            emp.setEmpId(empId);
             Contacts c = new Contacts();
             c.setContactId(conId);
             Contactlist cl = new Contactlist();
