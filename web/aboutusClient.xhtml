@@ -9,8 +9,7 @@
                 template="./MainTemplate.xhtml">
 
     <ui:define name="menu">
-        <h:form>
-            <c:if test="#{sessionHandler.getSessionVariables()==true}">
+<c:if test="#{sessionHandler.getSessionVariables()==true}">
                 <div id="nav_wrapper">
                     <ul id="nav">
                         <li><a href="index.xhtml">Home</a></li>
@@ -35,11 +34,10 @@
                     </ul><bt/>
                 </div>
             </c:if>
-        </h:form>
+        </h:form>        
     </ui:define>
     <ui:define name="content">
         <img src="resources/images/aboutusdetail.png" style="margin-left: -5px"></img>
-        
     </ui:define>
 
 </ui:composition>

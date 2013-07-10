@@ -5,15 +5,18 @@
 package bean;
 
 import entities.Contacts;
+import entities.Employee;
 import helperConverter.ContactHelper;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.mail.MessagingException;
 import mail.SendEmail;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -46,6 +49,15 @@ public class mailBean implements Serializable {
     public String subject;
     private List<Contacts> selectedContacts;
     private ContactHelper helper = new ContactHelper();
+    Map<String, Object> sessionMap;
+
+    public Map<String, Object> getSessionMap() {
+        return sessionMap;
+    }
+
+    public void setSessionMap(Map<String, Object> sessionMap) {
+        this.sessionMap = sessionMap;
+    }
 
     public void openSession() {
         SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
@@ -59,6 +71,7 @@ public class mailBean implements Serializable {
         session.flush();
         session.close();
     }
+
     public mailBean() {
     }
 
@@ -71,7 +84,7 @@ public class mailBean implements Serializable {
     }
 
     public String getTo() {
-        count=0;
+        count = 0;
         return to;
     }
 
@@ -95,38 +108,57 @@ public class mailBean implements Serializable {
         this.selectedContacts = selectedContacts;
     }
     List<Contacts> contactList = null;
+
     public String sendContent() throws MessagingException, UnsupportedEncodingException {
         openSession();
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mail Sent", "Your Mail has been sent.");
         FacesContext.getCurrentInstance().addMessage(null, message);
 
         String htmltext = content.replaceAll("\n", "<br/>");
-        
-     
+
+
         SendEmail se = new SendEmail(subject);
         String s[] = to.split(",");
         String from = "default";
 
         for (int i = 0; i < s.length; i++) {
             System.out.println(s[i]);
-            Query q = session.createQuery("select c from Contacts c where c.email ='"+s[i]+"'");
+            Query q = session.createQuery("select c from Contacts c where c.email ='" + s[i] + "'");
+            System.out.println("check 1...");
             contactList = (List<Contacts>) q.list();
-            System.out.println("contact list size :"+contactList.size());
+            System.out.println("contact list size :" + contactList.size());
             String firstName = contactList.get(0).getFirstName();
             String lastName = contactList.get(0).getLastName();
+            System.out.println("first " + firstName + " - " + lastName);
 //            String notes = contactList.get(0).getNotes();
-            from = helper.getNameForEmail(s[i]);
-            
-           se.composeSend(s[i], htmltext, contactList,from);
-        }
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            sessionMap = externalContext.getSessionMap();
+            System.out.println("sessonnnnnnnnnnnnnnn  " + sessionMap.get("type") + " " + sessionMap.get("empid"));
+            if (sessionMap.get("type").equals("admin")) {
+                from = helper.getNameForEmail(s[i]);
+            } else {
+//                ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                sessionMap = externalContext.getSessionMap();
+                int id = Integer.parseInt(sessionMap.get("empid").toString());
+                String hql_query1;
+                hql_query1 = "select e from Employee e where e.empId=" + id;
+                Query query1 = (Query) session.createQuery(hql_query1);
+                List<Employee> cont = (List<Employee>) query1.list();
+                String fName = cont.get(0).getFirstName();
+                String lName = cont.get(0).getLastName();
+                from = fName + " " + lName;
+                System.out.println("name " + from);
+            }
 
+            se.composeSend(s[i], htmltext, contactList, from);
+        }
         sentFlag = true;
         return "success";
     }
 
     public void onComplete() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mail Sent", "Your Mail has been sent."));
- }
+    }
 
     public static void setEmails(String searched) {
         to = searched;
@@ -141,36 +173,30 @@ public class mailBean implements Serializable {
     public boolean isMailSent() {
         return sentFlag;
     }
-    /**
-     * @return the progress
-     */
+    
     private Integer progress;
     private static int count;
 
     public Integer getProgress() {
-        
+
         if (count == 0) {
             progress = 0;
             count++;
         } else {
             progress = count;
-            
+
             progress = progress + (int) (Math.random() * 35);
             count = progress;
-            
-            if (progress >=  100) {
+
+            if (progress >= 100) {
                 progress = 100;
                 count = 0;
-                
             }
 
         }
         return progress;
     }
 
-    /**
-     * @param progress the progress to set
-     */
     public void setProgress(Integer progress) {
         this.progress = progress;
     }

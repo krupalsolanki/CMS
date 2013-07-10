@@ -112,15 +112,15 @@
                                         <h:outputText value="More Details" />  
                                     </h:outputLink>  
                                     <p:tooltip for="lnk">  
-                                        <h:outputText value="#{hiberManage.getInterestsForUser(item.email)}" />  
+                                        <h:outputText value="{hiberManage.getInterestsForUser(item.email)}" />  
                                     </p:tooltip>
                                 </p:column>-->
 
             </p:dataTable>
             <br/>
-            <c:if test="#{sessionHandler.getSessionVariables()==true}">
-                <p:commandButton value="Send Email" id="send" style="margin:10px 0" action="#{hiberManage.getEmailIds()}" />  
-            </c:if>
+
+            <p:commandButton value="Send Email" id="send" style="margin:10px 0" action="#{hiberManage.getEmailIds()}" />  
+
         </h:form>
 
 

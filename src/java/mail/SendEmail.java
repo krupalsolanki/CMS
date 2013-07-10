@@ -31,7 +31,7 @@ public class SendEmail {
 
             subjectOfMail = subject;
             fromMail = "Compassites Software Solutions Pvt Ltd.";
-            toMail = "satyam.mgs@gmail.com";
+//            toMail = "satyam.mgs@gmail.com";
 
             // bodyOfMail="Hi<br>Ye humare mail ka badan hai.."
             //        + "Is likhit vakyakhand ke samapt hone ke baad ek chitra prakat hona chahiye,"
@@ -51,7 +51,7 @@ public class SendEmail {
             transport.connect("compassitessolution@gmail.com", "developer@compass");
 
 
-            System.out.println("Email Sent to " + toMail);
+//            System.out.println("Email Sent to " + toMail);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,7 +60,6 @@ public class SendEmail {
     public void composeSend(String toMail, String content, List<Contacts> contactList,String fromName) throws MessagingException, UnsupportedEncodingException {
         
         fromMail = fromName;
-        
         Message msg = new MimeMessage(session);
         //For Read Receipt
         msg.setHeader("Return-Receipt-To", "<compassitessolution@gmail.com>");
@@ -73,6 +72,7 @@ public class SendEmail {
         msg.setFrom(from);
         Multipart multipart = new MimeMultipart("related");
         BodyPart htmlPart = new MimeBodyPart();
+        
         content = content.replaceAll("##email##", toMail);
         content = content.replaceAll("##firstName##", contactList.get(0).getFirstName());
         content = content.replaceAll("##lastName##", contactList.get(0).getLastName());
