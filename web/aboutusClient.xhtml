@@ -9,7 +9,8 @@
                 template="./MainTemplate.xhtml">
 
     <ui:define name="menu">
-<c:if test="#{sessionHandler.getSessionVariables()==true}">
+        <h:form>
+            <c:if test="#{sessionHandler.getSessionVariables()==true}">
                 <div id="nav_wrapper">
                     <ul id="nav">
                         <li><a href="index.xhtml">Home</a></li>
