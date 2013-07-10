@@ -229,7 +229,7 @@ public class ContactHelper {
     }
     boolean flag = false;
 
-    public String addContact(String firstName, String lastName, String email, String mobNo, String comName, String comLoc, String designation, String url, String notes, List<String> selectedInterests, String nickName, int categoryId) {
+    public String addContact(String firstName, String lastName, String email, String mobNo, String comName, String comLoc, String designation, String url, String notes, List<String> selectedInterests, String nickName, int categoryId, int rating) {
 
         this.email = email;
         System.out.println("addContact()");
@@ -274,7 +274,7 @@ public class ContactHelper {
                 }
 
 
-                addContactList(email, nickName, categoryId);
+                addContactList(email, nickName, categoryId, rating);
                 System.out.println("save in the database..");
                 check = true;
             }
@@ -286,7 +286,7 @@ public class ContactHelper {
                 }
 
 
-                addContactList(email, nickName, categoryId);
+                addContactList(email, nickName, categoryId, rating);
                 System.out.println("save in the database..");
                 check = true;
             }
@@ -338,7 +338,7 @@ public class ContactHelper {
         return "success";
     }
 
-    public String addContactList(String email, String nickName, int categoryId) {
+    public String addContactList(String email, String nickName, int categoryId, int rating) {
 
         System.out.print(email);
         try {
@@ -350,8 +350,12 @@ public class ContactHelper {
             for (Contacts c : conList) {
                 conId = c.getContactId();
             }
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            sessionMap = externalContext.getSessionMap();
+            int empId = Integer.parseInt(sessionMap.get("empid").toString());
+            System.out.println("empiddd" +empId);
             Employee emp = new Employee();
-            emp.setEmpId(1);
+            emp.setEmpId(empId);
             Contacts c = new Contacts();
             c.setContactId(conId);
             Contactlist cl = new Contactlist();
@@ -360,7 +364,7 @@ public class ContactHelper {
 
             session.save(cl);
             System.out.println("Contact Id is " + c.getContactId());
-            addContactRelation(conId, nickName, categoryId);
+            addContactRelation(conId, nickName, categoryId, rating);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -369,7 +373,7 @@ public class ContactHelper {
         return "success";
     }
 
-    public String addContactRelation(int conId, String nickName, int categoryId) {
+    public String addContactRelation(int conId, String nickName, int categoryId, int rating) {
         try {
 
             String hql_query = "select c from Contactlist c where c.contacts.contactId=" + conId;
@@ -386,6 +390,7 @@ public class ContactHelper {
             Contactrelation cr = new Contactrelation();
             cr.setNickName(nickName);
             cr.setCategoryId(categoryId);
+            cr.setRating(rating);
             cr.setContactlist(cl);
             session.save(cr);
             session.getTransaction().commit();

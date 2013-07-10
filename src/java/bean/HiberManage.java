@@ -17,6 +17,7 @@ import javax.faces.validator.ValidatorException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SlideEndEvent;
 
 import org.primefaces.event.UnselectEvent;
 
@@ -81,7 +82,18 @@ public class HiberManage {
     // The following are the getter and setter methods for the properties
     private int empId;
     private String category;
+    private int rating;
 
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+    
+    
+    
     public String getCategory() {
         return category;
     }
@@ -598,7 +610,7 @@ public class HiberManage {
 
     public String addContact() {
         System.out.println("category id "+category);
-        String temp = helper.addContact(firstName, lastName, email, mobNo, comName, comLoc, designation, url, notes, selectedInterests, nickName, categoryId);
+        String temp = helper.addContact(firstName, lastName, email, mobNo, comName, comLoc, designation, url, notes, selectedInterests, nickName, categoryId, rating);
         if (temp == "success") {
             isContactAddedFlag = true;
         }
@@ -784,4 +796,9 @@ public class HiberManage {
         }
         
     }
+    
+     public void onSlideEnd(SlideEndEvent event) {  
+        FacesMessage msg = new FacesMessage("Rating", "Value : " + event.getValue());  
+        FacesContext.getCurrentInstance().addMessage(null, msg);  
+    }  
 }
