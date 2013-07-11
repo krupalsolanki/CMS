@@ -46,18 +46,25 @@
         <img src="resources/images/conDetail.png" style="margin-left: -5px"></img>
         <h:form id="myform">
             <p:messages id="allmsgs"/>
-            <h5>
-                Select the category :
-                <p:selectOneMenu value="#{hiberManage.category}" id="categoryList" >  
+            <table>
+                <tr>
+               <td><h4>Select the category : </h4></td>
+               <td>&nbsp;&nbsp;&nbsp;</td>
+               <td><p:selectOneMenu value="#{hiberManage.category}" id="categoryList" >  
                     <f:selectItem itemLabel="select one" itemValue="0"  noSelectionOption="true"/>
                     <f:selectItem itemLabel="Personal" itemValue="1" />
                     <f:selectItem itemLabel="Business" itemValue="2" />  
                     <f:selectItem itemLabel="Both" itemValue="3" />
                 </p:selectOneMenu>  
-                <p:commandButton id="adButton" value="Add"  style="margin:20px; width: 75px "
+               </td>
+               </tr>
+               <tr>
+                   <td colspan="5" align="right"><p:commandButton id="adButton" value="Add"  style="margin:20px; width: 75px "
                                  action="#{hiberManage.categoryRedirect()}" ajax="false">
-                </p:commandButton> 
-            </h5>
+                        </p:commandButton>
+                   </td>
+                </tr>
+            </table>
         </h:form>
 
 

@@ -3,18 +3,17 @@
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
         <Node id="contactPersonalClient.xhtml" x="545" y="24" zoom="true"/>
-        <Node id="login.xhtml" x="76" y="486" zoom="true"/>
-        <Node id="privateMessageClient.xhtml" x="1150" y="150" zoom="true"/>
-        <Node id="newAddContactClient.xhtml" x="37" y="722" zoom="true"/>
-        <Node id="contactBusinessClient.xhtml" x="178" y="25" zoom="true"/>
-        <Node id="searchClient.xhtml" x="650" y="150" zoom="true"/>
         <Node id="mailClient.xhtml" x="930" y="268" zoom="true"/>
+        <Node id="login.xhtml" x="41" y="335" zoom="true"/>
+        <Node id="MainTemplate.xhtml" x="-9" y="412" zoom="true"/>
         <Node id="index.xhtml" x="150" y="150" zoom="true"/>
-        <Node id="MainTemplate.xhtml" x="346" y="718" zoom="true"/>
+        <Node id="privateMessageClient.xhtml" x="988" y="147" zoom="true"/>
         <Node id="addContactClient.xhtml" x="379" y="154" zoom="true"/>
+        <Node id="contactBusinessClient.xhtml" x="178" y="25" zoom="true"/>
         <Node id="add.xhtml" x="912" y="25" zoom="true"/>
-        <Node id="manageContact.xhtml" x="146" y="275" zoom="true"/>
-        <Node id="aboutusClient.xhtml" x="509" y="288" zoom="true"/>
+        <Node id="manageContact.xhtml" x="146" y="245" zoom="true"/>
+        <Node id="searchClient.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="aboutusClient.xhtml" x="502" y="251" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>
