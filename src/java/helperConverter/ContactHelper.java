@@ -301,7 +301,6 @@ public class ContactHelper {
 //            closeSession();
             return "error";
         }
-
     }
 
     public String addInterestBridge(List<String> intList) {

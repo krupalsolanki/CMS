@@ -22,7 +22,7 @@
                         <li class="current_page_item"><a href="addContactClient.xhtml">Add Contact</a></li>
                         <li><a href="searchClient.xhtml">Search</a></li>
                         <li><a href="mailClient.xhtml">Mail</a></li>
-                        <li><a href="aboutusClient.xhtml">About us</a></li>
+                        <li><a href="analyticsClient.xhtml">Analytics</a></li>
                         <li><h:commandLink value="Logout" action="#{sessionHandler.logout()}"></h:commandLink></li>
                     </ul><bt/>
                 </div>
@@ -34,7 +34,7 @@
                         <li><a href="manageContact.xhtml">Manage Contact</a></li>
                         <li class="current_page_item"><a href="addContactClient.xhtml">Add Contact</a></li>
                         <li><a href="searchClient.xhtml">Search</a></li>
-                        <li><a href="aboutusClient.xhtml">About us</a></li>
+                        <li><a href="mailClient.xhtml">Mail</a></li>
                         <li><h:commandLink value="Logout" action="#{sessionHandler.logout()}"></h:commandLink></li>
                     </ul><bt/>
                 </div>
@@ -46,7 +46,7 @@
             <h5>
                 <img src="resources/images/conDetail.png" style="margin-left: -5px"></img>
                 <table class="addContactTable" >
-                    <c:if test="#{hiberManage.isContactAddedFlag}">
+                    <c:if test="{hiberManage.isContactAddedFlag}">
                         <p:growl id="msg"/>
                     </c:if>
                     <tr><td>
@@ -92,14 +92,12 @@
                                          value="#{hiberManage.email}">
 
                                 <p:ajax event="change" update="myform:emailmessage myform:email myform:addButton" listener="#{hiberManage.validateEmail(hiberManage.email)}" />
-
                                 <f:validateRegex
                                     pattern="^[A-Za-z0-9][A-Za-z0-9_-]+(\.[_A-Za-z0-9-]+)*[A-Za-z0-9]@[A-Za-z0-9]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                             </p:inputText>
                             <br/><p:message id="emailmessage" for="email" />
                             <!--<p:watermark for="email" value="Email Address *" />-->
                         </td>
-
                         <td rowspan="3" style="vertical-align: top;"><h4>Notes</h4></td>
                         <td rowspan="3">
                             <p class="mailContent">
@@ -109,7 +107,6 @@
                             <br/><h:outputText id="counter" />
                         </td>
                     </tr>
-
                     <tr>
                         <td><h4>Contact No</h4></td>
                         <td><p:inputMask id="contactNo" tabindex="4" value="#{hiberManage.mobNo}" 
@@ -144,25 +141,25 @@
                         </td>
                         <td><h4>Nick Name</h4></td>
                         <td><p:inputText id="nickName" maxlength="120" value="#{hiberManage.nickName}" style="text-transform: capitalize" />
-
                         </td>
                     </tr>
                     <tr>
                         <td><h4>Rating</h4><h:outputText value="*" style="color: red;" /></td>  
-                         <p:growl id="growl" showDetail="true" /> 
-                         <td>   <h:panelGrid columns="1" style="margin-bottom:10px">   
+                        <!--<p:growl id="growlRating" showDetail="true" />--> 
+                        <td><h:panelGrid columns="1" style="margin-bottom:10px">   
                                 <p:slider for="txt6" style="width:150px"  maxValue="10" minValue="0"
-                                   displayTemplate="#{hiberManage.rating}">
-                                    <p:ajax event="slideEnd" listener="#{hiberManage.onSlideEnd}" update="growl" />
+                                          displayTemplate="#{hiberManage.rating}">
+                                    <p:ajax event="slideEnd" listener="#{hiberManage.onSlideEnd}"  />
                                 </p:slider>
-                                </h:panelGrid>
-                                <h:inputHidden id="txt6" value="#{hiberManage.rating}" />   
-                         </td>
+                            </h:panelGrid>
+                            <h:inputHidden id="txt" value="#{hiberManage.rating}" />   
+                        </td>
+                        <td><p:outputLabel id="txt6" value="#{hiberManage.rating}" /></td>
                     </tr>
                     <tr>
                         <td colspan="2">
                             <p:commandButton id="addButton" value="Add" disabled="#{hiberManage.doesEmailExistFlag!=0}" style="margin:20px; width: 75px "
-                                             action="#{hiberManage.addContact()}" ajax="false" onclick="textbox.show();" tabindex="12" update="msg" actionListener="#{hiberManage.showAdddedDetails()}">
+                                             action="#{hiberManage.addContact()}" ajax="false" onclick="textbox.show();" tabindex="12" actionListener="#{hiberManage.showAdddedDetails()}">
                                 <f:setPropertyActionListener value="#{sessionHandler.addedBy}" 
                                                              target="#{hiberManage.addedBy}"/>
                             </p:commandButton>

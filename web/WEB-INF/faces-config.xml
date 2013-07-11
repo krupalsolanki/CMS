@@ -65,6 +65,10 @@
             <from-outcome>fail</from-outcome>
             <to-view-id>/login.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>user</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
@@ -104,12 +108,20 @@
             <from-outcome>logout</from-outcome>
             <to-view-id>/login.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/addContactClient.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>/contactPersonalClient.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>logout</from-outcome>
             <to-view-id>/login.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/addContactClient.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>

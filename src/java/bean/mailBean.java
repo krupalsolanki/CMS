@@ -7,10 +7,18 @@ package bean;
 import entities.Contacts;
 import entities.Employee;
 import helperConverter.ContactHelper;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.mail.MessagingException;
@@ -109,7 +117,7 @@ public class mailBean implements Serializable {
     }
     List<Contacts> contactList = null;
 
-    public String sendContent() throws MessagingException, UnsupportedEncodingException {
+    public String sendContent() throws MessagingException, UnsupportedEncodingException, IOException {
         openSession();
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mail Sent", "Your Mail has been sent.");
         FacesContext.getCurrentInstance().addMessage(null, message);
@@ -120,8 +128,10 @@ public class mailBean implements Serializable {
         SendEmail se = new SendEmail(subject);
         String s[] = to.split(",");
         String from = "default";
-
-        for (int i = 0; i < s.length; i++) {
+        int totalsent = 0;
+        totalsent = s.length;
+        
+        for (int i = 0; i < totalsent; i++) {
             System.out.println(s[i]);
             Query q = session.createQuery("select c from Contacts c where c.email ='" + s[i] + "'");
             System.out.println("check 1...");
@@ -152,7 +162,22 @@ public class mailBean implements Serializable {
 
             se.composeSend(s[i], htmltext, contactList, from);
         }
+        if(totalsent > 0)
+        {
+            try {
+                String toCall = "http://54.225.23.238/mailsent.php?count=" +totalsent+"&subject=" +subject;
+                URL url = new URL(toCall);
+                URLConnection urlConn = url.openConnection();
+                BufferedReader in = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
+                System.out.println("Total Sent : " +totalsent);
+                in.close();
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(mailBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
         sentFlag = true;
+        to=null;
         return "success";
     }
 

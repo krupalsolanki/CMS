@@ -22,7 +22,7 @@
                         <li><a href="addContactClient.xhtml">Add Contact</a></li>
                         <li><a href="searchClient.xhtml">Search</a></li>
                         <li class="current_page_item"><a href="mailClient.xhtml">Mail</a></li>
-                        <li><a href="aboutusClient.xhtml">About us</a></li>
+                        <li><a href="analyticsClient.xhtml">Analytics</a></li>
                         <li><h:commandLink value="Logout" action="#{sessionHandler.logout()}"></h:commandLink></li>
                     </ul><bt/>
                 </div>
@@ -34,7 +34,7 @@
                         <li><a href="manageContact.xhtml">Manage Contact</a></li>
                         <li><a href="addContactClient.xhtml">Add Contact</a></li>
                         <li><a href="searchClient.xhtml">Search</a></li>
-                        <li><a href="aboutusClient.xhtml">About us</a></li>
+                        <li><a href="mailClient.xhtml">Mail</a></li>
                         <li><h:commandLink value="Logout" action="#{sessionHandler.logout()}"></h:commandLink></li>
                     </ul><bt/>
                 </div>
@@ -70,9 +70,7 @@
                     <tr>
                         <td></td>
                         <td>
-
                             <p:growl id="messages" globalOnly="true" /> 
-
                             <p:commandButton id="showDialogButton" onclick="confirmation.show();" type="button" 
                                              value="Send" widgetVar="sendButton" style="width: 100px;height: 40px"/>
 
@@ -93,8 +91,6 @@
                                     pbAjax.start();
                                     dlg.show();" oncomplete="pbAjax.cancel();" action="#{mailBean.sendContent()}" />  
                 <p:commandButton id="decline" value="No" onclick="confirmation.hide();" type="button" />   
-
-
             </p:confirmDialog> 
 
             <p:dialog header="Your mail is being sent" closable="false" width="800" widgetVar="dlg" showEffect="fade" hideEffect="fade" modal="true">  
@@ -102,10 +98,6 @@
                     <p:ajax event="complete" listener="#{mailBean.onComplete()}" update="messages" />  
                 </p:progressBar>
             </p:dialog> 
-
-
         </h:form>
-
     </ui:define>
-
 </ui:composition>

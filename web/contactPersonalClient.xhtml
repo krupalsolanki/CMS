@@ -22,7 +22,7 @@
                         <li class="current_page_item"><a href="addContactClient.xhtml">Add Contact</a></li>
                         <li><a href="searchClient.xhtml">Search</a></li>
                         <li><a href="mailClient.xhtml">Mail</a></li>
-                        <li><a href="aboutusClient.xhtml">About us</a></li>
+                        <li><a href="analyticsClient.xhtml">Analytics</a></li>
                         <li><h:commandLink value="Logout" action="#{sessionHandler.logout()}"></h:commandLink></li>
                     </ul><bt/>
                 </div>
@@ -34,7 +34,7 @@
                         <li><a href="manageContact.xhtml">Manage Contact</a></li>
                         <li class="current_page_item"><a href="addContactClient.xhtml">Add Contact</a></li>
                         <li><a href="searchClient.xhtml">Search</a></li>
-                        <li><a href="aboutusClient.xhtml">About us</a></li>
+                        <li><a href="mailClient.xhtml">Mail</a></li>
                         <li><h:commandLink value="Logout" action="#{sessionHandler.logout()}"></h:commandLink></li>
                     </ul><bt/>
                 </div>
@@ -136,7 +136,19 @@
                             </p:autoComplete>
                         </td>
                     </tr>
-
+                    <tr>
+                        <td><h4>Rating</h4><h:outputText value="*" style="color: red;" /></td>  
+                        <!--<p:growl id="growlRating" showDetail="true" />--> 
+                        <td><h:panelGrid columns="1" style="margin-bottom:10px">   
+                                <p:slider for="txt6" style="width:150px"  maxValue="10" minValue="0"
+                                          displayTemplate="#{hiberManage.rating}">
+                                    <p:ajax event="slideEnd" listener="#{hiberManage.onSlideEnd}"  />
+                                </p:slider>
+                            </h:panelGrid>
+                            <h:inputHidden id="txt" value="#{hiberManage.rating}" />   
+                        </td>
+                        <td><p:outputLabel id="txt6" value="#{hiberManage.rating}" /></td>
+                    </tr>
                     <tr>
                         <td colspan="2">
                             <p:commandButton id="addButton" value="Add" disabled="#{hiberManage.doesEmailExistFlag!=0}" style="margin:20px; width: 75px "

@@ -78,7 +78,7 @@ public class SendEmail {
         content = content.replaceAll("##lastName##", contactList.get(0).getLastName());
 //        content = content.replaceAll("##notes##", contactList.get(0).getNotes());
         
-        htmlPart.setContent("<html><body>" + content + "<br/>" + "<img src=\"54.225.23.238/test.php?email="+toMail+"\"/></body></html>", "text/html");
+        htmlPart.setContent("<html><body>" + content + "<br/>" + "<img src=\"54.225.23.238/test.php?email="+toMail+ "&subject="+ subjectOfMail +"\"/></body></html>", "text/html");
         multipart.addBodyPart(htmlPart);
         //BodyPart imgPart=new MimeBodyPart();
 
