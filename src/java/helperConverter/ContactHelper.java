@@ -7,6 +7,7 @@ import entities.Contacts;
 import entities.Employee;
 import entities.Interestbridge;
 import entities.Interests;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -515,13 +516,14 @@ public class ContactHelper {
             //Converts message digest value in base 16 (hex)
             md5Password = new BigInteger(1, digest.digest()).toString(16);
 
-            String hql_query = "select e from Employee e where e.empEmailId = '" + emailForLogin + "'";
+            String hql_query = "select e from Employee e  where e.empEmailId = '" + emailForLogin + "'";
             Query query = (Query) session.createQuery(hql_query);
             //prepare statement
             List<Employee> empList = (List<Employee>) query.list();
             String checkEmail = "";
             String checkPassword = "";
             int checkType = 0;
+            System.out.println("am here "+empList.size());
 
 
 //            System.out.println("email " + checkEmail);
@@ -553,7 +555,7 @@ public class ContactHelper {
 
     }
 
-    public String addNewUser(String email, String password, String firstName, String lastName) {
+    public String addNewUser(String email, String password, String firstName, String lastName) throws IOException {
 
         if (!doesEmployeeEmailExist(email)) {
             String md5 = null;
