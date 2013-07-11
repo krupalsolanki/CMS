@@ -706,8 +706,12 @@ public class HiberManage {
         System.out.println("sign up email " + emailForSignUp);
         System.out.println("password " + password);
 
-
-        return helper.addNewUser(emailForSignUp, password, firstNameSignUp, lastNameSignUp);
+        String ans=helper.addNewUser(emailForSignUp, password, firstNameSignUp, lastNameSignUp);
+        emailForSignUp=null;
+        password =null;
+        firstNameSignUp=null;
+        lastNameSignUp=null;
+        return ans;
 
     }
     private String errorMessage;

@@ -153,6 +153,7 @@ public class mailBean implements Serializable {
             se.composeSend(s[i], htmltext, contactList, from);
         }
         sentFlag = true;
+        to=null;
         return "success";
     }
 

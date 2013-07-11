@@ -82,7 +82,7 @@
             </p:dataTable>
             <p:dialog header="Delete Contact" widgetVar="deleteDialog" resizable="false" id="deleteDlg" showEffect="fade" hideEffect="explode" modal="true"> 
                 <h:panelGrid id="delete_contact" columns="2" cellpadding="4" style="margin:0 auto;">
-                    <h:outputText value="ARE YOU SURE YOU WANNA DELETE #{hiberManage.deleteContact.firstName} ?" /><br/><br/>
+                    <h:outputText value="Are you sure you want to Delete #{hiberManage.deleteContact.firstName} ?" /><br/><br/>
 
                     <p:commandButton id="confirm" value="Yes" update="@form" action="#{hiberManage.deleteSelectedContact()}" >
                         <f:param name="some" value="#{hiberManage.deleteContact.email}" />
