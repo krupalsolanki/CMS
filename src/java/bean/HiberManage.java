@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -414,12 +415,14 @@ public class HiberManage{
     }
 
     public Contacts getEditContact() {
-
+        
         return editContact;
     }
 
     public void setEditContact(Contacts editContact) {
+        
         this.editContact = editContact;
+        
     }
 
     public Contacts getDeleteContact() {
@@ -468,11 +471,16 @@ public class HiberManage{
         return contacts;
     }
 
-    public List<Contacts> getMyContacts() {
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+    @PostConstruct
+    public void test(){
+         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         sessionMap = externalContext.getSessionMap();
         String empid = sessionMap.get("empid").toString();
         myContacts = helper.getMyContacts(empid);
+    }
+    
+    public List<Contacts> getMyContacts() {
+       test();
         return myContacts;
     }
 
@@ -577,11 +585,21 @@ public class HiberManage{
 //        return helper.editSelectedContact(email, firstName, lastName, comName, comLoc, phoneNo, designation);
 
         boolean updateContactFlag = helper.editSelectedContact(editCon.getEmail(), editCon.getFirstName(), editCon.getLastName(), editCon.getCompanyName(), editCon.getCompanyLoc(), editCon.getPhoneNo(), editCon.getDesignation());
+        
+        
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        sessionMap = externalContext.getSessionMap();
+        String empid = sessionMap.get("empid").toString();
+        helper = new ContactHelper();
+        myContacts = helper.getMyContacts(empid);
+        
+
+//        myContacts = new ArrayList<Contacts>();
         RequestContext.getCurrentInstance().execute("contactDialog.hide();");
-        RequestContext.getCurrentInstance().update("@form");
-
-        contacts = helper.getContacts();
-
+        RequestContext.getCurrentInstance().update(":form:display_panel");
+        
+        
+        
         return updateContactFlag;
     }
 
@@ -594,7 +612,7 @@ public class HiberManage{
         RequestContext.getCurrentInstance().execute("deleteDialogDialog.hide();");
         RequestContext.getCurrentInstance().update("@form");
 
-        contacts = helper.getContacts();
+//        contacts = helper.getContacts();
 
         return deleteContactFlag;
     }

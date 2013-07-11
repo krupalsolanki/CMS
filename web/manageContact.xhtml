@@ -48,42 +48,44 @@
             <img src="resources/images/manageConDetail.png" style="margin-left: -5px"></img>
 
             <p:separator style="margin-top:20px"/> 
-            <p:dataTable id="display" value="#{hiberManage.myContacts}" paginator="true" rows="10" var="item" style="border:solid 1px">
+            <h:panelGrid id="display_panel" columns="2" cellpadding="4" style="margin:0 auto;">
+                <p:dataTable id="display_datatable_contacts" value="#{hiberManage.myContacts}" paginator="true" rows="10" var="item" style="border:solid 1px">
 
 
-                <p:column headerText="First Name">
-                    <h:outputText value="#{item.firstName}"/>
-                </p:column>
-                <p:column headerText="Last Name">
-                    <h:outputText value="#{item.lastName}"/>
-                </p:column>
-                <p:column headerText="Company Name">
-                    <h:outputText value="#{item.companyName}"/>
-                </p:column>
-                <p:column headerText="Company Location">
-                    <h:outputText value="#{item.companyLoc}"/>
-                </p:column>
-                <p:column headerText="Phone">
-                    <h:outputText value="#{item.phoneNo}"/>
-                </p:column>
-                <p:column headerText="Email">
-                    <h:outputText value="#{item.email}"/>
-                </p:column>
-                <p:column headerText="Designation">
-                    <h:outputText value="#{item.designation}"/>
+                    <p:column headerText="First Name">
+                        <h:outputText value="#{item.firstName}"/>
+                    </p:column>
+                    <p:column headerText="Last Name">
+                        <h:outputText value="#{item.lastName}"/>
+                    </p:column>
+                    <p:column headerText="Company Name">
+                        <h:outputText value="#{item.companyName}"/>
+                    </p:column>
+                    <p:column headerText="Company Location">
+                        <h:outputText value="#{item.companyLoc}"/>
+                    </p:column>
+                    <p:column headerText="Phone">
+                        <h:outputText value="#{item.phoneNo}"/>
+                    </p:column>
+                    <p:column headerText="Email">
+                        <h:outputText value="#{item.email}"/>
+                    </p:column>
+                    <p:column headerText="Designation">
+                        <h:outputText value="#{item.designation}"/>
 
-                </p:column>
-                <p:column style="width:4%">  
-                    <p:commandButton id="selectButton" update=":form:display_contact" oncomplete="contactDialog.show()" icon="ui-icon-pencil" title="View">  
-                        <f:setPropertyActionListener value="#{item}" target="#{hiberManage.editContact}" />  
-                    </p:commandButton>  
-                </p:column>  
-                <p:column style="width:4%"> 
-                    <p:commandButton id="deleteButton" update=":form:delete_contact" oncomplete="deleteDialog.show()" icon="ui-icon-trash" title="Delete">  
-                        <f:setPropertyActionListener value="#{item}" target="#{hiberManage.deleteContact}" />  
-                    </p:commandButton>    
-                </p:column> 
-            </p:dataTable>
+                    </p:column>
+                    <p:column style="width:4%">  
+                        <p:commandButton id="selectButton" update=":editForm:display_edit_contact_dialog" oncomplete="contactDialog.show()" icon="ui-icon-pencil" title="View">  
+                            <f:setPropertyActionListener value="#{item}" target="#{hiberManage.editContact}" />  
+                        </p:commandButton>  
+                    </p:column>  
+                    <p:column style="width:4%"> 
+                        <p:commandButton id="deleteButton" update=":form:delete_contact" oncomplete="deleteDialog.show()" icon="ui-icon-trash" title="Delete">  
+                            <f:setPropertyActionListener value="#{item}" target="#{hiberManage.deleteContact}" />  
+                        </p:commandButton>    
+                    </p:column> 
+                </p:dataTable>
+            </h:panelGrid>
             <p:dialog header="Delete Contact" widgetVar="deleteDialog" resizable="false" id="deleteDlg" showEffect="fade" hideEffect="explode" modal="true"> 
                 <h:panelGrid id="delete_contact" columns="2" cellpadding="4" style="margin:0 auto;">
                     <h:outputText value="ARE YOU SURE YOU WANNA DELETE #{hiberManage.deleteContact.firstName} ?" /><br/><br/>
@@ -95,11 +97,13 @@
 
                 </h:panelGrid>
             </p:dialog>
+        </h:form>
 
+        <h:form id="editForm">
             <p:dialog header="Edit Contact" widgetVar="contactDialog" resizable="false" id="editDlg"  
                       showEffect="fade" hideEffect="explode" modal="true">  
 
-                <h:panelGrid id="display_contact" columns="2" cellpadding="4" style="margin:0 auto;">  
+                <h:panelGrid id="display_edit_contact_dialog" columns="2" cellpadding="4" style="margin:0 auto;">  
 
                     <h:outputText value="Click on the values to edit!" style="font-size: 18px;color: red"/><br/><br/>
 
@@ -130,21 +134,26 @@
                     </p:inplace>
 
                     <h:outputLabel for="inplaceDesignation" value="Designation :" />
-                    <p:inplace id="inplaceDesignation">
-                        <p:inputText value="#{hiberManage.editContact.designation}" />
-                    </p:inplace>
+                    <c:if test="#{hiberManage.editContact.designation==null}">
+                        <p:inplace id="inplaceDesignation" label="edit me">
+                            <p:inputText value="#{hiberManage.editContact.designation}" />
+                        </p:inplace>
+                    </c:if>
+                    <c:if test="#{hiberManage.editContact.designation!=null}">
+                        <p:inplace id="inplaceDesignation" >
+                            <p:inputText value="#{hiberManage.editContact.designation}" />
+                        </p:inplace>
+                    </c:if>
 
                     <p:inputText value="#{hiberManage.editContact.email}" type="hidden"/>
 
-                    <p:commandButton value="Update Contact" update="@form" action="#{hiberManage.editSelectedContact(hiberManage.editContact)}" >
+                    <p:commandButton value="Update Contact" update=":form:display_panel" action="#{hiberManage.editSelectedContact(hiberManage.editContact)}" >
                     </p:commandButton>  
                     <!--<p:commandButton value="Update Contact" action="{hiberManage.editSelectedContact(hiberManage.editContact.email,hiberManage.editContact.firstName,hiberManage.editContact.lastName,hiberManage.editContact.companyName,hiberManage.editContact.companyLoc,hiberManage.editContact.phoneNo,hiberManage.editContact.designation)}"/>--> 
                 </h:panelGrid>  
 
             </p:dialog>  
-
         </h:form>
-
 
     </ui:define>
 

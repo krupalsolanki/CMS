@@ -32,8 +32,8 @@ public class ContactHelper {
         //this.session = HibernateUtil.getSessionFactory().getCurrentSession();
         SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
         session = sessionFactory.openSession();
-        org.hibernate.Transaction tx = session.beginTransaction();
-        session.beginTransaction();
+//        org.hibernate.Transaction tx = session.beginTransaction();
+        //session.beginTransaction();
         System.out.println("opening session");
     }
 
@@ -228,6 +228,7 @@ public class ContactHelper {
         }
         return contactList;
     }
+    
     boolean flag = false;
 
     public String addContact(String firstName, String lastName, String email, String mobNo, String comName, String comLoc, String designation, String url, String notes, List<String> selectedInterests, String nickName, int categoryId, int rating) {
@@ -428,8 +429,10 @@ public class ContactHelper {
 
     public boolean editSelectedContact(String email, String firstName, String lastName, String comName, String comLoc, String phoneNo, String designation) {
 
-//        openSession();
+     
         session.beginTransaction();
+//        openSession();
+       
         Query query = session.createSQLQuery("update Contacts set firstName = :firstName , lastName = :lastName , companyName = :companyName , companyLoc = :companyLoc , phoneNo = :phoneNo , designation = :designation where email = :email ");
 
         System.out.println("Yeh hai first name " + firstName + " | " + lastName + " | " + comName + " | " + comLoc + " | " + phoneNo + " | " + email);
@@ -443,8 +446,9 @@ public class ContactHelper {
 
         int result = query.executeUpdate();
         System.out.println("update executed");
+        
 //        closeSession();
-        session.getTransaction().commit();;
+        session.getTransaction().commit();
         return true;
 
     }
