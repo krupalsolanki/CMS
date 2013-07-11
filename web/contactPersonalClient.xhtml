@@ -9,6 +9,10 @@
                 template="./MainTemplate.xhtml">
 
     <ui:define name="menu">
+        <f:metadata>
+            <f:viewParam name="something" value="#{sessionHandler.addedBy}" />
+            <f:event type="preRenderView" listener="#{sessionHandler.deconnecter}" />
+        </f:metadata>
         <h:form>
             <c:choose >
                 <c:when test="#{sessionHandler.sessionMap.get('type').equals('admin')}">

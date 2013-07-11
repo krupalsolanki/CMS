@@ -5,6 +5,7 @@
 package bean;
 
 import helperConverter.ContactHelper;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
@@ -12,9 +13,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionEvent;
 
 /**
  *
@@ -29,7 +27,7 @@ public class SessionHandler {
     protected String addedBy;
     HiberManage hiber;
     ContactHelper helper;
-    Map<String, Object> sessionMap;
+    Map<String, Object> sessionMap = null;
     private int empId;
 
     public String getPassword() {
@@ -64,12 +62,14 @@ public class SessionHandler {
         this.sessionMap = sessionMap;
     }
 
-    public SessionHandler() {
+    public SessionHandler() throws IOException {
+//        FacesContext.getCurrentInstance().getExternalContext().redirect("/login.xhtml");
+
         System.out.println("i am in session nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
         helper = new ContactHelper();
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         sessionMap = externalContext.getSessionMap();
-        System.out.println("sessonnnnnnnnnnnnnnn  " + sessionMap.get("type") + " " + sessionMap.get("empid"));
+//        System.out.println("sessonnnnnnnnnnnnnnn  " + sessionMap.get("type") + " " + sessionMap.get("empid"));
 
     }
 
@@ -110,25 +110,47 @@ public class SessionHandler {
         return "fail";
     }
 
-    public boolean getSessionVariables() {
+    public boolean getSessionVariables() throws IOException {
+//        FacesContext.getCurrentInstance().getExternalContext().redirect("/login.xhtml");
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         sessionMap = externalContext.getSessionMap();
-        if (sessionMap.get("type").equals("admin")) {
-            return true;
+        if (sessionMap != null) {
+            if (sessionMap.get("type").equals("admin")) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
+
     }
 
     public String logout() {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         sessionMap = externalContext.getSessionMap();
         System.out.println(sessionMap.get("username"));
-        sessionMap.remove("username");
+        sessionMap.remove("type");
+        sessionMap.remove("empid");
+        sessionMap = null;
         System.out.println("**************************************");
         System.out.println("LOGOUT");
         System.out.println("**************************************");
-        System.out.println(sessionMap.get("username"));
+//        System.out.println(sessionMap.get("username"));
         return "logout";
+    }
+
+    public void deconnecter() throws IOException {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        sessionMap = ec.getSessionMap();
+        System.out.println("walters ");
+        if (sessionMap.get("empid") == null) {
+            try {
+
+                ec.redirect(ec.getRequestContextPath() + "/faces/login.xhtml");
+            } catch (IOException ex) {
+            }
+        }
+
     }
 }

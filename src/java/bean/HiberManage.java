@@ -2,7 +2,9 @@ package bean;
 
 import helperConverter.ContactHelper;
 import entities.Contacts;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
@@ -14,6 +16,13 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.primefaces.context.RequestContext;
@@ -26,11 +35,11 @@ import org.primefaces.event.UnselectEvent;
  */
 @ManagedBean
 @RequestScoped
-public class HiberManage {
+public class HiberManage{
 
     Session session = null;
     SessionHandler sessionhandler;
-    Map<String, Object> sessionMap;
+    Map<String, Object> sessionMap = null;
     private String emailMessage;
     private String firstNameSignUp;
     private String lastNameSignUp;
@@ -409,7 +418,7 @@ public class HiberManage {
         this.deleteContact = deleteContact;
     }
 
-    public HiberManage() {
+    public HiberManage() throws IOException {
         editContact = new Contacts();
         deleteContact = new Contacts();
         helper = new ContactHelper();
@@ -689,7 +698,7 @@ public class HiberManage {
         return "browse";
     }
 
-    public String addNewUser() {
+    public String addNewUser() throws IOException {
         validateEmployeeEmail(emailForSignUp);
         System.out.println("sign up email " + emailForSignUp);
         System.out.println("password " + password);
@@ -782,6 +791,16 @@ public class HiberManage {
         } else{
             return "fail";
         }
-        
     }
+    
+    public void checkUserSession() throws IOException {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        sessionMap = externalContext.getSessionMap();
+        
+        if (sessionMap.get("empid") == null) {
+            externalContext.redirect(externalContext.getRequestContextPath() + "/faces/login.xhtml");
+        }
+    }
+
+
 }
