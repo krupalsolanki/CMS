@@ -19,10 +19,10 @@
                     <ul id="nav">
                         <li><a href="index.xhtml">Home</a></li>
                         <li><a href="manageContact.xhtml">Manage Contact</a></li>
-                        <li ><a href="addContactClient.xhtml">Add Contact</a></li>
+                        <li><a href="addContactClient.xhtml">Add Contact</a></li>
                         <li><a href="searchClient.xhtml">Search</a></li>
                         <li><a href="mailClient.xhtml">Mail</a></li>
-                        <li class="current_page_item"><a href="analyticsClient.xhtml">Analytics</a></li>
+                        <li  class="current_page_item"><a href="analyticsClient.xhtml">Analytics</a></li>
                         <li><h:commandLink value="Logout" action="#{sessionHandler.logout()}"></h:commandLink></li>
                     </ul><bt/>
                 </div>
@@ -32,22 +32,24 @@
                     <ul id="nav">
                         <li><a href="index.xhtml">Home</a></li>
                         <li><a href="manageContact.xhtml">Manage Contact</a></li>
-                        <li ><a href="addContactClient.xhtml">Add Contact</a></li>
+                        <li><a href="addContactClient.xhtml">Add Contact</a></li>
                         <li><a href="searchClient.xhtml">Search</a></li>
                         <li><a href="mailClient.xhtml">Mail</a></li>
                         <li><h:commandLink value="Logout" action="#{sessionHandler.logout()}"></h:commandLink></li>
                     </ul><bt/>
                 </div>
             </c:if>
-        </h:form>        
+        </h:form>
     </ui:define>
     <ui:define name="content">
         <img src="resources/images/aboutusdetail.png" style="margin-left: -5px"></img>
-        <iframe src="https://www.google.com" ></iframe>
+        
         <h:form>
-            <table>
+            <table>                <tr>
+                    <td> <h4>Analytical Report </h4></td>
+                </tr>
                 <tr>
-                    <td> <h4><a href="http://54.225.23.238/analytics.php" target="_blank">Analytical Report</a> </h4></td>
+                    <td><center>><iframe src="http://54.225.23.238/analysis-display.php" height="500" width="500" scrolling="auto" frameborder="0" align="middle"></iframe></center></td>
                 </tr>
                 <tr>
                     <td> <h4><a href="http://54.225.23.238/exporter.php" target="_blank">Detailed Information</a> </h4> </td>
@@ -56,6 +58,7 @@
             </table>
 
         </h:form>
+        
     </ui:define>
 
 </ui:composition>

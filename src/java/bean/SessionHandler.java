@@ -114,6 +114,8 @@ public class SessionHandler {
 //        FacesContext.getCurrentInstance().getExternalContext().redirect("/login.xhtml");
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         sessionMap = externalContext.getSessionMap();
+        System.out.println("************************" + sessionMap.get("type"));
+        
         if (sessionMap != null) {
             if (sessionMap.get("type").equals("admin")) {
                 return true;
@@ -123,7 +125,6 @@ public class SessionHandler {
         } else {
             return false;
         }
-
     }
 
     public String logout() {
