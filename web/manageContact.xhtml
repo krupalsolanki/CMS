@@ -74,16 +74,22 @@
                         <h:outputText value="#{item.designation}"/>
 
                     </p:column>
-                    <p:column style="width:4%">  
+                    <p:column style="width:4%" headerText="++Details"> 
+                        <p:commandButton id="other_details" update=":form:display_alldetails_dialog" oncomplete="moreDetails.show()" icon="ui-icon-arrow-4-diag" title="More Details" >
+                            <f:setPropertyActionListener value="#{item}" target="#{hiberManage.editContact}" />
+                        </p:commandButton>
+                    </p:column>
+                    <p:column style="width:4%" headerText="Edit">  
                         <p:commandButton id="selectButton" update=":editForm:display_edit_contact_dialog" oncomplete="contactDialog.show()" icon="ui-icon-pencil" title="View">  
                             <f:setPropertyActionListener value="#{item}" target="#{hiberManage.editContact}" />  
                         </p:commandButton>  
                     </p:column>  
-                    <p:column style="width:4%"> 
+                    <p:column style="width:4%" headerText="Delete"> 
                         <p:commandButton id="deleteButton" update=":form:delete_contact" oncomplete="deleteDialog.show()" icon="ui-icon-trash" title="Delete">  
                             <f:setPropertyActionListener value="#{item}" target="#{hiberManage.deleteContact}" />  
                         </p:commandButton>    
-                    </p:column> 
+                    </p:column>
+
                 </p:dataTable>
             </h:panelGrid>
             <p:dialog header="Delete Contact" widgetVar="deleteDialog" resizable="false" id="deleteDlg" showEffect="fade" hideEffect="explode" modal="true"> 
@@ -96,6 +102,54 @@
                     <p:commandButton id="decline" value="No" onclick="deleteDialog.hide();" type="button" />   
 
                 </h:panelGrid>
+            </p:dialog>
+            <p:dialog header="More Details" widgetVar="moreDetails" resizable="false" id="editDlg"  
+                      showEffect="fade" hideEffect="explode" modal="true">  
+
+                <h:panelGrid id="display_alldetails_dialog" columns="2" cellpadding="4" style="margin:0 auto;">  
+
+                    <h:outputLabel for="inplaceFirstName" value="First Name :" />
+                    <p:inplace id="inplaceFirstName" >
+                        <h:outputText value="#{hiberManage.editContact.firstName}" />
+                    </p:inplace>
+
+                    <h:outputLabel for="inplaceLastName" value="Last Name :" />
+                    <p:inplace id="inplaceLastName" >
+                        <h:outputText value="#{hiberManage.editContact.lastName}" />
+                    </p:inplace>
+
+                    <h:outputLabel for="inplaceComapanyName" value="Comapany Name :" />
+                    <p:inplace id="inplaceComapanyName" >
+                        <h:outputText value="#{hiberManage.editContact.companyName}" />
+                    </p:inplace>
+
+                    <h:outputLabel for="inplaceComapanyLocation" value="Comapany Location :" />
+                    <p:inplace id="inplaceComapanyLocation">
+                        <h:outputText value="#{hiberManage.editContact.companyLoc}" />
+                    </p:inplace>
+
+                    <h:outputLabel for="inplacePhoneNo" value="Phone No :" />
+                    <p:inplace id="inplacePhoneNo">
+                        <h:outputText value="#{hiberManage.editContact.phoneNo}" />
+                    </p:inplace>
+
+                    <h:outputLabel for="inplaceDesignation" value="Designation :" />
+                    <p:inplace id="inplaceDesignation" >
+                        <h:outputText value="#{hiberManage.editContact.designation}" />
+                    </p:inplace>
+
+                    <h:outputLabel for="inplaceEmail" value="Email :" />
+                    <p:inplace id="inplaceEmail">
+                        <h:outputText value="#{hiberManage.editContact.email}" />
+                    </p:inplace>
+                    
+                    <h:outputLabel for="inplaceLinkedIn" value="LinkedInUrl :" />
+                    <p:inplace id="inplaceLinkedIn">
+                        <h:outputText value="#{hiberManage.editContact.linkedInUrl}" />
+                    </p:inplace>
+                    <!--<p:commandButton value="Update Contact" action="{hiberManage.editSelectedContact(hiberManage.editContact.email,hiberManage.editContact.firstName,hiberManage.editContact.lastName,hiberManage.editContact.companyName,hiberManage.editContact.companyLoc,hiberManage.editContact.phoneNo,hiberManage.editContact.designation)}"/>--> 
+                </h:panelGrid>   
+
             </p:dialog>
         </h:form>
 
@@ -134,16 +188,10 @@
                     </p:inplace>
 
                     <h:outputLabel for="inplaceDesignation" value="Designation :" />
-                    <c:if test="#{hiberManage.editContact.designation==null}">
-                        <p:inplace id="inplaceDesignation" label="edit me">
-                            <p:inputText value="#{hiberManage.editContact.designation}" />
-                        </p:inplace>
-                    </c:if>
-                    <c:if test="#{hiberManage.editContact.designation!=null}">
-                        <p:inplace id="inplaceDesignation" >
-                            <p:inputText value="#{hiberManage.editContact.designation}" />
-                        </p:inplace>
-                    </c:if>
+                    <p:inplace id="inplaceDesignation" label="edit me">
+                        <p:inputText value="#{hiberManage.editContact.designation}" />
+                    </p:inplace>
+
 
                     <p:inputText value="#{hiberManage.editContact.email}" type="hidden"/>
 
@@ -154,6 +202,7 @@
 
             </p:dialog>  
         </h:form>
+
 
     </ui:define>
 
