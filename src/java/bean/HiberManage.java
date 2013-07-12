@@ -471,16 +471,12 @@ public class HiberManage{
         return contacts;
     }
 
-    @PostConstruct
-    public void test(){
-         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+    
+    public List<Contacts> getMyContacts() {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         sessionMap = externalContext.getSessionMap();
         String empid = sessionMap.get("empid").toString();
         myContacts = helper.getMyContacts(empid);
-    }
-    
-    public List<Contacts> getMyContacts() {
-       test();
         return myContacts;
     }
 
