@@ -115,18 +115,24 @@ public class SessionHandler {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         sessionMap = externalContext.getSessionMap();
         System.out.println("************************" + sessionMap.get("type"));
-        
-        if (sessionMap != null) {
-            if (sessionMap.get("type").equals("admin")) {
-                return true;
+
+        try {
+            if (sessionMap != null) {
+                if (sessionMap.get("type").equals("admin")) {
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
                 return false;
             }
-        } else {
-            return false;
+        } catch (Exception e) {
+            
         }
+        return false;
     }
 
+    
     public String logout() {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         sessionMap = externalContext.getSessionMap();
