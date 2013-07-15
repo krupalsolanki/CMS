@@ -683,10 +683,7 @@ public class HiberManage{
             emailMessage = "Email Already Exists.";
 //            FacesMessage message = new FacesMessage("Password and Confirm Password Should match"); 
             doesEmployeeEmailExistFlag = 1;
-
-
         }
-
     }
 
     public String getInterestsForUser(String email) {
@@ -727,7 +724,6 @@ public class HiberManage{
         validateEmployeeEmail(emailForSignUp);
         System.out.println("sign up email " + emailForSignUp);
         System.out.println("password " + password);
-
         String ans=helper.addNewUser(emailForSignUp, password, firstNameSignUp, lastNameSignUp);
         emailForSignUp=null;
         password =null;
@@ -735,7 +731,6 @@ public class HiberManage{
         lastNameSignUp=null;
         if(ans.equals("user"))
             isContactAddedFlag=true;
-
         return ans;
     }
     private String errorMessage;
@@ -756,44 +751,26 @@ public class HiberManage{
         }
     }
 
-    /**
-     * @return the confirmPassword
-     */
     public String getConfirmPassword() {
         return confirmPassword;
     }
 
-    /**
-     * @param confirmPassword the confirmPassword to set
-     */
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
 
-    /**
-     * @return the errorMessage
-     */
     public String getErrorMessage() {
         return errorMessage;
     }
 
-    /**
-     * @param errorMessage the errorMessage to set
-     */
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
 
-    /**
-     * @return the emailMessage
-     */
     public String getEmailMessage() {
         return emailMessage;
     }
 
-    /**
-     * @param emailMessage the emailMessage to set
-     */
     public void setEmailMessage(String emailMessage) {
         this.emailMessage = emailMessage;
     }

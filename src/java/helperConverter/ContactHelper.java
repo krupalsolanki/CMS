@@ -597,7 +597,6 @@ public class ContactHelper {
 
             return "user";
         } else {
-
             return "fail";
         }
     }

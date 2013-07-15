@@ -27,7 +27,7 @@
                 <h:form id="myform">
                     <div id="nav_wrapper">
                         <ul id="nav">
-                            <p:growl id="message" />
+                            <h:message for="loginButton" id="message" />
                             <li>
                                 <span style="color: black; font-weight: bold">Username <p:inputText id="username" required="true" requiredMessage="Please enter username!" 
                                                                                                     value="#{sessionHandler.username}" tabindex="1" maxlength="100">
@@ -50,7 +50,6 @@
             <!--grid_12 end here-->
             <div class="clear"></div>
             <div style="margin-left: 15px;">
-
                 <div id="slider" style=" width:500px; float: left;">
                     <div id="slideshow" style=" height: 300px; width:500px; float: left;">
                         <div class="slide_entry" style=" height: 600px; width: 500px; float: left;">
@@ -69,7 +68,6 @@
                     </div>
                     <!-- end slideshow_full div --> 
                 </div>
-
                 <div style="float: right; display: inline-block">
                     <h:form id="signUpForm">
                         <p style="font-size: 25px;">Sign Up </p>
