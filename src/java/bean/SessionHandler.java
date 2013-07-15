@@ -70,11 +70,9 @@ public class SessionHandler {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         sessionMap = externalContext.getSessionMap();
 //        System.out.println("sessonnnnnnnnnnnnnnn  " + sessionMap.get("type") + " " + sessionMap.get("empid"));
-
     }
 
     public String login() {
-
         System.out.println("i am here login session");
         System.out.println("username " + username);
         System.out.println("password " + password);

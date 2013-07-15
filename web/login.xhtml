@@ -37,7 +37,6 @@
                             <li><span style="color: black; font-weight: bold">
                                     Password <p:password id="password"  value="#{sessionHandler.password}" tabindex="2" /></span>
                             </li><br/>
-
                             <div align="right"><p:commandButton id="loginButton" action="#{sessionHandler.login()}" tabindex="3" value="Login" update="message" />
                             </div>
                         </ul>
@@ -46,7 +45,7 @@
                 <!--#nav_wrapper--> 
                 <div class="grid_12">
                     <div class="divider"></div>
-                </div>  
+                </div>
             </div>
             <!--grid_12 end here-->
             <div class="clear"></div>
@@ -60,12 +59,10 @@
                                     <img src="resources/images/handshake_logo_1.png" ></img>
                                 </li>
                                 <li style="width: 500px;">
-
                                     <p class="subtitle" style="width: 300px;">HandShake, Connect Seamlessly</p>
                                     <img src="resources/images/logo.png" ></img>
                                 </li>
                             </ul>
-
                             <div id="number"></div>
                         </div>
                         <!-- end slide_entry_full div --> 
@@ -77,6 +74,9 @@
                     <h:form id="signUpForm">
                         <p style="font-size: 25px;">Sign Up </p>
                         <table class="loginTable" style="margin-top:40px; margin-right:50px; width: 350px;">
+                            <c:if test="#{hiberManage.isContactAddedFlag}">
+                                <p:growl id="msg"/>
+                            </c:if>
                             <tr>
                                 <td>First Name :</td>
                                 <td><h:inputText style="text-transform: capitalize" id="firstNameSign" styleClass="input" value="#{hiberManage.firstNameSignUp}" /></td>
@@ -126,12 +126,11 @@
 
                             <tr>
                                 <td></td>
-                                <td align="right"><h:commandButton id="okbtn" value="Submit" class="button" action="#{hiberManage.addNewUser()}"/></td>
+                                <td align="right"><h:commandButton id="okbtn" value="Submit" class="button" action="#{hiberManage.addNewUser()}" /></td>
                             </tr>
                         </table>
                     </h:form>
                 </div>
-
             </div>
 
             <div class="grid_12">

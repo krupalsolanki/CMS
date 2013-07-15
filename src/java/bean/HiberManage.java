@@ -466,7 +466,6 @@ public class HiberManage{
         } else if (contacts == null) {
             contacts = helper.getContacts();
         }
-
         this.setFieldsToNull();
         return contacts;
     }
@@ -734,8 +733,10 @@ public class HiberManage{
         password =null;
         firstNameSignUp=null;
         lastNameSignUp=null;
-        return ans;
+        if(ans.equals("user"))
+            isContactAddedFlag=true;
 
+        return ans;
     }
     private String errorMessage;
     private String confirmPassword;
