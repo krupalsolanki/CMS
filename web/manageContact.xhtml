@@ -67,8 +67,9 @@
                     <p:column headerText="Phone">
                         <h:outputText value="#{item.phoneNo}"/>
                     </p:column>
-                    <p:column headerText="Email">
-                        <h:outputText value="#{item.email}"/>
+                    <p:column headerText="Category">
+                            <h:outputText value="#{hiberManage.getAllDetails(item.contactId).categoryId==1?'personal':hiberManage.getAllDetails(item.contactId).categoryId==2?'business':'both'}"/>
+                        
                     </p:column>
                     <p:column headerText="Designation">
                         <h:outputText value="#{item.designation}"/>
@@ -77,6 +78,7 @@
                     <p:column style="width:4%" headerText="Details"> 
                         <p:commandButton id="other_details" update=":form:display_alldetails_dialog" oncomplete="moreDetails.show()" icon="ui-icon-arrow-4-diag" title="More Details" >
                             <f:setPropertyActionListener value="#{item}" target="#{hiberManage.editContact}" />
+                            <f:setPropertyActionListener value="#{hiberManage.getAllDetails(item.contactId)}" target="#{hiberManage.otherDetails}" />
                         </p:commandButton>
                     </p:column>
                     <p:column style="width:4%" headerText="Edit">  
@@ -147,6 +149,35 @@
                     <p:inplace id="inplaceLinkedIn">
                         <h:outputText value="#{hiberManage.editContact.linkedInUrl}" />
                     </p:inplace>
+                    
+                    <h:outputLabel for="inplaceNickName" value="NickName :" />
+                    <p:inplace id="inplaceNickName">        
+                        <h:outputText value="#{hiberManage.otherDetails.nickName}" />
+                    </p:inplace>
+                    
+                    <h:outputLabel for="inplaceRating" value="Rating :" />
+                    <p:inplace id="inplaceRating">
+                        <h:outputText value="#{hiberManage.otherDetails.rating}" />
+                    </p:inplace>
+                    
+                    <h:outputLabel for="inplaceNotes" value="Notes :" />
+                    <p:inplace id="inplaceNotes">
+                        <h:outputText value="#{hiberManage.otherDetails.notes}" />
+                    </p:inplace>
+                    
+                    <h:outputLabel for="inplaceCategory" value="Category :" />
+                    <p:inplace id="inplaceCategory">
+                        <c:if test="#{hiberManage.otherDetails.categoryId==1}">
+                            <h:outputText value="Personal" />
+                        </c:if>
+                        <c:if test="#{hiberManage.otherDetails.categoryId==2}">
+                            <h:outputText value="Business" />
+                        </c:if>
+                        <c:otherwise>
+                            <h:outputText value="Both" />
+                        </c:otherwise>
+                    </p:inplace>
+                    
                     <!--<p:commandButton value="Update Contact" action="{hiberManage.editSelectedContact(hiberManage.editContact.email,hiberManage.editContact.firstName,hiberManage.editContact.lastName,hiberManage.editContact.companyName,hiberManage.editContact.companyLoc,hiberManage.editContact.phoneNo,hiberManage.editContact.designation)}"/>--> 
                 </h:panelGrid>   
 
@@ -188,10 +219,10 @@
                     </p:inplace>
 
                     <h:outputLabel for="inplaceDesignation" value="Designation :" />
-                    <p:inplace id="inplaceDesignation" label="edit me">
+                    <p:inplace id="inplaceDesignation" rendered="#{hiberManage.editContact.designation!=''}">
                         <p:inputText value="#{hiberManage.editContact.designation}" />
                     </p:inplace>
-
+                    <p:inputText value="#{hiberManage.editContact.designation}" rendered="#{hiberManage.editContact.designation==''}" />
 
                     <p:inputText value="#{hiberManage.editContact.email}" type="hidden"/>
 

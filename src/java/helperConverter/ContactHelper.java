@@ -638,6 +638,15 @@ public class ContactHelper {
         }
         return name;
     }
+    public Contactrelation getAllDetails(int contactIdForDetails) {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        sessionMap = externalContext.getSessionMap();
+        int empid = Integer.parseInt(sessionMap.get("empid").toString());
+        String hql_query = "select cr from Contactrelation cr where cr.contactlist.contacts.contactId = " + contactIdForDetails +" and cr.contactlist.employee.empId="+empid;
+        Query query = (Query) session.createQuery(hql_query);
+        List<Contactrelation> crList = query.list();
+        return crList.get(0);
+    }
 
     public int getEmpID(String username) {
 //        Query q1 = session.createQuery("Select e from Employee e where e.empEmailId='" +username +"@compassitesinc.com'");

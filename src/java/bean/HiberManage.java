@@ -1,5 +1,6 @@
 package bean;
 
+import entities.Contactrelation;
 import helperConverter.ContactHelper;
 import entities.Contacts;
 import java.io.IOException;
@@ -57,6 +58,7 @@ public class HiberManage{
     List<Contacts> myContacts;
     public List<Contacts> conts;
     private Contacts editContact;
+    private Contactrelation otherDetails;
     private Contacts deleteContact;
     ContactHelper helper = new ContactHelper();
     private int recordCount = 20;
@@ -411,6 +413,14 @@ public class HiberManage{
         
         this.editContact = editContact;
         
+    }
+
+    public Contactrelation getOtherDetails() {
+        return otherDetails;
+    }
+
+    public void setOtherDetails(Contactrelation otherDetails) {
+        this.otherDetails = otherDetails;
     }
 
     public Contacts getDeleteContact() {
@@ -810,4 +820,7 @@ public class HiberManage{
          FacesContext context = FacesContext.getCurrentInstance();
          context.addMessage(null, new FacesMessage("The contact has been added."));
      }
+     public Contactrelation getAllDetails(int contactIdForDetails) {
+        return helper.getAllDetails(contactIdForDetails);
+    }
 }
