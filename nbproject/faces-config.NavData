@@ -7,6 +7,7 @@
         <Node id="login.xhtml" x="28" y="333" zoom="true"/>
         <Node id="MainTemplate.xhtml" x="-9" y="412" zoom="true"/>
         <Node id="index.xhtml" x="150" y="150" zoom="true"/>
+        <Node id="analyticsClient.xhtml" x="400" y="150" zoom="true"/>
         <Node id="privateMessageClient.xhtml" x="988" y="147" zoom="true"/>
         <Node id="addContactClient.xhtml" x="379" y="154" zoom="true"/>
         <Node id="contactBusinessClient.xhtml" x="164" y="27" zoom="true"/>

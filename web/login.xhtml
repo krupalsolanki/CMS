@@ -27,12 +27,12 @@
                 <h:form id="myform">
                     <div id="nav_wrapper">
                         <ul id="nav">
-                            <h:message for="loginButton" id="message" />
+                            <p:growl id="message" showDetail="true" />
                             <li>
                                 <span style="color: black; font-weight: bold">Username <p:inputText id="username" required="true" requiredMessage="Please enter username!" 
                                                                                                     value="#{sessionHandler.username}" tabindex="1" maxlength="100">
                                     </p:inputText><br/></span>
-                                <h6 align="right"><h:outputLabel value="@compassitesinc.com" /></h6>
+                                <h5 align="right" style="margin-left: 110px;"><h:outputLabel value="@compassitesinc.com" /></h5>
                             </li>
                             <li><span style="color: black; font-weight: bold">
                                     Password <p:password id="password"  value="#{sessionHandler.password}" tabindex="2" /></span>
@@ -77,11 +77,24 @@
                             </c:if>
                             <tr>
                                 <td>First Name :</td>
-                                <td><h:inputText style="text-transform: capitalize" id="firstNameSign" styleClass="input" value="#{hiberManage.firstNameSignUp}" /></td>
+                                <td><h:inputText style="text-transform: capitalize" id="firstNameSign" styleClass="input" value="#{hiberManage.firstNameSignUp}" 
+                                                 required="true" requiredMessage="Please Enter First Name!"
+                                                 validatorMessage="Please Enter Alphabets only!">
+                                    <f:validateRegex
+                                            pattern="[A-Za-z]+" />
+                                    </h:inputText>
+                                    
+                                    <br/><h:message for="firstNameSign" /></td>
                             </tr>
                             <tr>
                                 <td>Last Name :</td>
-                                <td><h:inputText id="lastNameSign" style="text-transform: capitalize" styleClass="input" value="#{hiberManage.lastNameSignUp}" /></td>
+                                <td><h:inputText id="lastNameSign" style="text-transform: capitalize" styleClass="input" value="#{hiberManage.lastNameSignUp}" 
+                                                 required="true" requiredMessage="Please Enter Last Name!"
+                                                 validatorMessage="Please Enter Alphabets only!">
+                                    <f:validateRegex
+                                            pattern="[A-Za-z]+" />
+                                    </h:inputText>
+                                    <br/><h:message for="lastNameSign"/></td>
                             </tr>
                             <tr>
                                 <td>Email :</td>
@@ -91,8 +104,9 @@
                                                  styleClass="input"
                                                  value="#{hiberManage.emailForSignUp}">
                                         <f:validateRegex
-                                            pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                                            pattern="[A-Za-z]+\.[A-Za-z]+" />
                                     </h:inputText>
+                                    <h5 align="right" style="margin-left: 40px;"><h:outputLabel value="@compassitesinc.com" /></h5>
                                     <br/><h:message for="emailSign"  />
 
                                 </td>
@@ -101,27 +115,21 @@
                                 <td>
                                     Password: </td>
                                 <td>
-                                    <h:inputSecret binding="#{passwordComponent}" id="pwd" required="true" requiredMessage="Please Enter Password" styleClass="input" value="#{hiberManage.password}" />     
+                                    <h:inputSecret binding="#{passwordComponent}" id="pwd" required="true" requiredMessage="Please Enter Password" styleClass="input" value="#{hiberManage.password}" > 
+                                   </h:inputSecret>
+                                    <br/><h:message for="pwd"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>  
                                     Confirm Password: </td>
                                 <td>
-                                    <h:inputSecret id="confirm" required="#{not empty passwordComponent.value}" requiredMessage="Please Enter Confirm Password" styleClass="input" validator="#{hiberManage.validatePassword}" value="#{hiberManage.confirmPassword}"> 
+                                    <h:inputSecret id="confirm" required="TRUE" requiredMessage="Please Enter Confirm Password" styleClass="input" validator="#{hiberManage.validatePassword}" value="#{hiberManage.confirmPassword}"> 
                                         <f:attribute name="passwordComponent" value="#{passwordComponent}"> </f:attribute>
-
                                     </h:inputSecret>     
-                                    <br/><h:message for="pwd" style="margin-left: 30px;"/>
+                                    <br/><h:message for="confirm"/>
                                 </td>
                             </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <h:outputText id="passError" value="#{hiberManage.errorMessage}" style="color: red;" />
-                                    <h:outputText style="margin-left:160px; color: red" value="#{hiberManage.emailMessage}" />
-                                </td>
-                            </tr>
-
                             <tr>
                                 <td></td>
                                 <td align="right"><h:commandButton id="okbtn" value="Submit" class="button" action="#{hiberManage.addNewUser()}" /></td>
@@ -130,7 +138,6 @@
                     </h:form>
                 </div>
             </div>
-
             <div class="grid_12">
                 <div class="divider"></div>
             </div>

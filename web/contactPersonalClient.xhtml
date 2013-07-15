@@ -146,7 +146,7 @@
                     <tr>
                         <td colspan="2">
                             <p:commandButton id="addButton" value="Add" disabled="#{hiberManage.doesEmailExistFlag!=0}" style="margin:20px; width: 75px "
-                                             action="#{hiberManage.addContact()}" ajax="false" onclick="textbox.show();" tabindex="12" update="msg" actionListener="#{hiberManage.showAdddedDetails()}">
+                                             action="#{hiberManage.addContact()}" ajax="false" onclick="textbox.show();" tabindex="12" update="msg" actionListener="#{hiberManage.showAddedDetails()}">
                                 <f:setPropertyActionListener value="#{sessionHandler.addedBy}" 
                                                              target="#{hiberManage.addedBy}"/>
                             </p:commandButton>

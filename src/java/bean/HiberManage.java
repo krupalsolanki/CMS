@@ -4,10 +4,8 @@ import helperConverter.ContactHelper;
 import entities.Contacts;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -17,18 +15,10 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SlideEndEvent;
-
 import org.primefaces.event.UnselectEvent;
 
 /**
@@ -102,8 +92,6 @@ public class HiberManage{
         this.rating = rating;
     }
     
-    
-    
     public String getCategory() {
         return category;
     }
@@ -120,7 +108,7 @@ public class HiberManage{
         this.nickName = nickName;
     }
 
-    public int getCategoryId() {
+    public int getCategoryId(){
         return categoryId;
     }
 
@@ -692,9 +680,11 @@ public class HiberManage{
 
     }
 
-    public void showAdddedDetails() {
+    
+    public void showSignUpMsg()
+    {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("The contact has been Added."));
+        context.addMessage(null, new FacesMessage("The user has been added."));
     }
 
     //code for images in login
@@ -721,6 +711,7 @@ public class HiberManage{
     }
 
     public String addNewUser() throws IOException {
+        emailForSignUp = emailForSignUp+"@compassitesinc.com";
         validateEmployeeEmail(emailForSignUp);
         System.out.println("sign up email " + emailForSignUp);
         System.out.println("password " + password);
@@ -729,8 +720,6 @@ public class HiberManage{
         password =null;
         firstNameSignUp=null;
         lastNameSignUp=null;
-        if(ans.equals("user"))
-            isContactAddedFlag=true;
         return ans;
     }
     private String errorMessage;
@@ -815,4 +804,10 @@ public class HiberManage{
         FacesMessage msg = new FacesMessage("Rating", "Value : " + event.getValue());  
         FacesContext.getCurrentInstance().addMessage(null, msg);  
     }  
+     
+     public void showAddedDetails()
+     {
+         FacesContext context = FacesContext.getCurrentInstance();
+         context.addMessage(null, new FacesMessage("The contact has been added."));
+     }
 }

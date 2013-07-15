@@ -56,7 +56,7 @@ public class ContactHelper {
         List<String> contactList = null;
         try {
 
-            Query q = session.createQuery("select distinct c.companyName from Contacts as c ");
+            Query q = session.createQuery("select distinct c.companyName from Contacts as c where c.companyName!=''");
             contactList = (List<String>) q.list();
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,7 +70,7 @@ public class ContactHelper {
         List<String> contactList = null;
         try {
 
-            Query q = session.createQuery("select distinct c.companyLoc from Contacts as c ");
+            Query q = session.createQuery("select distinct c.companyLoc from Contacts as c where c.companyLoc!=''");
             contactList = (List<String>) q.list();
         } catch (Exception e) {
             e.printStackTrace();
@@ -84,7 +84,7 @@ public class ContactHelper {
         List<String> contactList = null;
         try {
 
-            Query q = session.createQuery("select distinct c.designation from Contacts as c ");
+            Query q = session.createQuery("select distinct c.designation from Contacts as c where c.designation!=''");
             contactList = (List<String>) q.list();
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,7 +98,7 @@ public class ContactHelper {
         List<String> interestList = null;
         try {
 
-            Query q = session.createQuery("select distinct i.interestName from Interests as i ");
+            Query q = session.createQuery("select distinct i.interestName from Interests as i where i.interestName!=''");
             interestList = (List<String>) q.list();
         } catch (Exception e) {
             e.printStackTrace();
@@ -276,7 +276,7 @@ public class ContactHelper {
                 }
 
 
-                addContactList(email, nickName, categoryId, rating);
+                addContactList(email, nickName, categoryId, rating, notes);
                 System.out.println("save in the database..");
                 check = true;
             }
@@ -288,7 +288,7 @@ public class ContactHelper {
                 }
 
 
-                addContactList(email, nickName, categoryId, rating);
+                addContactList(email, nickName, categoryId, rating, notes);
                 System.out.println("save in the database..");
                 check = true;
             }
@@ -339,7 +339,7 @@ public class ContactHelper {
         return "success";
     }
 
-    public String addContactList(String email, String nickName, int categoryId, int rating) {
+    public String addContactList(String email, String nickName, int categoryId, int rating, String notes) {
 
         System.out.print(email);
         try {
@@ -365,7 +365,7 @@ public class ContactHelper {
 
             session.save(cl);
             System.out.println("Contact Id is " + c.getContactId());
-            addContactRelation(conId, nickName, categoryId, rating);
+            addContactRelation(conId, nickName, categoryId, rating, notes);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -374,7 +374,7 @@ public class ContactHelper {
         return "success";
     }
 
-    public String addContactRelation(int conId, String nickName, int categoryId, int rating) {
+    public String addContactRelation(int conId, String nickName, int categoryId, int rating, String notes) {
         try {
 
             String hql_query = "select c from Contactlist c where c.contacts.contactId=" + conId;
@@ -390,6 +390,7 @@ public class ContactHelper {
 
             Contactrelation cr = new Contactrelation();
             cr.setNickName(nickName);
+            cr.setNotes(notes);
             cr.setCategoryId(categoryId);
             cr.setRating(rating);
             cr.setContactlist(cl);
