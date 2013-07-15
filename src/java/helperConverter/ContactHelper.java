@@ -56,7 +56,7 @@ public class ContactHelper {
         List<String> contactList = null;
         try {
 
-            Query q = session.createQuery("select distinct c.companyName from Contacts as c ");
+            Query q = session.createQuery("select distinct c.companyName from Contacts as c where c.companyName!=''");
             contactList = (List<String>) q.list();
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,7 +70,7 @@ public class ContactHelper {
         List<String> contactList = null;
         try {
 
-            Query q = session.createQuery("select distinct c.companyLoc from Contacts as c ");
+            Query q = session.createQuery("select distinct c.companyLoc from Contacts as c where c.companyLoc!=''");
             contactList = (List<String>) q.list();
         } catch (Exception e) {
             e.printStackTrace();
@@ -84,7 +84,7 @@ public class ContactHelper {
         List<String> contactList = null;
         try {
 
-            Query q = session.createQuery("select distinct c.designation from Contacts as c ");
+            Query q = session.createQuery("select distinct c.designation from Contacts as c where c.designation!=''");
             contactList = (List<String>) q.list();
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,7 +98,7 @@ public class ContactHelper {
         List<String> interestList = null;
         try {
 
-            Query q = session.createQuery("select distinct i.interestName from Interests as i ");
+            Query q = session.createQuery("select distinct i.interestName from Interests as i where i.interestName!=''");
             interestList = (List<String>) q.list();
         } catch (Exception e) {
             e.printStackTrace();

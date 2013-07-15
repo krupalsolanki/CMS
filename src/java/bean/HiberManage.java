@@ -727,6 +727,7 @@ public class HiberManage{
     }
 
     public String addNewUser() throws IOException {
+        emailForSignUp = emailForSignUp+"@compassitesinc.com";
         validateEmployeeEmail(emailForSignUp);
         System.out.println("sign up email " + emailForSignUp);
         System.out.println("password " + password);
