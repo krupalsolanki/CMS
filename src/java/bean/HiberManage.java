@@ -696,9 +696,11 @@ public class HiberManage{
 
     }
 
-    public void showAdddedDetails() {
+    
+    public void showSignUpMsg()
+    {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("The contact has been Added."));
+        context.addMessage(null, new FacesMessage("The user has been added."));
     }
 
     //code for images in login
@@ -734,6 +736,8 @@ public class HiberManage{
         password =null;
         firstNameSignUp=null;
         lastNameSignUp=null;
+        
+        
         return ans;
 
     }

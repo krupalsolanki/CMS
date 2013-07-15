@@ -11,7 +11,7 @@
     <ui:define name="menu">
         <f:metadata>
             <f:viewParam name="something" value="#{sessionHandler.addedBy}" />
-            <f:event type="preRenderView" listener="#{sessionHandler.deconnecter}" />
+            <f:event type="preRenderView" listener="#{sessionHandler.deconnecter()}" />
         </f:metadata>
         <h:form>
             <c:if test="#{sessionHandler.getSessionVariables()==true}">
