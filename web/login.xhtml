@@ -126,19 +126,14 @@
                                 <td>  
                                     Confirm Password: </td>
                                 <td>
-                                    <h:inputSecret id="confirm" required="#{not empty passwordComponent.value}" requiredMessage="Please Enter Confirm Password" styleClass="input" validator="#{hiberManage.validatePassword}" value="#{hiberManage.confirmPassword}"> 
+                                    <h:inputSecret id="confirm" required="TRUE" requiredMessage="Please Enter Confirm Password" styleClass="input" validator="#{hiberManage.validatePassword}" value="#{hiberManage.confirmPassword}"> 
                                         <f:attribute name="passwordComponent" value="#{passwordComponent}"> </f:attribute>
 
                                     </h:inputSecret>     
-                                    <br/><h:message for="pwd" style="margin-left: 30px;"/>
+                                    <br/><h:message for="confirm"/>
                                 </td>
                             </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <h:outputText id="passError" value="#{hiberManage.errorMessage}" style="color: red;" />
-                                    <h:outputText style="margin-left:160px; color: red" value="#{hiberManage.emailMessage}" />
-                                </td>
-                            </tr>
+                           
 
                             <tr>
                                 <td></td>
