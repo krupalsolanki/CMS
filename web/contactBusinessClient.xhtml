@@ -149,12 +149,12 @@
                         <td>
                             <p:rating value="#{hiberManage.rating}" stars="10" cancel="false" />
                         </td>
-                        <td><p:outputLabel id="txt6" value="#{hiberManage.rating}" /></td>
+                        
                     </tr>
                     <tr>
                         <td colspan="2">
                             <p:commandButton id="addButton" value="Add" disabled="#{hiberManage.doesEmailExistFlag!=0}" style="margin:20px; width: 75px "
-                                             action="#{hiberManage.addContact()}" ajax="false" onclick="textbox.show();" tabindex="12" actionListener="#{hiberManage.showAdddedDetails()}">
+                                             action="#{hiberManage.addContact()}" ajax="false" onclick="textbox.show();" tabindex="12" actionListener="#{hiberManage.showAddedDetails()}">
                                 <f:setPropertyActionListener value="#{sessionHandler.addedBy}" 
                                                              target="#{hiberManage.addedBy}"/>
                             </p:commandButton>

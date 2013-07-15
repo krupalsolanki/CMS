@@ -841,4 +841,10 @@ public class HiberManage{
         FacesMessage msg = new FacesMessage("Rating", "Value : " + event.getValue());  
         FacesContext.getCurrentInstance().addMessage(null, msg);  
     }  
+     
+     public void showAddedDetails()
+     {
+         FacesContext context = FacesContext.getCurrentInstance();
+         context.addMessage(null, new FacesMessage("The contact has been added."));
+     }
 }
